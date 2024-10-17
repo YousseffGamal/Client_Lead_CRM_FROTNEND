@@ -30,8 +30,6 @@
 }
 /* Styling for login box */
 .login-box {
-    position: relative;
-    z-index: 999;
     background-color: #ffffff;
     border-radius: 25.76px;
     padding: 40px;

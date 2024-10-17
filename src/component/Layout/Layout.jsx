@@ -244,8 +244,47 @@ const Layout = ({ children, headerText, pageType }) => {
             {headerText || "Leads Dashboard"}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-     
-       
+            {pageType === "blogs" ? (
+              <Link
+                to="/addblog"
+                style={{ textDecoration: "none", color: "#000" }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#0177FB",
+                    borderRadius: "27.66px",
+                    color: "#ffffff",
+                    padding: "8px 16px",
+                    width: { xs: "auto", sm: "200px" },
+                    height: { xs: "45px", sm: "56px" },
+                    fontSize: { xs: "0.875rem", sm: "1.25rem" },
+                  }}
+                >
+                  New Blog
+                </Button>
+              </Link>
+            ) : (
+              <Link
+                to="/addlead"
+                style={{ textDecoration: "none", color: "#000" }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#0177FB",
+                    borderRadius: "27.66px",
+                    color: "#ffffff",
+                    padding: "8px 16px",
+                    width: { xs: "auto", sm: "200px" },
+                    height: { xs: "45px", sm: "56px" },
+                    fontSize: { xs: "0.875rem", sm: "1.25rem" },
+                  }}
+                >
+                  New Lead
+                </Button>
+              </Link>
+            )}
             <Box
               sx={{
                 backgroundColor: "#F1F1F1",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, Typography, CircularProgress, Dialog, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import { Box, TextField, Button, Typography, CircularProgress, Dialog } from "@mui/material";
 import "./signupPage.css"; // Assuming external CSS for custom styles
 import Ellipse from "../../assets/images/Ellipse 1.png";
 import TopLeftImage from "../../assets/images/tapIcon.png"; // Import the top-left image
@@ -14,12 +14,19 @@ const SignUpPage = () => {
 
   // State for form data, error, and success messages
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     phone: '',
     email: '',
     password: '',
-    investorCategory: '', // Add investorCategory field
+    investorCategory: '', // New field for investor category
+    preferences: {
+      LeadType: [],
+      state: [],
+      county: [],
+      occupancy: [],
+      closingTime: '',
+      askingPrice: '',
+    },
   });
 
   const [errorMessage, setErrorMessage] = useState(''); // For error message
@@ -27,10 +34,21 @@ const SignUpPage = () => {
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name.startsWith('preferences.')) {
+      const preferenceName = name.split('.')[1];
+      setFormData((prevData) => ({
+        ...prevData,
+        preferences: {
+          ...prevData.preferences,
+          [preferenceName]: value,
+        },
+      }));
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   // Handle form submission
@@ -42,13 +60,19 @@ const SignUpPage = () => {
     axiosInstance.post('/signup', formData)
       .then((res) => {
         setFormData({
-          name: '', // Combined Name field
-          firstName: '',
-          lastName: '',
+          name: '',
           phone: '',
           email: '',
           password: '',
           investorCategory: '',
+          preferences: {
+            LeadType: [],
+            state: [],
+            county: [],
+            occupancy: [],
+            closingTime: '',
+            askingPrice: '',
+          },
         });
         setLoading(false); // Hide loading state
 
@@ -112,62 +136,7 @@ const SignUpPage = () => {
               },
             }}
           />
-          {/* First Name Input */}
-          <TextField
-            fullWidth
-            variant="standard"
-            label="First Name"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            sx={{
-              marginBottom: "52px",
-              "& .MuiInputBase-root": {
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-                "&.Mui-focused": {
-                  backgroundColor: "transparent",
-                },
-              },
-              "& .MuiInput-underline:before": {
-                borderBottom: "1px solid #000000",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottom: "1px solid #000000",
-              },
-            }}
-          />
-          {/* Last Name Input */}
-          <TextField
-            fullWidth
-            variant="standard"
-            label="Last Name"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            sx={{
-              marginBottom: "52px",
-              "& .MuiInputBase-root": {
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-                "&.Mui-focused": {
-                  backgroundColor: "transparent",
-                },
-              },
-              "& .MuiInput-underline:before": {
-                borderBottom: "1px solid #000000",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottom: "1px solid #000000",
-              },
-            }}
-          />
+          
           {/* Email Input */}
           <TextField
             fullWidth
@@ -196,6 +165,7 @@ const SignUpPage = () => {
               },
             }}
           />
+          
           {/* Phone Input */}
           <TextField
             fullWidth
@@ -224,18 +194,18 @@ const SignUpPage = () => {
               },
             }}
           />
-          {/* Password Input */}
+
+          {/* Investor Category Input */}
           <TextField
             fullWidth
             variant="standard"
-            label="Password"
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
+            label="Investor Category"
+            id="investorCategory"
+            name="investorCategory"
+            value={formData.investorCategory}
             onChange={handleChange}
             sx={{
-              marginBottom: "42px",
+              marginBottom: "52px",
               "& .MuiInputBase-root": {
                 backgroundColor: "transparent",
                 "&:hover": {
@@ -253,25 +223,52 @@ const SignUpPage = () => {
               },
             }}
           />
+          
+          {/* Preferences Inputs */}
+          <TextField
+            fullWidth
+            variant="standard"
+            label="Lead Type"
+            id="preferences.LeadType"
+            name="preferences.LeadType" // Ensure this matches the preferences structure
+            value={formData.preferences.LeadType}
+            onChange={handleChange}
+            sx={{
+              marginBottom: "52px",
+              "& .MuiInputBase-root": {
+                backgroundColor: "transparent",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+                "&.Mui-focused": {
+                  backgroundColor: "transparent",
+                },
+              },
+              "& .MuiInput-underline:before": {
+                borderBottom: "1px solid #000000",
+              },
+              "& .MuiInput-underline:after": {
+                borderBottom: "1px solid #000000",
+              },
+            }}
+          />
+          {/* Add similar fields for state, county, occupancy, closingTime, and askingPrice as needed */}
 
-          {/* Investor Category Select */}
-          <FormControl fullWidth variant="standard" sx={{ marginBottom: "52px" }}>
-            <InputLabel id="investorCategory-label">Investor Category</InputLabel>
-            <Select
-              labelId="investorCategory-label"
-              id="investorCategory"
-              name="investorCategory"
-              value={formData.investorCategory}
-              onChange={handleChange}
-              label="Investor Category"
-            >
-              <MenuItem value="Wholesaler">Wholesaler</MenuItem>
-              <MenuItem value="Realtor">Realtor</MenuItem>
-            </Select>
-          </FormControl>
+          <span style={{ color: "red" }}> {errorMessage}</span>
 
-          {/* Error Message */}
-          <span style={{ color: "red" }}>{errorMessage}</span>
+          {/* Remember Me */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "42px",
+            }}
+          >
+            <label className="Save">
+              <input type="checkbox" style={{ marginRight: "8px" }} />
+              Save Login Credentials
+            </label>
+          </Box>
 
           {/* Submit Button */}
           <Button
@@ -307,22 +304,7 @@ const SignUpPage = () => {
 
       {/* Modal for loading and success message */}
       <Dialog open={openModal} onClose={() => setOpenModal(false)}>
-        <Box sx={{ padding: "20px", textAlign: "center" }}>
-          {loading ? (
-            <>
-              <CircularProgress />
-              <Typography variant="h6" sx={{ marginTop: "20px" }}>
-                Registering...
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography variant="h6" sx={{ color: "green" }}>
-                Registration successful! Redirecting to login...
-              </Typography>
-            </>
-          )}
-        </Box>
+        {/* Content for modal */}
       </Dialog>
     </Box>
   );

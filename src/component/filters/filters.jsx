@@ -10,7 +10,10 @@ import {
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import axios from "axios"; // Import axios
-
+import {
+  occupancyOptions,
+  leadTemperatureOptions,
+} from "../../Pages/AddLead/components/constants";
 import axiosInstance from "../../axios";
 
 const FilterComponent = ({ setLeadsData }) => {
