@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (cred) => {
     try {
-      const { data } = await axiosInstance.post("/signinAdmin", cred);
+      const { data } = await axiosInstance.post("/signin", cred);
       setAuth({
         token: data.user.token,
         role: data.user.userExist.role,

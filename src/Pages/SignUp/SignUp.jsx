@@ -1,27 +1,25 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, Typography, CircularProgress, Dialog } from "@mui/material";
+import { Box, TextField, Button, Typography, CircularProgress, Dialog, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import "./signupPage.css"; // Assuming external CSS for custom styles
 import Ellipse from "../../assets/images/Ellipse 1.png";
 import TopLeftImage from "../../assets/images/tapIcon.png"; // Import the top-left image
 import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
 import axiosInstance from "../../axios";
 
-
 const SignUpPage = () => {
-
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [openModal, setOpenModal] = useState(false); // State for modal visibility
   const navigate = useNavigate(); // Use useNavigate for navigation
 
-  
   // State for form data, error, and success messages
   const [formData, setFormData] = useState({
-    name : '',
-    phone : '',
-    email : '',
-    password : '',
-
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    password: '',
+    investorCategory: '', // Add investorCategory field
   });
 
   const [errorMessage, setErrorMessage] = useState(''); // For error message
@@ -40,36 +38,29 @@ const SignUpPage = () => {
     e.preventDefault();
     setLoading(true); // Show loading state
 
-    console.log(formData)
-    axiosInstance.post('/signupAdmin',formData)
-    .then((res) =>{
-      setFormData({
-        name : '',
-        phone : '',
-        email : '',
-        password : '',
+    console.log(formData);
+    axiosInstance.post('/signup', formData)
+      .then((res) => {
+        setFormData({
+          name: '', // Combined Name field
+          firstName: '',
+          lastName: '',
+          phone: '',
+          email: '',
+          password: '',
+          investorCategory: '',
+        });
+        setLoading(false); // Hide loading state
+
+        setTimeout(() => {
+          navigate("/"); // Redirect to login page using navigate
+        }, 2000);
       })
-      setLoading(false); // Hide loading state
-
-      setTimeout(() => {
-        navigate("/"); // Redirect to login page using navigate
-      }, 2000);
-    })
-    .catch((err) =>{
-      setErrorMessage(`Faild to Sign Up : ${err.response.data.message}`)
-      setLoading(false); // Hide loading state
-         
-
-    })
- 
+      .catch((err) => {
+        setErrorMessage(`Failed to Sign Up: ${err.response.data.message}`);
+        setLoading(false); // Hide loading state
+      });
   };
-
-
-
-
-
-
-
 
   return (
     <Box className="login-container">
@@ -93,30 +84,70 @@ const SignUpPage = () => {
           Sign Up
         </Typography>
         <form onSubmit={handleSubmit}>
-          {/* Customized Profile Image Upload */}
-          {/* <TextField
-            type="file"
-            fullWidth
-            variant="outlined" // Use outlined variant for better styling
-            sx={{
-              marginBottom: "42px",
-              "& .MuiInputBase-root": {
-                borderRadius: "10px", // Custom border radius
-              },
-            }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          /> */}
-
           {/* Name Input */}
           <TextField
             fullWidth
             variant="standard"
             label="Name"
-             id="name"
-              name="name"
+            id="name"
+            name="name"
             value={formData.name}
+            onChange={handleChange}
+            sx={{
+              marginBottom: "52px",
+              "& .MuiInputBase-root": {
+                backgroundColor: "transparent",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+                "&.Mui-focused": {
+                  backgroundColor: "transparent",
+                },
+              },
+              "& .MuiInput-underline:before": {
+                borderBottom: "1px solid #000000",
+              },
+              "& .MuiInput-underline:after": {
+                borderBottom: "1px solid #000000",
+              },
+            }}
+          />
+          {/* First Name Input */}
+          <TextField
+            fullWidth
+            variant="standard"
+            label="First Name"
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            sx={{
+              marginBottom: "52px",
+              "& .MuiInputBase-root": {
+                backgroundColor: "transparent",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+                "&.Mui-focused": {
+                  backgroundColor: "transparent",
+                },
+              },
+              "& .MuiInput-underline:before": {
+                borderBottom: "1px solid #000000",
+              },
+              "& .MuiInput-underline:after": {
+                borderBottom: "1px solid #000000",
+              },
+            }}
+          />
+          {/* Last Name Input */}
+          <TextField
+            fullWidth
+            variant="standard"
+            label="Last Name"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
             onChange={handleChange}
             sx={{
               marginBottom: "52px",
@@ -144,8 +175,8 @@ const SignUpPage = () => {
             label="Email"
             id="email"
             name="email"
-          value={formData.email}
-          onChange={handleChange}
+            value={formData.email}
+            onChange={handleChange}
             sx={{
               marginBottom: "52px",
               "& .MuiInputBase-root": {
@@ -172,8 +203,8 @@ const SignUpPage = () => {
             label="Phone"
             id="phone"
             name="phone"
-          value={formData.phone}
-          onChange={handleChange}
+            value={formData.phone}
+            onChange={handleChange}
             sx={{
               marginBottom: "52px",
               "& .MuiInputBase-root": {
@@ -193,7 +224,6 @@ const SignUpPage = () => {
               },
             }}
           />
-
           {/* Password Input */}
           <TextField
             fullWidth
@@ -202,8 +232,8 @@ const SignUpPage = () => {
             type="password"
             id="password"
             name="password"
-          value={formData.password}
-          onChange={handleChange}
+            value={formData.password}
+            onChange={handleChange}
             sx={{
               marginBottom: "42px",
               "& .MuiInputBase-root": {
@@ -223,22 +253,25 @@ const SignUpPage = () => {
               },
             }}
           />
-          <span style={{ color : "red"}}>  {errorMessage}</span>
-        
 
-          {/* Remember Me */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: "42px",
-            }}
-          >
-            <label className="Save">
-              <input type="checkbox" style={{ marginRight: "8px" }} />
-              Save Login Credentials
-            </label>
-          </Box>
+          {/* Investor Category Select */}
+          <FormControl fullWidth variant="standard" sx={{ marginBottom: "52px" }}>
+            <InputLabel id="investorCategory-label">Investor Category</InputLabel>
+            <Select
+              labelId="investorCategory-label"
+              id="investorCategory"
+              name="investorCategory"
+              value={formData.investorCategory}
+              onChange={handleChange}
+              label="Investor Category"
+            >
+              <MenuItem value="Wholesaler">Wholesaler</MenuItem>
+              <MenuItem value="Realtor">Realtor</MenuItem>
+            </Select>
+          </FormControl>
+
+          {/* Error Message */}
+          <span style={{ color: "red" }}>{errorMessage}</span>
 
           {/* Submit Button */}
           <Button
