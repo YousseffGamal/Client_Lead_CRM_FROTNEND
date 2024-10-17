@@ -1,0 +1,109 @@
+body{
+    background-color: #F1F1F1 !important;
+}
+@font-face {
+    font-family: "LufgaLight";
+    src: url("./assets/Fonts/Lufga/LufgaLight.ttf");
+}
+@font-face {
+    font-family: "LufgaSemiBold";
+    src: url("./assets/Fonts/Lufga/LufgaSemiBold.ttf");
+}
+@font-face {
+    font-family: "LufgaRegular";
+    src: url("./assets/Fonts/Lufga/LufgaRegular.ttf");
+}
+@font-face {
+    font-family: "LufgaMedium";
+    src: url("./assets/Fonts/Lufga/LufgaMedium.ttf");
+}
+@font-face {
+    font-family: "LufgaLight";
+    src: url("./assets/Fonts/Lufga/LufgaLight.ttf");
+}
+.HeaderText{
+font-family: "LufgaLight" !important;
+}
+.UserName{
+    color: #000000 !important;
+    font-family: "LufgaSemiBold" !important;
+}
+
+.UserEmail{
+    color: #000000 !important;
+    font-family: "LufgaRegular" !important;
+}
+.Welcome{
+    color: #000000 !important;
+    font-family: "LufgaMedium" !important;
+}
+.Navigation{
+    color: #000000 !important;
+    font-family: "LufgaMedium" !important;
+    opacity: 0.7;
+}
+.About{
+    color: #000000 !important;
+    font-family: "LufgaRegular" !important;
+    font-size: 15px !important;
+    opacity: 0.7;
+
+}
+.TitleCard{
+    font-family: "LufgaMedium" !important;
+
+}
+.CardNumber{
+    font-family: "LufgaRegular" !important;
+
+}
+.TableHeader{
+    font-family: "LufgaMedium" !important;
+
+}
+.TableData{
+    font-family: "LufgaMedium" !important;
+    font-weight: bold !important;
+
+}
+.TableDataS{
+    font-family: "LufgaRegular" !important;
+
+}
+.NavText{
+    font-family: "LufgaMedium" !important;
+    font-weight: bold !important;
+
+
+}
+.AddLeadBtn{
+    font-family: "LufgaMedium" !important;
+
+}
+.CardTtile{
+    color: #000000 !important;
+    font-family: "LufgaMedium" !important;
+}
+.CardDescr{
+    font-family: "LufgaRegular" !important;
+    font-size: 12px !important;
+
+}
+td{
+    text-align: center !important;
+}
+.css-11cfq65-MuiTablePagination-displayedRows {
+  margin: 0 !important;
+}
+.ProfileName{
+    color: #000000 !important;
+    font-size: 46px !important;
+    font-family: "LufgaSemiBold" !important;
+    margin-top: 48px !important;
+    margin-bottom: 17px !important;
+}
+.ProfileInfo{
+    color: #000000 !important;
+    font-size: 28px !important;
+    font-family: "LufgaLight" !important;
+}

@@ -1,0 +1,134 @@
+@font-face {
+    font-family: "LufgaRegular";
+    src: url("../../assets/Fonts/Lufga/LufgaRegular.ttf");
+}
+/* Main container for login page */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    position: relative;
+    padding: 20px; /* Added padding for better spacing */
+}
+
+/* Layered image style - positioned at the top */
+.layered-image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; /* Ensure the container spans the full width */
+}
+
+
+.layered-image img {
+    width: 100vw; /* Full width of the viewport */
+    height: auto; /* Keep the aspect ratio intact */
+}
+/* Styling for login box */
+.login-box {
+    background-color: #ffffff;
+    border-radius: 25.76px;
+    padding: 40px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    width: 730px; /* Default width for larger screens */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
+    transition: width 0.3s ease; /* Smooth transition for width changes */
+}
+
+/* Make login box responsive */
+@media (max-width: 1024px) {
+    .login-box {
+        width: 90%; /* Set to 90% of the screen width for medium devices */
+    }
+}
+
+@media (max-width: 768px) {
+    .login-box {
+        width: 80%; /* Further reduce for tablet screens */
+        padding: 30px;
+        height: auto; /* Allow height to adjust for content */
+    }
+
+    .MuiInputBase-root {
+        font-size: 14px; /* Adjust input text size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .login-box {
+        width: 100%; /* Full width for small screens */
+        padding: 20px;
+        height: auto; /* Adjust height to fit contents */
+    }
+
+    /* Adjust font size for small screens */
+    .login-box h4 {
+        font-size: 24px;
+    }
+}
+
+/* Form inputs */
+.MuiInputBase-root::before {
+    border-bottom: 1px solid #000000 !important;
+}
+
+/* Submit button adjustments for small screens */
+@media (max-width: 480px) {
+    .MuiButton-root {
+        padding: 12px 0;
+        font-size: 14px;
+    }
+}
+/* Remove background color on focus */
+.MuiInputBase-root {
+    background-color: transparent !important; /* Transparent background */
+}
+
+.MuiInputBase-root:hover {
+    background-color: transparent !important; /* Transparent background on hover */
+}
+
+.MuiInputBase-root.Mui-focused {
+    background-color: transparent !important; /* Transparent background when focused */
+}
+
+/* Remove the default input underline */
+.MuiInput-underline:before {
+    border-bottom: 1px solid #000000 !important; /* Underline before focus */
+}
+
+.MuiInput-underline:after {
+    border-bottom: 1px solid #000000 !important; /* Underline on focus */
+}
+.Signin{
+font-family: "LufgaRegular" !important;
+}
+.Save{
+    font-size: 20px;
+    opacity: 0.7;
+    font-family: "LufgaRegular" !important;
+
+}
+.Forget{
+    font-size: 20px;
+    opacity: 0.7;
+    font-family: "LufgaRegular" !important; 
+}
+
+
+.top-left-image img {
+    position: absolute;
+    top: 60px;
+    left: 60px;
+    width: 70px; /* Adjust the size of the top-left image */
+    height: auto;
+
+  }
