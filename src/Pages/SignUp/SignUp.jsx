@@ -1,24 +1,65 @@
-import React, { useState } from "react";
-import { Box, TextField, Button, Typography, CircularProgress, Dialog } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Button,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
+import ChipDropdown from '../../component/chipDropdown/chipDropdown'; // Import your new ChipDropdown component
+import TextInput from '../../component/TextInput/TextInput'; // Import the TextInput component
+import SelectInput from '../../component/SelectInput/SelectInput'; // Import the SelectInput component
 import "./signupPage.css"; // Assuming external CSS for custom styles
 import Ellipse from "../../assets/images/Ellipse 1.png";
 import TopLeftImage from "../../assets/images/tapIcon.png"; // Import the top-left image
 import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
 import axiosInstance from "../../axios";
 
+// Sample options for the dropdowns
+const leadTypes = [
+  { label: 'Cash Buyer', value: 'cash_buyer' },
+  { label: 'Owner Occupant', value: 'owner_occupant' },
+  { label: 'Investor', value: 'investor' },
+];
+
+const occupancyOptions = [
+  { label: 'Vacant', value: 'vacant' },
+  { label: 'Occupied', value: 'occupied' },
+];
+
+const stateOptions = [
+  { label: 'California', value: 'CA' },
+  { label: 'Texas', value: 'TX' },
+  { label: 'New York', value: 'NY' },
+];
+
+const countyOptions = {
+  CA: [
+    { label: 'Los Angeles', value: 'los_angeles' },
+    { label: 'San Diego', value: 'san_diego' },
+  ],
+  TX: [
+    { label: 'Harris', value: 'harris' },
+    { label: 'Dallas', value: 'dallas' },
+  ],
+  NY: [
+    { label: 'Kings', value: 'kings' },
+    { label: 'Queens', value: 'queens' },
+  ],
+};
+
 const SignUpPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [openModal, setOpenModal] = useState(false); // State for modal visibility
-  const navigate = useNavigate(); // Use useNavigate for navigation
+  const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
 
-  // State for form data, error, and success messages
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     phone: '',
     email: '',
     password: '',
-    investorCategory: '', // New field for investor category
+    investorCategory: '',
     preferences: {
       LeadType: [],
       state: [],
@@ -29,9 +70,8 @@ const SignUpPage = () => {
     },
   });
 
-  const [errorMessage, setErrorMessage] = useState(''); // For error message
-  
-  // Handle input change
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name.startsWith('preferences.')) {
@@ -51,16 +91,16 @@ const SignUpPage = () => {
     }
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Show loading state
+    setLoading(true);
 
     console.log(formData);
-    axiosInstance.post('/signup', formData)
+    axiosInstance.post('/signupAdmin', formData)
       .then((res) => {
         setFormData({
-          name: '',
+          firstName: '',
+          lastName: '',
           phone: '',
           email: '',
           password: '',
@@ -74,7 +114,7 @@ const SignUpPage = () => {
             askingPrice: '',
           },
         });
-        setLoading(false); // Hide loading state
+        setLoading(false);
 
         setTimeout(() => {
           navigate("/"); // Redirect to login page using navigate
@@ -82,23 +122,20 @@ const SignUpPage = () => {
       })
       .catch((err) => {
         setErrorMessage(`Failed to Sign Up: ${err.response.data.message}`);
-        setLoading(false); // Hide loading state
+        setLoading(false);
       });
   };
 
   return (
     <Box className="login-container">
-      {/* Layered Image */}
       <Box className="layered-image">
         <img src={Ellipse} alt="Layered Top" />
       </Box>
 
-      {/* Top Left Image */}
       <Box className="top-left-image">
         <img src={TopLeftImage} alt="Top Left" />
       </Box>
 
-      {/* Sign Up Form */}
       <Box className="login-box">
         <Typography
           className="Signin"
@@ -108,204 +145,112 @@ const SignUpPage = () => {
           Sign Up
         </Typography>
         <form onSubmit={handleSubmit}>
-          {/* Name Input */}
-          <TextField
-            fullWidth
-            variant="standard"
-            label="Name"
-            id="name"
-            name="name"
-            value={formData.name}
+          <TextInput
+            label="First Name"
+            name="firstName"
+            value={formData.firstName}
             onChange={handleChange}
-            sx={{
-              marginBottom: "52px",
-              "& .MuiInputBase-root": {
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-                "&.Mui-focused": {
-                  backgroundColor: "transparent",
-                },
-              },
-              "& .MuiInput-underline:before": {
-                borderBottom: "1px solid #000000",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottom: "1px solid #000000",
-              },
-            }}
           />
           
-          {/* Email Input */}
-          <TextField
-            fullWidth
-            variant="standard"
+          <TextInput
+            label="Last Name"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+          />
+          
+          <TextInput
             label="Email"
-            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            sx={{
-              marginBottom: "52px",
-              "& .MuiInputBase-root": {
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-                "&.Mui-focused": {
-                  backgroundColor: "transparent",
-                },
-              },
-              "& .MuiInput-underline:before": {
-                borderBottom: "1px solid #000000",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottom: "1px solid #000000",
-              },
-            }}
           />
           
-          {/* Phone Input */}
-          <TextField
-            fullWidth
-            variant="standard"
+          <TextInput
             label="Phone"
-            id="phone"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            sx={{
-              marginBottom: "52px",
-              "& .MuiInputBase-root": {
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-                "&.Mui-focused": {
-                  backgroundColor: "transparent",
-                },
-              },
-              "& .MuiInput-underline:before": {
-                borderBottom: "1px solid #000000",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottom: "1px solid #000000",
-              },
-            }}
           />
 
-          {/* Investor Category Input */}
-          <TextField
-            fullWidth
-            variant="standard"
+          <SelectInput
             label="Investor Category"
-            id="investorCategory"
             name="investorCategory"
             value={formData.investorCategory}
             onChange={handleChange}
-            sx={{
-              marginBottom: "52px",
-              "& .MuiInputBase-root": {
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-                "&.Mui-focused": {
-                  backgroundColor: "transparent",
-                },
-              },
-              "& .MuiInput-underline:before": {
-                borderBottom: "1px solid #000000",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottom: "1px solid #000000",
-              },
-            }}
+            options={[
+              { label: "Investor", value: "Investor" },
+              { label: "Cash Buyer", value: "Cash Buyer" },
+              { label: "Owner Occupant", value: "Owner Occupant" },
+            ]}
           />
-          
-          {/* Preferences Inputs */}
-          <TextField
-            fullWidth
-            variant="standard"
-            label="Lead Type"
-            id="preferences.LeadType"
-            name="preferences.LeadType" // Ensure this matches the preferences structure
+
+          <ChipDropdown
+            options={leadTypes}
             value={formData.preferences.LeadType}
-            onChange={handleChange}
-            sx={{
-              marginBottom: "52px",
-              "& .MuiInputBase-root": {
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-                "&.Mui-focused": {
-                  backgroundColor: "transparent",
-                },
-              },
-              "& .MuiInput-underline:before": {
-                borderBottom: "1px solid #000000",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottom: "1px solid #000000",
-              },
-            }}
+            onChange={(newValue) => handleChange({ target: { name: 'preferences.LeadType', value: newValue } })}
+            label="Lead Type"
+            placeholder="Select Lead Type"
           />
-          {/* Add similar fields for state, county, occupancy, closingTime, and askingPrice as needed */}
 
-          <span style={{ color: "red" }}> {errorMessage}</span>
+          <ChipDropdown
+            options={stateOptions}
+            value={formData.preferences.state}
+            onChange={(newValue) => handleChange({ target: { name: 'preferences.state', value: newValue } })}
+            label="State"
+            placeholder="Select State"
+          />
 
-          {/* Remember Me */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: "42px",
-            }}
-          >
-            <label className="Save">
-              <input type="checkbox" style={{ marginRight: "8px" }} />
-              Save Login Credentials
-            </label>
-          </Box>
+          <ChipDropdown
+            options={countyOptions[formData.preferences.state[0]?.value] || []}
+            value={formData.preferences.county}
+            onChange={(newValue) => handleChange({ target: { name: 'preferences.county', value: newValue } })}
+            label="County"
+            placeholder="Select County"
+            disabled={!formData.preferences.state.length} // Disable if no state is selected
+          />
 
-          {/* Submit Button */}
+          <ChipDropdown
+            options={occupancyOptions}
+            value={formData.preferences.occupancy}
+            onChange={(newValue) => handleChange({ target: { name: 'preferences.occupancy', value: newValue } })}
+            label="Occupancy"
+            placeholder="Select Occupancy"
+          />
+
+          <TextInput
+            label="Closing Time"
+            name="preferences.closingTime"
+            value={formData.preferences.closingTime}
+            onChange={handleChange}
+          />
+
+          <TextInput
+            label="Asking Price"
+            name="preferences.askingPrice"
+            value={formData.preferences.askingPrice}
+            onChange={handleChange}
+          />
+
+          {errorMessage && <Typography color="error">{errorMessage}</Typography>}
+
           <Button
-            fullWidth
+            type="submit"
             variant="contained"
             sx={{
-              backgroundColor: "#000000",
-              color: "#FFFFFF",
-              borderRadius: "25.76px",
-              fontSize: "25px",
-              position: "relative",
+              width: "100%",
+              marginTop: "20px",
+              height: "56px",
+              backgroundColor: "#353535",
+              "&:hover": {
+                backgroundColor: "#191919",
+              },
             }}
-            type="submit"
-            disabled={loading} // Disable button while loading
           >
-            {loading ? (
-              <CircularProgress
-                size={24}
-                sx={{
-                  position: "absolute",
-                  left: "50%",
-                  top: "50%",
-                  marginLeft: "-12px",
-                  marginTop: "-12px",
-                }}
-              />
-            ) : (
-              "SIGN UP"
-            )}
+            {loading ? <CircularProgress color="inherit" size={24} /> : "Sign Up"}
           </Button>
         </form>
       </Box>
-
-      {/* Modal for loading and success message */}
-      <Dialog open={openModal} onClose={() => setOpenModal(false)}>
-        {/* Content for modal */}
-      </Dialog>
     </Box>
   );
 };

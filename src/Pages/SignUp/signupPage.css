@@ -30,6 +30,7 @@
 }
 /* Styling for login box */
 .login-box {
+    margin-top: 90px;
     background-color: #ffffff;
     border-radius: 25.76px;
     padding: 40px;
@@ -131,4 +132,7 @@ font-family: "LufgaRegular" !important;
     width: 70px; /* Adjust the size of the top-left image */
     height: auto;
 
+  }
+  body{
+    overflow-x: hidden;
   }
