@@ -57,9 +57,9 @@ const SignUpPage = () => {
     investorCategory: "",
     preferences: {
       LeadType: [],
-      state: "", // Change to string
-      county: "", // Change to string
-      occupancy: "", // Change to string
+      state: [], // Change to an array
+      county: [], // Change to an array
+      occupancy: "", // Keep as string or change to array based on your needs
       closingTime: "",
       askingPrice: "",
     },
@@ -120,9 +120,9 @@ const SignUpPage = () => {
           investorCategory: '',
           preferences: {
             LeadType: [],
-            state: '', // Reset state to string
-            county: '', // Reset county to string
-            occupancy: '', // Reset occupancy to string
+            state: [], // Reset state to array
+            county: [], // Reset county to array
+            occupancy: '', // Keep as string or reset based on your needs
             closingTime: '',
             askingPrice: '',
           },
@@ -139,8 +139,6 @@ const SignUpPage = () => {
       });
   };
 
-
-  
   const getStates = async () => {
     try {
       const res = await axiosInstance.get("/getAllStates");
@@ -230,9 +228,7 @@ const SignUpPage = () => {
             }))}
             value={formData.preferences.LeadType}
             onChange={(newValue) =>
-              handleChange({
-                target: { name: "preferences.LeadType", value: newValue },
-              })
+              handleChipDropDownChange(newValue, "LeadType")
             }
             label="Lead Type"
             placeholder="Select Lead Type"
@@ -243,11 +239,9 @@ const SignUpPage = () => {
               label: state.name,
               value: state._id,
             }))}
-            value={[formData.preferences.state]} // Ensure it's an array for the ChipDropdown
+            value={formData.preferences.state} // Use an array for multiple selection
             onChange={(newValue) =>
-              handleChange({
-                target: { name: "preferences.state", value: newValue[0]?.value || "" }, // Set value as string
-              })
+              handleChipDropDownChange(newValue, "state") // Pass the new value
             }
             label="State"
             placeholder="Select State"
@@ -258,11 +252,9 @@ const SignUpPage = () => {
               label: county.name,
               value: county._id,
             }))}
-            value={[formData.preferences.county]} // Ensure it's an array for the ChipDropdown
+            value={formData.preferences.county} // Use an array for multiple selection
             onChange={(newValue) =>
-              handleChange({
-                target: { name: "preferences.county", value: newValue[0]?.value || "" }, // Set value as string
-              })
+              handleChipDropDownChange(newValue, "county") // Pass the new value
             }
             label="County"
             placeholder="Select County"
@@ -270,7 +262,7 @@ const SignUpPage = () => {
 
           <ChipDropdown
             options={occupancyOptions}
-            value={[formData.preferences.occupancy]} // Ensure it's an array for the ChipDropdown
+            value={[formData.preferences.occupancy]} // Keep as is or change based on your needs
             onChange={(newValue) =>
               handleChange({
                 target: { name: "preferences.occupancy", value: newValue[0]?.value || "" }, // Set value as string
@@ -294,21 +286,26 @@ const SignUpPage = () => {
             onChange={handleChange}
           />
 
-          {errorMessage && (
-            <Typography color="error">{errorMessage}</Typography>
-          )}
+          <Box textAlign="center">
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={loading}
+              sx={{
+                marginTop: "20px",
+                backgroundColor: "#007bff",
+                "&:hover": { backgroundColor: "#0056b3" },
+              }}
+            >
+              {loading ? <CircularProgress size={24} /> : "Sign Up"}
+            </Button>
+          </Box>
 
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              width: "100%",
-              marginTop: "20px",
-              backgroundColor: "#3D99D9",
-            }}
-          >
-            {loading ? <CircularProgress size={24} /> : "Sign Up"}
-          </Button>
+          {errorMessage && (
+            <Typography variant="body2" color="error">
+              {errorMessage}
+            </Typography>
+          )}
         </form>
       </Box>
     </Box>
