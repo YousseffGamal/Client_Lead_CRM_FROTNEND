@@ -230,7 +230,9 @@ const SignUpPage = () => {
             }))}
             value={formData.preferences.LeadType}
             onChange={(newValue) =>
-              handleChipDropDownChange(newValue, "LeadType")
+              handleChange({
+                target: { name: "preferences.LeadType", value: newValue },
+              })
             }
             label="Lead Type"
             placeholder="Select Lead Type"
