@@ -6,7 +6,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     token: localStorage.getItem("token") || "",
-    role: localStorage.getItem("role") || null,
     user: JSON.parse(localStorage.getItem("user")) || null,
   });
 
@@ -16,11 +15,9 @@ export const AuthProvider = ({ children }) => {
       console.log(data);
       setAuth({
         token: data.user.token,
-        role: data.user.userExist.role,
         user: data.user.userExist,
       });
       localStorage.setItem("token", data.user.token);
-      localStorage.setItem("role", data.user.userExist.role);
       localStorage.setItem("user", JSON.stringify(data.user.userExist));
 
       return { success: true, data };
@@ -34,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     axiosInstance
-      .post("logoutAdmin")
+      .post("logout")
       .then((res) => {
         setAuth({ token: "", user: "" }); // Reset permissions state
         localStorage.removeItem("token");
@@ -45,10 +42,6 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
       });
-  };
-
-  const hasPermissions = (roles) => {
-    return roles.includes(auth.role);
   };
 
   useEffect(() => {
@@ -69,7 +62,7 @@ export const AuthProvider = ({ children }) => {
   }, [logout]);
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout, hasPermissions }}>
+    <AuthContext.Provider value={{ auth, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

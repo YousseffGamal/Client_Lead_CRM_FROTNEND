@@ -6,36 +6,24 @@ import SignUpPage from "./Pages/SignUp/SignUp";
 import ProtectedRoute from "./utiliteis/protectedRoute";
 import BlogsArticles from "./Pages/BlogsArticles/BlogsArticles";
 
-import Profile from "./Pages/profile/profile"
+import Profile from "./Pages/profile/profile";
 
 const ProjectRoutes = () => {
   return (
     // <React.Suspense fallback={<>Loading...</>}>
-      <Router>
-        <Routes>
-          {/* <Route element={<ProtectedRoute redirectTo="/" roles={["Admin"]} />}> */}
-            <Route path="/dashboard" element={<Dashboard />} />
-          {/* </Route> */}
-    
-          <Route
-            element={
-              <ProtectedRoute redirectTo="/" roles={["Marketer", "Admin"]} />
-            }
-          >
-            <Route path="/blogsarticles" element={<BlogsArticles />} />
-          </Route>
-          <Route
-            element={
-              <ProtectedRoute redirectTo="/" roles={["Marketer", "Admin"]} />
-            }
-          >
-            <Route path="/profile" element={<Profile />} />
-          </Route>
+    <Router>
+      <Routes>
+        <Route element={<ProtectedRoute redirectTo="/" />}>
+          <Route path="/dashboard" element={<Dashboard />} />
 
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/signuppage" element={<SignUpPage />} />
-        </Routes>
-      </Router>
+          <Route path="/blogsarticles" element={<BlogsArticles />} />
+
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/signuppage" element={<SignUpPage />} />
+      </Routes>
+    </Router>
     // </React.Suspense>
   );
 };
