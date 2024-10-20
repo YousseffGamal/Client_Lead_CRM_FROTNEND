@@ -13,6 +13,7 @@ import Ellipse from "../../assets/images/Ellipse 1.png";
 import TopLeftImage from "../../assets/images/tapIcon.png"; // Import the top-left image
 import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
 import axiosInstance from "../../axios";
+import { leadTemperatureOptions } from "../../component/constance/constance";
 
 // Sample options for the dropdowns
 const leadTypes = [
@@ -71,6 +72,18 @@ const SignUpPage = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [states, setStates] = useState([]);
+  const [counties, setCounties] = useState([]);
+  useEffect(() => {
+    getStates(); // Fetch states on component mount
+  }, []);
+
+  useEffect(() => {
+    if (formData.preferences.state.length > 0) {
+      const stateId = formData.preferences.state[0].value;
+      getCounty(stateId); // Fetch counties whenever the state changes
+    }
+  }, [formData.preferences.state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,6 +103,7 @@ const SignUpPage = () => {
       });
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -124,6 +138,25 @@ const SignUpPage = () => {
         setErrorMessage(`Failed to Sign Up: ${err.response.data.message}`);
         setLoading(false);
       });
+  };
+
+  const getStates = async () => {
+    try {
+      const res = await axiosInstance.get("/getAllStates");
+      setStates(res.data.states);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getCounty = () => {
+    axiosInstance
+      .get(`/getAllCounty`)  // Use ObjectId in the request
+      .then((res) => {
+        console.log(res.data);
+        setCounties(res.data.counties);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -186,7 +219,10 @@ const SignUpPage = () => {
           />
 
           <ChipDropdown
-            options={leadTypes}
+            options={leadTemperatureOptions.map((item)=>({
+              label: item.label,
+              value: item.value
+            }))}
             value={formData.preferences.LeadType}
             onChange={(newValue) => handleChange({ target: { name: 'preferences.LeadType', value: newValue } })}
             label="Lead Type"
@@ -194,7 +230,10 @@ const SignUpPage = () => {
           />
 
           <ChipDropdown
-            options={stateOptions}
+             options={states.map((state) => ({
+              label: state.name, // Display name (e.g., "New York")
+              value: state._id,  // Use the ObjectId (e.g., "5f4e97e9b0e7f33b8c9dcf28")
+            }))}
             value={formData.preferences.state}
             onChange={(newValue) => handleChange({ target: { name: 'preferences.state', value: newValue } })}
             label="State"
@@ -202,12 +241,15 @@ const SignUpPage = () => {
           />
 
           <ChipDropdown
-            options={countyOptions[formData.preferences.state[0]?.value] || []}
+            options={counties.map((counties) => ({
+              label: counties.name, // Display name (e.g., "New York")
+              value: counties._id,  // Use the ObjectId (e.g., "5f4e97e9b0e7f33b8c9dcf28")
+            }))}
             value={formData.preferences.county}
             onChange={(newValue) => handleChange({ target: { name: 'preferences.county', value: newValue } })}
             label="County"
             placeholder="Select County"
-            disabled={!formData.preferences.state.length} // Disable if no state is selected
+            disabled={!formData.preferences.state.length} 
           />
 
           <ChipDropdown
