@@ -103,7 +103,7 @@ const Layout = ({ children, headerText, pageType }) => {
             padding: "8px 16px",
           }}
         >
-          Manage leads and track progress
+         Ready to boost your business?
         </Typography>
       </Box>
       <List sx={{ padding: "8px 15px" }}>
@@ -149,7 +149,7 @@ const Layout = ({ children, headerText, pageType }) => {
               </ListItemIcon>
               <ListItemText
                 className="NavText"
-                primary="Leads Dashboard"
+                primary="Leads Market Place"
                 sx={{
                   color: activeLink === "/dashboard" ? "#F1F1F1" : "#656565",
                 }}
@@ -241,10 +241,10 @@ const Layout = ({ children, headerText, pageType }) => {
               fontSize: { xs: "13px", sm: "15px", md: "2.5rem" },
             }}
           >
-            {headerText || "Leads Dashboard"}
+            {headerText || "Leads Market Place"}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            {pageType === "blogs" ? (
+            {/* {pageType === "blogs" ? (
               <Link
                 to="/addblog"
                 style={{ textDecoration: "none", color: "#000" }}
@@ -284,7 +284,7 @@ const Layout = ({ children, headerText, pageType }) => {
                   New Lead
                 </Button>
               </Link>
-            )}
+            )} */}
             <Box
               sx={{
                 backgroundColor: "#F1F1F1",
