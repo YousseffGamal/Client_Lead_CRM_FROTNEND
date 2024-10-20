@@ -57,9 +57,9 @@ const SignUpPage = () => {
     investorCategory: "",
     preferences: {
       LeadType: [],
-      state: [],
-      county: [],
-      occupancy: [],
+      state: "", // Change to string
+      county: "", // Change to string
+      occupancy: "", // Change to string
       closingTime: "",
       askingPrice: "",
     },
@@ -68,17 +68,11 @@ const SignUpPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [states, setStates] = useState([]);
   const [counties, setCounties] = useState([]);
+  
   useEffect(() => {
     getStates();
-    getCounty(); // Fetch states on component mount
+    getCounty(); // Fetch counties on component mount
   }, []);
-
-  // useEffect(() => {
-  //   if (formData.preferences.state.length > 0) {
-  //     const stateId = formData.preferences.state[0].value;
-  //     getCounty(stateId); // Fetch counties whenever the state changes
-  //   }
-  // }, [formData.preferences.state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -88,7 +82,7 @@ const SignUpPage = () => {
         ...prevData,
         preferences: {
           ...prevData.preferences,
-          [preferenceName]: value,
+          [preferenceName]: value, // Set the value directly as a string
         },
       }));
     } else {
@@ -99,15 +93,13 @@ const SignUpPage = () => {
     }
   };
 
-  const handleChipDropDownChange = (item, type) => {
-    console.log(item);
-    const newValue = item[0];
-    console.log(newValue.value);
+  const handleChipDropDownChange = (items, type) => {
+    const newValue = items.map(item => item.value); // Get an array of selected values
     setFormData((prevData) => ({
       ...prevData,
       preferences: {
         ...prevData.preferences,
-        [type]: [...prevData.preferences[type], newValue.value], // Add new value to the array
+        [type]: newValue, // Update the preference type with an array of values
       },
     }));
   };
@@ -117,34 +109,34 @@ const SignUpPage = () => {
     setLoading(true);
 
     console.log(formData);
-    // axiosInstance.post('/signup', formData)
-    //   .then((res) => {
-    //     setFormData({
-    //       firstName: '',
-    //       lastName: '',
-    //       phone: '',
-    //       email: '',
-    //       password: '',
-    //       investorCategory: '',
-    //       preferences: {
-    //         LeadType: [],
-    //         state: [],
-    //         county: [],
-    //         occupancy: [],
-    //         closingTime: '',
-    //         askingPrice: '',
-    //       },
-    //     });
-    //     setLoading(false);
+    axiosInstance.post('/signup', formData)
+      .then((res) => {
+        setFormData({
+          firstName: '',
+          lastName: '',
+          phone: '',
+          email: '',
+          password: '',
+          investorCategory: '',
+          preferences: {
+            LeadType: [],
+            state: '', // Reset state to string
+            county: '', // Reset county to string
+            occupancy: '', // Reset occupancy to string
+            closingTime: '',
+            askingPrice: '',
+          },
+        });
+        setLoading(false);
 
-    //     setTimeout(() => {
-    //       navigate("/"); // Redirect to login page using navigate
-    //     }, 2000);
-    //   })
-    //   .catch((err) => {
-    //     setErrorMessage(`Failed to Sign Up: ${err.response.data.message}`);
-    //     setLoading(false);
-    //   });
+        setTimeout(() => {
+          navigate("/"); // Redirect to login page using navigate
+        }, 2000);
+      })
+      .catch((err) => {
+        setErrorMessage(`Failed to Sign Up: ${err.response.data.message}`);
+        setLoading(false);
+      });
   };
 
   const getStates = async () => {
@@ -158,7 +150,7 @@ const SignUpPage = () => {
 
   const getCounty = () => {
     axiosInstance
-      .get(`/getAllCounty`) // Use ObjectId in the request
+      .get(`/getAllCounty`)
       .then((res) => {
         console.log(res.data);
         setCounties(res.data.counties);
@@ -212,12 +204,13 @@ const SignUpPage = () => {
             value={formData.phone}
             onChange={handleChange}
           />
+          
           <TextInput
-            label="Password" // Add password field label
-            name="password" // Use password field name
-            type="password" // Set type to password
-            value={formData.password} // Bind password value
-            onChange={handleChange} // Handle change event
+            label="Password"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
           />
 
           <SelectInput
@@ -234,8 +227,6 @@ const SignUpPage = () => {
               value: item.value,
             }))}
             value={formData.preferences.LeadType}
-            // onChange={(newValue) => handleChange({ target: { name: 'preferences.LeadType', value: newValue } })}
-
             onChange={(newValue) =>
               handleChipDropDownChange(newValue, "LeadType")
             }
@@ -245,13 +236,13 @@ const SignUpPage = () => {
 
           <ChipDropdown
             options={states.map((state) => ({
-              label: state.name, // Display name (e.g., "New York")
-              value: state._id, // Use the ObjectId (e.g., "5f4e97e9b0e7f33b8c9dcf28")
+              label: state.name,
+              value: state._id,
             }))}
-            value={formData.preferences.state}
+            value={[formData.preferences.state]} // Ensure it's an array for the ChipDropdown
             onChange={(newValue) =>
               handleChange({
-                target: { name: "preferences.state", value: newValue },
+                target: { name: "preferences.state", value: newValue[0]?.value || "" }, // Set value as string
               })
             }
             label="State"
@@ -259,14 +250,14 @@ const SignUpPage = () => {
           />
 
           <ChipDropdown
-            options={counties.map((counties) => ({
-              label: counties.name, // Display name (e.g., "New York")
-              value: counties._id, // Use the ObjectId (e.g., "5f4e97e9b0e7f33b8c9dcf28")
+            options={counties.map((county) => ({
+              label: county.name,
+              value: county._id,
             }))}
-            value={formData.preferences.county}
+            value={[formData.preferences.county]} // Ensure it's an array for the ChipDropdown
             onChange={(newValue) =>
               handleChange({
-                target: { name: "preferences.county", value: newValue },
+                target: { name: "preferences.county", value: newValue[0]?.value || "" }, // Set value as string
               })
             }
             label="County"
@@ -275,10 +266,10 @@ const SignUpPage = () => {
 
           <ChipDropdown
             options={occupancyOptions}
-            value={formData.preferences.occupancy}
+            value={[formData.preferences.occupancy]} // Ensure it's an array for the ChipDropdown
             onChange={(newValue) =>
               handleChange({
-                target: { name: "preferences.occupancy", value: newValue },
+                target: { name: "preferences.occupancy", value: newValue[0]?.value || "" }, // Set value as string
               })
             }
             label="Occupancy"
@@ -309,18 +300,10 @@ const SignUpPage = () => {
             sx={{
               width: "100%",
               marginTop: "20px",
-              height: "56px",
-              backgroundColor: "#353535",
-              "&:hover": {
-                backgroundColor: "#191919",
-              },
+              backgroundColor: "#3D99D9",
             }}
           >
-            {loading ? (
-              <CircularProgress color="inherit" size={24} />
-            ) : (
-              "Sign Up"
-            )}
+            {loading ? <CircularProgress size={24} /> : "Sign Up"}
           </Button>
         </form>
       </Box>
