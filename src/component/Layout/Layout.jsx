@@ -118,7 +118,7 @@ const Layout = ({ children, headerText, pageType }) => {
         >
           Navigation
         </Typography>
-        (
+
         <Link to="/dashboard" style={{ textDecoration: "none" }}>
           <ListItem
             button
@@ -154,7 +154,7 @@ const Layout = ({ children, headerText, pageType }) => {
             />
           </ListItem>
         </Link>
-        ) (
+
         <Link to="/blogsarticles" style={{ textDecoration: "none" }}>
           <ListItem
             button
@@ -190,7 +190,6 @@ const Layout = ({ children, headerText, pageType }) => {
             />
           </ListItem>
         </Link>
-        )
       </List>
     </div>
   );
