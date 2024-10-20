@@ -202,17 +202,20 @@ const SignUpPage = () => {
             value={formData.phone}
             onChange={handleChange}
           />
+          <TextInput
+            label="Password" // Add password field label
+            name="password" // Use password field name
+            type="password" // Set type to password
+            value={formData.password} // Bind password value
+            onChange={handleChange} // Handle change event
+          />
 
           <SelectInput
             label="Investor Category"
             name="investorCategory"
             value={formData.investorCategory}
             onChange={handleChange}
-            options={[
-              { label: "Investor", value: "Investor" },
-              { label: "Cash Buyer", value: "Cash Buyer" },
-              { label: "Owner Occupant", value: "Owner Occupant" },
-            ]}
+            options={InvestorOptions}
           />
 
           <ChipDropdown

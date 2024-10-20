@@ -1,7 +1,7 @@
 export const occupancyOptions = [
     { value: "Occupied by the owner", label: "Occupied by the owner" },
     { value: "Vacant", label: "Vacant" },
-    { value: "Rented", label: "URented" },
+    { value: "Rented", label: "Rented" },
     // Add more occupancy options as needed
   ];
   
