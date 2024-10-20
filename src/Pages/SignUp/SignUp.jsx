@@ -95,12 +95,11 @@ const SignUpPage = () => {
 
   const handleChipDropDownChange = (items, type) => {
     const newValue = items.map((item) => item.value); // Get an array of selected values
-    console.log(newValue);
     setFormData((prevData) => ({
       ...prevData,
       preferences: {
         ...prevData.preferences,
-        [type]: [...prevData.preferences.LeadType, newValue], // Update the preference type with an array of values
+        [type]: newValue, // Update the preference type with an array of values
       },
     }));
   };

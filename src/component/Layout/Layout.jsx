@@ -32,7 +32,7 @@ import { useAuth } from "../../store/authContext";
 const drawerWidth = 320;
 
 const Layout = ({ children, headerText, pageType }) => {
-  const { logout, auth, hasPermissions } = useAuth();
+  const { logout, auth } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
@@ -91,8 +91,7 @@ const Layout = ({ children, headerText, pageType }) => {
             padding: "8px 16px",
           }}
         >
-          Welcome <br /> Back,                     {auth.user.name}
-          !
+          Welcome <br /> Back, {auth.user.name}!
         </Typography>
         <Typography
           className="About"
@@ -103,7 +102,7 @@ const Layout = ({ children, headerText, pageType }) => {
             padding: "8px 16px",
           }}
         >
-         Ready to boost your business?
+          Ready to boost your business?
         </Typography>
       </Box>
       <List sx={{ padding: "8px 15px" }}>
@@ -119,83 +118,79 @@ const Layout = ({ children, headerText, pageType }) => {
         >
           Navigation
         </Typography>
-
-        {hasPermissions(["Admin"]) && (
-          <Link to="/dashboard" style={{ textDecoration: "none" }}>
-            <ListItem
-              button
-              onClick={() => handleLinkClick("/dashboard")}
-              sx={{
-                width: "90%",
-                marginBottom: "23px",
+        (
+        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+          <ListItem
+            button
+            onClick={() => handleLinkClick("/dashboard")}
+            sx={{
+              width: "90%",
+              marginBottom: "23px",
+              backgroundColor:
+                activeLink === "/dashboard" ? "#000000" : "transparent",
+              color: activeLink === "/dashboard" ? "#F1F1F1" : "#656565",
+              height: "77px",
+              borderRadius: "30px",
+              "&:hover": {
                 backgroundColor:
-                  activeLink === "/dashboard" ? "#000000" : "transparent",
+                  activeLink === "/dashboard" ? "#000000" : "transparent", // Neutralize hover effect
                 color: activeLink === "/dashboard" ? "#F1F1F1" : "#656565",
-                height: "77px",
-                borderRadius: "30px",
-                "&:hover": {
-                  backgroundColor:
-                    activeLink === "/dashboard" ? "#000000" : "transparent", // Neutralize hover effect
-                  color: activeLink === "/dashboard" ? "#F1F1F1" : "#656565",
-                },
-              }}
-            >
-              <ListItemIcon>
-                <Dashboard
-                  style={{
-                    color: activeLink === "/dashboard" ? "#F1F1F1" : "#656565",
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                className="NavText"
-                primary="Leads Market Place"
-                sx={{
+              },
+            }}
+          >
+            <ListItemIcon>
+              <Dashboard
+                style={{
                   color: activeLink === "/dashboard" ? "#F1F1F1" : "#656565",
                 }}
               />
-            </ListItem>
-          </Link>
-        )}
-        {hasPermissions(["Admin", "Marketer"]) && (
-          <Link to="/blogsarticles" style={{ textDecoration: "none" }}>
-            <ListItem
-              button
-              onClick={() => handleLinkClick("/blogsarticles")}
+            </ListItemIcon>
+            <ListItemText
+              className="NavText"
+              primary="Leads Market Place"
               sx={{
-                width: "90%",
-                backgroundColor:
-                  activeLink === "/blogsarticles" ? "#000000" : "transparent",
-                color: activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
-                height: "77px",
-                borderRadius: "30px",
-                "&:hover": {
-                  backgroundColor:
-                    activeLink === "/blogsarticles" ? "#000000" : "transparent", // Neutralize hover effect
-                  color:
-                    activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
-                },
+                color: activeLink === "/dashboard" ? "#F1F1F1" : "#656565",
               }}
-            >
-              <ListItemIcon>
-                <People
-                  style={{
-                    color:
-                      activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                className="NavText"
-                primary="Blogs & Articles"
-                sx={{
+            />
+          </ListItem>
+        </Link>
+        ) (
+        <Link to="/blogsarticles" style={{ textDecoration: "none" }}>
+          <ListItem
+            button
+            onClick={() => handleLinkClick("/blogsarticles")}
+            sx={{
+              width: "90%",
+              backgroundColor:
+                activeLink === "/blogsarticles" ? "#000000" : "transparent",
+              color: activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
+              height: "77px",
+              borderRadius: "30px",
+              "&:hover": {
+                backgroundColor:
+                  activeLink === "/blogsarticles" ? "#000000" : "transparent", // Neutralize hover effect
+                color: activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
+              },
+            }}
+          >
+            <ListItemIcon>
+              <People
+                style={{
                   color:
                     activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
                 }}
               />
-            </ListItem>
-          </Link>
-        )}
+            </ListItemIcon>
+            <ListItemText
+              className="NavText"
+              primary="Blogs & Articles"
+              sx={{
+                color: activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
+              }}
+            />
+          </ListItem>
+        </Link>
+        )
       </List>
     </div>
   );
@@ -359,12 +354,16 @@ const Layout = ({ children, headerText, pageType }) => {
                   </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                <Link
-    to="/profile"
-    style={{ textDecoration: "none", color: "#000", width: "100%" }} // Ensure full width for click area
-  >
-    Profile
-  </Link>
+                  <Link
+                    to="/profile"
+                    style={{
+                      textDecoration: "none",
+                      color: "#000",
+                      width: "100%",
+                    }} // Ensure full width for click area
+                  >
+                    Profile
+                  </Link>
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>

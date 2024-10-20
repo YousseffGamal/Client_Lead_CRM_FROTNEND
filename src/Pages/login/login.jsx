@@ -30,11 +30,7 @@ const LoginPage = () => {
 
     const response = await login(formData); // Assuming login() returns a promise
     if (response.success) {
-      if (response.data.user.userExist.role === "Admin") {
-        navigate("/dashboard");
-      } else if (response.data.user.userExist.role === "Marketer") {
-        navigate("/blogsarticles");
-      }
+      navigate("/dashboard");
     } else {
       setErrorMessage(response.message); // Display error message
     }

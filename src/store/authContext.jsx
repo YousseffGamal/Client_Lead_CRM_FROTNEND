@@ -12,7 +12,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (cred) => {
     try {
-      const { data } = await axiosInstance.post("/signinAdmin", cred);
+      const { data } = await axiosInstance.post("/signin", cred);
+      console.log(data);
       setAuth({
         token: data.user.token,
         role: data.user.userExist.role,
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", data.user.token);
       localStorage.setItem("role", data.user.userExist.role);
       localStorage.setItem("user", JSON.stringify(data.user.userExist));
-      console.log(data);
+
       return { success: true, data };
     } catch (error) {
       return {
