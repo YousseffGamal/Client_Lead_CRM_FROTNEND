@@ -139,6 +139,8 @@ const SignUpPage = () => {
       });
   };
 
+
+  
   const getStates = async () => {
     try {
       const res = await axiosInstance.get("/getAllStates");
