@@ -73,12 +73,12 @@ const SignUpPage = () => {
     getCounty(); // Fetch states on component mount
   }, []);
 
-  useEffect(() => {
-    if (formData.preferences.state.length > 0) {
-      const stateId = formData.preferences.state[0].value;
-      getCounty(stateId); // Fetch counties whenever the state changes
-    }
-  }, [formData.preferences.state]);
+  // useEffect(() => {
+  //   if (formData.preferences.state.length > 0) {
+  //     const stateId = formData.preferences.state[0].value;
+  //     getCounty(stateId); // Fetch counties whenever the state changes
+  //   }
+  // }, [formData.preferences.state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
