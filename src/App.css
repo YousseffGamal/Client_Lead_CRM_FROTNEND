@@ -107,3 +107,44 @@ td{
     font-size: 28px !important;
     font-family: "LufgaLight" !important;
 }
+.address{
+    font-family: "LufgaRegular" !important;
+    color: #191919 !important;
+    font-size: 31px !important;
+
+}
+.city{
+    font-family: "LufgaRegular" !important;
+    color: #0177FB !important;
+    font-size: 21px !important;
+    margin-top: 7px !important;
+
+}
+.Condition{
+    font-family: "LufgaRegular" !important;
+    color: #191919 !important;
+    font-size: 16px !important;
+
+}
+
+.status{
+    font-family: "LufgaMedium" !important;
+    font-size: 19px !important;
+
+}
+.Occupancy{
+    font-family: "LufgaRegular" !important;
+    color: #191919 !important;
+    font-size: 18px !important;
+    margin-top: 13px !important;
+}
+.Closing{
+    font-family: "LufgaRegular" !important;
+    color: #191919 !important;
+    font-size: 18px !important;
+    margin-top: 13px !important; 
+}
+.LeadBtn{
+    font-family: "LufgaMedium" !important;
+    font-size: 20px !important;
+}
