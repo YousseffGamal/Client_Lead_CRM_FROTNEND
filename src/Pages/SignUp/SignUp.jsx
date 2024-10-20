@@ -1,46 +1,44 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  Typography,
-  CircularProgress,
-} from "@mui/material";
-import ChipDropdown from '../../component/chipDropdown/chipDropdown'; // Import your new ChipDropdown component
-import TextInput from '../../component/TextInput/TextInput'; // Import the TextInput component
-import SelectInput from '../../component/SelectInput/SelectInput'; // Import the SelectInput component
+import { Box, Button, Typography, CircularProgress } from "@mui/material";
+import ChipDropdown from "../../component/chipDropdown/chipDropdown"; // Import your new ChipDropdown component
+import TextInput from "../../component/TextInput/TextInput"; // Import the TextInput component
+import SelectInput from "../../component/SelectInput/SelectInput"; // Import the SelectInput component
 import "./signupPage.css"; // Assuming external CSS for custom styles
 import Ellipse from "../../assets/images/Ellipse 1.png";
 import TopLeftImage from "../../assets/images/tapIcon.png"; // Import the top-left image
 import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
 import axiosInstance from "../../axios";
-import { leadTemperatureOptions,occupancyOptions,InvestorOptions } from "../../component/constance/constance";
+import {
+  leadTemperatureOptions,
+  occupancyOptions,
+  InvestorOptions,
+} from "../../component/constance/constance";
 
 // Sample options for the dropdowns
 const leadTypes = [
-  { label: 'Cash Buyer', value: 'cash_buyer' },
-  { label: 'Owner Occupant', value: 'owner_occupant' },
-  { label: 'Investor', value: 'investor' },
+  { label: "Cash Buyer", value: "cash_buyer" },
+  { label: "Owner Occupant", value: "owner_occupant" },
+  { label: "Investor", value: "investor" },
 ];
 
-
 const stateOptions = [
-  { label: 'California', value: 'CA' },
-  { label: 'Texas', value: 'TX' },
-  { label: 'New York', value: 'NY' },
+  { label: "California", value: "CA" },
+  { label: "Texas", value: "TX" },
+  { label: "New York", value: "NY" },
 ];
 
 const countyOptions = {
   CA: [
-    { label: 'Los Angeles', value: 'los_angeles' },
-    { label: 'San Diego', value: 'san_diego' },
+    { label: "Los Angeles", value: "los_angeles" },
+    { label: "San Diego", value: "san_diego" },
   ],
   TX: [
-    { label: 'Harris', value: 'harris' },
-    { label: 'Dallas', value: 'dallas' },
+    { label: "Harris", value: "harris" },
+    { label: "Dallas", value: "dallas" },
   ],
   NY: [
-    { label: 'Kings', value: 'kings' },
-    { label: 'Queens', value: 'queens' },
+    { label: "Kings", value: "kings" },
+    { label: "Queens", value: "queens" },
   ],
 };
 
@@ -51,23 +49,23 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    password: '',
-    investorCategory: '',
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    password: "",
+    investorCategory: "",
     preferences: {
       LeadType: [],
       state: [],
       county: [],
       occupancy: [],
-      closingTime: '',
-      askingPrice: '',
+      closingTime: "",
+      askingPrice: "",
     },
   });
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [states, setStates] = useState([]);
   const [counties, setCounties] = useState([]);
   useEffect(() => {
@@ -84,8 +82,8 @@ const SignUpPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.startsWith('preferences.')) {
-      const preferenceName = name.split('.')[1];
+    if (name.startsWith("preferences.")) {
+      const preferenceName = name.split(".")[1];
       setFormData((prevData) => ({
         ...prevData,
         preferences: {
@@ -100,41 +98,53 @@ const SignUpPage = () => {
       });
     }
   };
-  
+
+  const handleChipDropDownChange = (item, type) => {
+    console.log(item);
+    const newValue = item[0];
+    console.log(newValue.value);
+    setFormData((prevData) => ({
+      ...prevData,
+      preferences: {
+        ...prevData.preferences,
+        [type]: [...prevData.preferences[type], newValue.value], // Add new value to the array
+      },
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     console.log(formData);
-    axiosInstance.post('/signup', formData)
-      .then((res) => {
-        setFormData({
-          firstName: '',
-          lastName: '',
-          phone: '',
-          email: '',
-          password: '',
-          investorCategory: '',
-          preferences: {
-            LeadType: [],
-            state: [],
-            county: [],
-            occupancy: [],
-            closingTime: '',
-            askingPrice: '',
-          },
-        });
-        setLoading(false);
+    // axiosInstance.post('/signup', formData)
+    //   .then((res) => {
+    //     setFormData({
+    //       firstName: '',
+    //       lastName: '',
+    //       phone: '',
+    //       email: '',
+    //       password: '',
+    //       investorCategory: '',
+    //       preferences: {
+    //         LeadType: [],
+    //         state: [],
+    //         county: [],
+    //         occupancy: [],
+    //         closingTime: '',
+    //         askingPrice: '',
+    //       },
+    //     });
+    //     setLoading(false);
 
-        setTimeout(() => {
-          navigate("/"); // Redirect to login page using navigate
-        }, 2000);
-      })
-      .catch((err) => {
-        setErrorMessage(`Failed to Sign Up: ${err.response.data.message}`);
-        setLoading(false);
-      });
+    //     setTimeout(() => {
+    //       navigate("/"); // Redirect to login page using navigate
+    //     }, 2000);
+    //   })
+    //   .catch((err) => {
+    //     setErrorMessage(`Failed to Sign Up: ${err.response.data.message}`);
+    //     setLoading(false);
+    //   });
   };
 
   const getStates = async () => {
@@ -148,7 +158,7 @@ const SignUpPage = () => {
 
   const getCounty = () => {
     axiosInstance
-      .get(`/getAllCounty`)  // Use ObjectId in the request
+      .get(`/getAllCounty`) // Use ObjectId in the request
       .then((res) => {
         console.log(res.data);
         setCounties(res.data.counties);
@@ -181,21 +191,21 @@ const SignUpPage = () => {
             value={formData.firstName}
             onChange={handleChange}
           />
-          
+
           <TextInput
             label="Last Name"
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
           />
-          
+
           <TextInput
             label="Email"
             name="email"
             value={formData.email}
             onChange={handleChange}
           />
-          
+
           <TextInput
             label="Phone"
             name="phone"
@@ -219,23 +229,31 @@ const SignUpPage = () => {
           />
 
           <ChipDropdown
-            options={leadTemperatureOptions.map((item)=>({
+            options={leadTemperatureOptions.map((item) => ({
               label: item.label,
-              value: item.value
+              value: item.value,
             }))}
             value={formData.preferences.LeadType}
-            onChange={(newValue) => handleChange({ target: { name: 'preferences.LeadType', value: newValue } })}
+            // onChange={(newValue) => handleChange({ target: { name: 'preferences.LeadType', value: newValue } })}
+
+            onChange={(newValue) =>
+              handleChipDropDownChange(newValue, "LeadType")
+            }
             label="Lead Type"
             placeholder="Select Lead Type"
           />
 
           <ChipDropdown
-             options={states.map((state) => ({
+            options={states.map((state) => ({
               label: state.name, // Display name (e.g., "New York")
-              value: state._id,  // Use the ObjectId (e.g., "5f4e97e9b0e7f33b8c9dcf28")
+              value: state._id, // Use the ObjectId (e.g., "5f4e97e9b0e7f33b8c9dcf28")
             }))}
             value={formData.preferences.state}
-            onChange={(newValue) => handleChange({ target: { name: 'preferences.state', value: newValue } })}
+            onChange={(newValue) =>
+              handleChange({
+                target: { name: "preferences.state", value: newValue },
+              })
+            }
             label="State"
             placeholder="Select State"
           />
@@ -243,10 +261,14 @@ const SignUpPage = () => {
           <ChipDropdown
             options={counties.map((counties) => ({
               label: counties.name, // Display name (e.g., "New York")
-              value: counties._id,  // Use the ObjectId (e.g., "5f4e97e9b0e7f33b8c9dcf28")
+              value: counties._id, // Use the ObjectId (e.g., "5f4e97e9b0e7f33b8c9dcf28")
             }))}
             value={formData.preferences.county}
-            onChange={(newValue) => handleChange({ target: { name: 'preferences.county', value: newValue } })}
+            onChange={(newValue) =>
+              handleChange({
+                target: { name: "preferences.county", value: newValue },
+              })
+            }
             label="County"
             placeholder="Select County"
           />
@@ -254,7 +276,11 @@ const SignUpPage = () => {
           <ChipDropdown
             options={occupancyOptions}
             value={formData.preferences.occupancy}
-            onChange={(newValue) => handleChange({ target: { name: 'preferences.occupancy', value: newValue } })}
+            onChange={(newValue) =>
+              handleChange({
+                target: { name: "preferences.occupancy", value: newValue },
+              })
+            }
             label="Occupancy"
             placeholder="Select Occupancy"
           />
@@ -273,7 +299,9 @@ const SignUpPage = () => {
             onChange={handleChange}
           />
 
-          {errorMessage && <Typography color="error">{errorMessage}</Typography>}
+          {errorMessage && (
+            <Typography color="error">{errorMessage}</Typography>
+          )}
 
           <Button
             type="submit"
@@ -288,7 +316,11 @@ const SignUpPage = () => {
               },
             }}
           >
-            {loading ? <CircularProgress color="inherit" size={24} /> : "Sign Up"}
+            {loading ? (
+              <CircularProgress color="inherit" size={24} />
+            ) : (
+              "Sign Up"
+            )}
           </Button>
         </form>
       </Box>

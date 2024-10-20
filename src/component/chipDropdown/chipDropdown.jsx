@@ -7,12 +7,17 @@ const chipDropdown = ({ label, value, onChange, options, disabled }) => {
       multiple
       options={options}
       getOptionLabel={(option) => option.label}
-      value={value}
+      value={value.value}
       onChange={(event, newValue) => {
         onChange(newValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} variant="standard" label={label} placeholder={`Select ${label}`} />
+        <TextField
+          {...params}
+          variant="standard"
+          label={label}
+          placeholder={`Select ${label}`}
+        />
       )}
       renderTags={(value, getTagProps) =>
         value.map((option, index) => (
