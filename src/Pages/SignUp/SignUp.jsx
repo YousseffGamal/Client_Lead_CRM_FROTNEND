@@ -57,8 +57,8 @@ const SignUpPage = () => {
     investorCategory: "",
     preferences: {
       LeadType: [],
-      state: "", // Change to string
-      county: "", // Change to string
+      state: [], // Change to string
+      county: [], // Change to string
       occupancy: "", // Change to string
       closingTime: "",
       askingPrice: "",
@@ -68,7 +68,7 @@ const SignUpPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [states, setStates] = useState([]);
   const [counties, setCounties] = useState([]);
-  
+
   useEffect(() => {
     getStates();
     getCounty(); // Fetch counties on component mount
@@ -94,12 +94,13 @@ const SignUpPage = () => {
   };
 
   const handleChipDropDownChange = (items, type) => {
-    const newValue = items.map(item => item.value); // Get an array of selected values
+    const newValue = items.map((item) => item.value); // Get an array of selected values
+    console.log(newValue);
     setFormData((prevData) => ({
       ...prevData,
       preferences: {
         ...prevData.preferences,
-        [type]: newValue, // Update the preference type with an array of values
+        [type]: [...prevData.preferences.LeadType, newValue], // Update the preference type with an array of values
       },
     }));
   };
@@ -109,22 +110,23 @@ const SignUpPage = () => {
     setLoading(true);
 
     console.log(formData);
-    axiosInstance.post('/signup', formData)
+    axiosInstance
+      .post("/signup", formData)
       .then((res) => {
         setFormData({
-          firstName: '',
-          lastName: '',
-          phone: '',
-          email: '',
-          password: '',
-          investorCategory: '',
+          firstName: "",
+          lastName: "",
+          phone: "",
+          email: "",
+          password: "",
+          investorCategory: "",
           preferences: {
             LeadType: [],
-            state: '', // Reset state to string
-            county: '', // Reset county to string
-            occupancy: '', // Reset occupancy to string
-            closingTime: '',
-            askingPrice: '',
+            state: "", // Reset state to string
+            county: "", // Reset county to string
+            occupancy: "", // Reset occupancy to string
+            closingTime: "",
+            askingPrice: "",
           },
         });
         setLoading(false);
@@ -204,7 +206,7 @@ const SignUpPage = () => {
             value={formData.phone}
             onChange={handleChange}
           />
-          
+
           <TextInput
             label="Password"
             name="password"
@@ -228,9 +230,7 @@ const SignUpPage = () => {
             }))}
             value={formData.preferences.LeadType}
             onChange={(newValue) =>
-              handleChange({
-                target: { name: "preferences.LeadType", value: newValue },
-              })
+              handleChipDropDownChange(newValue, "LeadType")
             }
             label="Lead Type"
             placeholder="Select Lead Type"
@@ -244,7 +244,10 @@ const SignUpPage = () => {
             value={[formData.preferences.state]} // Ensure it's an array for the ChipDropdown
             onChange={(newValue) =>
               handleChange({
-                target: { name: "preferences.state", value: newValue[0]?.value || "" }, // Set value as string
+                target: {
+                  name: "preferences.state",
+                  value: newValue[0]?.value || "",
+                }, // Set value as string
               })
             }
             label="State"
@@ -259,7 +262,10 @@ const SignUpPage = () => {
             value={[formData.preferences.county]} // Ensure it's an array for the ChipDropdown
             onChange={(newValue) =>
               handleChange({
-                target: { name: "preferences.county", value: newValue[0]?.value || "" }, // Set value as string
+                target: {
+                  name: "preferences.county",
+                  value: newValue[0]?.value || "",
+                }, // Set value as string
               })
             }
             label="County"
@@ -271,7 +277,10 @@ const SignUpPage = () => {
             value={[formData.preferences.occupancy]} // Ensure it's an array for the ChipDropdown
             onChange={(newValue) =>
               handleChange({
-                target: { name: "preferences.occupancy", value: newValue[0]?.value || "" }, // Set value as string
+                target: {
+                  name: "preferences.occupancy",
+                  value: newValue[0]?.value || "",
+                }, // Set value as string
               })
             }
             label="Occupancy"
