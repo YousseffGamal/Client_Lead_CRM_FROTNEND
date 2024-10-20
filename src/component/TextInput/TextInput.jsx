@@ -3,13 +3,14 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 
-const TextInput = ({ label, name, value, onChange }) => {
+const TextInput = ({ label, name, value, onChange, type = "text" }) => { // Default type to 'text'
   return (
     <TextField
       fullWidth
       variant="standard"
       label={label}
       name={name}
+      type={type} // Set the input type
       value={value}
       onChange={onChange}
       sx={{
