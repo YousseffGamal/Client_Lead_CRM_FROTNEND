@@ -12,3 +12,10 @@ export const occupancyOptions = [
     { value: "670becb00e4efa75a6485bc9", label: "Cold" },
     // Add more temperature options as needed
   ];
+
+
+  export const InvestorOptions = [
+    { value: "Wholesaler", label: "Wholesaler" },
+    { value: "Realtor", label: "Realtor" },
+  ];
+  

@@ -13,7 +13,7 @@ import Ellipse from "../../assets/images/Ellipse 1.png";
 import TopLeftImage from "../../assets/images/tapIcon.png"; // Import the top-left image
 import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
 import axiosInstance from "../../axios";
-import { leadTemperatureOptions } from "../../component/constance/constance";
+import { leadTemperatureOptions,occupancyOptions,InvestorOptions } from "../../component/constance/constance";
 
 // Sample options for the dropdowns
 const leadTypes = [
@@ -22,10 +22,6 @@ const leadTypes = [
   { label: 'Investor', value: 'investor' },
 ];
 
-const occupancyOptions = [
-  { label: 'Vacant', value: 'vacant' },
-  { label: 'Occupied', value: 'occupied' },
-];
 
 const stateOptions = [
   { label: 'California', value: 'CA' },
@@ -75,7 +71,8 @@ const SignUpPage = () => {
   const [states, setStates] = useState([]);
   const [counties, setCounties] = useState([]);
   useEffect(() => {
-    getStates(); // Fetch states on component mount
+    getStates();
+    getCounty(); // Fetch states on component mount
   }, []);
 
   useEffect(() => {
@@ -110,7 +107,7 @@ const SignUpPage = () => {
     setLoading(true);
 
     console.log(formData);
-    axiosInstance.post('/signupAdmin', formData)
+    axiosInstance.post('/signup', formData)
       .then((res) => {
         setFormData({
           firstName: '',
@@ -249,7 +246,6 @@ const SignUpPage = () => {
             onChange={(newValue) => handleChange({ target: { name: 'preferences.county', value: newValue } })}
             label="County"
             placeholder="Select County"
-            disabled={!formData.preferences.state.length} 
           />
 
           <ChipDropdown
