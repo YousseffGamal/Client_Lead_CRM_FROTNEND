@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, CardContent, Typography, Button, Box } from "@mui/material";
+import { Card, CardContent, Button, Box } from "@mui/material";
+import CustomTypography from "../CustomTypography/CustomTypography"; // Import the shared component
 
 const LeadCard = ({ address, city, condition, askingPrice, status }) => {
   const truncateText = (text, percentage) => {
@@ -51,7 +52,7 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
     >
       <CardContent
         sx={{
-          marginTop:"28px",
+          marginTop: "28px",
           textAlign: "center",
           display: "flex",
           flexDirection: "column",
@@ -59,20 +60,20 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
           padding: "0", // Adjusting padding to align items better
         }}
       >
-        <Typography className="address" variant="h6" component="div" textAlign="center">
+        <CustomTypography className="address" variant="h6" component="div" textAlign="center">
           {address}
-        </Typography>
-        <Typography className="city" variant="body1" color="textSecondary" textAlign="center">
+        </CustomTypography>
+        <CustomTypography className="city" variant="body1" color="textSecondary" textAlign="center">
           {city}
-        </Typography>
-        <Typography
+        </CustomTypography>
+        <CustomTypography
           className="condition"
           variant="body2"
           color="textSecondary"
           sx={{ marginTop: "8px", textAlign: "center" }}
         >
           Condition: {truncateText(condition, 0.3)}
-        </Typography>
+        </CustomTypography>
 
         {/* Centered Status with dynamic background and text color */}
         <Box
@@ -89,17 +90,17 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
             height: "35px", // Set the height to 35px
           }}
         >
-          <Typography className="status" variant="body2">
+          <CustomTypography className="status" variant="body2">
             {status}
-          </Typography>
+          </CustomTypography>
         </Box>
 
-        <Typography className="Occupancy" variant="body2" sx={{ textAlign: "center", marginTop: "8px" }}>
+        <CustomTypography className="Occupancy" variant="body2" sx={{ textAlign: "center", marginTop: "8px" }}>
           Occupancy: By Owner
-        </Typography>
-        <Typography className="Closing" variant="body2" sx={{ textAlign: "center", marginBottom: "16px" }}>
+        </CustomTypography>
+        <CustomTypography className="Closing" variant="body2" sx={{ textAlign: "center", marginBottom: "16px" }}>
           Closing: 30-60 Days
-        </Typography>
+        </CustomTypography>
         <Button
           variant="contained"
           className="LeadBtn" 

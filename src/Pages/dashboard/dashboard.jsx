@@ -1,9 +1,6 @@
 import React from "react";
 import LeadCard from "../../component/LeadCard/LeadCard"; // Adjust the path if necessary
-import {
-  Box,
-  Grid,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import Layout from "../../component/Layout/Layout";
 
 // Sample leads data
@@ -26,21 +23,29 @@ const Dashboard = () => {
           p: 3,
           backgroundColor: "#F1F1F1",
           marginTop: "65px",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center", 
         }}
       >
-        <Grid container spacing={2} justifyContent="center">
-          {leads.map((lead, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <LeadCard
-                address={lead.address}
-                city={lead.city}
-                condition={lead.condition}
-                askingPrice={lead.askingPrice}
-                status={lead.status} // Pass the status prop
-              />
-            </Grid>
-          ))}
-        </Grid>
+        {leads.map((lead, index) => (
+          <Box
+            key={index}
+            sx={{
+              width: { xs: "100%", sm: "50%", md: "33.33%", lg: "25%" }, // Responsive widths
+              padding: 1, 
+              boxSizing: "border-box", 
+            }}
+          >
+            <LeadCard
+              address={lead.address}
+              city={lead.city}
+              condition={lead.condition}
+              askingPrice={lead.askingPrice}
+              status={lead.status} 
+            />
+          </Box>
+        ))}
       </Box>
     </Layout>
   );
