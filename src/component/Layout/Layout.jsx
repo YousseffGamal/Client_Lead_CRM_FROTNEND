@@ -337,7 +337,7 @@ const Layout = ({ children, headerText, pageType }) => {
                       fontSize: { xs: "0.875rem", sm: "1rem" },
                     }}
                   >
-                    {auth.user.name}
+                    {auth.user.firstName }
                   </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
