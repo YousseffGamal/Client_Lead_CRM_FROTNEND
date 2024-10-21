@@ -148,3 +148,14 @@ td{
     font-family: "LufgaMedium" !important;
     font-size: 20px !important;
 }
+.current-price{
+font-size: 60px !important;
+font-family: "LufgaRegular" !important;
+color: #191919 !important;
+text-align: right !important;
+
+}
+.BID{
+    font-family: "LufgaMedium" !important;
+    font-size: 20px !important;
+}
