@@ -1,35 +1,35 @@
-import React from "react";
+// PiddingCard.js
+import React, { useState } from "react";
 import { Card, Button, Box, TextField } from "@mui/material";
 import CustomTypography from "../CustomTypography/CustomTypography"; // Import the shared component
+import Notification from "../Notification/Notification"; // Import the Notification component
 
 const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
+  // State for notification
+  const [notificationOpen, setNotificationOpen] = useState(false);
+
   // Define styles based on the lead's status
   const getStatusStyles = (status) => {
     switch (status) {
       case "Hot":
-        return {
-          backgroundColor: "#FFEBED",
-          color: "#CB0A1D",
-        };
+        return { backgroundColor: "#FFEBED", color: "#CB0A1D" };
       case "Cold":
-        return {
-          backgroundColor: "#F0F7FF",
-          color: "#0466D4",
-        };
+        return { backgroundColor: "#F0F7FF", color: "#0466D4" };
       case "Warm":
-        return {
-          backgroundColor: "#FFFAE6",
-          color: "#D0A704",
-        };
+        return { backgroundColor: "#FFFAE6", color: "#D0A704" };
       default:
-        return {
-          backgroundColor: "#FFFFFF",
-          color: "#000000",
-        };
+        return { backgroundColor: "#FFFFFF", color: "#000000" };
     }
   };
 
   const statusStyles = getStatusStyles(status);
+
+  // Function to handle bid submission
+  const handleBid = () => {
+    // Here you would add the logic to submit the bid
+    // After successfully adding the bid, show the notification
+    setNotificationOpen(true);
+  };
 
   return (
     <Card
@@ -139,6 +139,7 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
         <Button
           variant="contained"
           className="BID"
+          onClick={handleBid} // Call handleBid when the button is clicked
           sx={{
             backgroundColor: "#0177FB",
             color: "#FFFFFF",
@@ -152,6 +153,13 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
           Add Bid
         </Button>
       </Box>
+
+      {/* Notification Component */}
+      <Notification 
+        open={notificationOpen} 
+        message="Bid successfully added!" 
+        onClose={() => setNotificationOpen(false)} 
+      />
     </Card>
   );
 };
