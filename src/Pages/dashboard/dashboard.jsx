@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import Layout from "../../component/Layout/Layout";
-import LeadCard from "../../component/LeadCard/LeadCard"; // Adjust the path if necessary
-import PiddingCard from "../../component/PiddingCard/PiddingCard"; // Adjust the path if necessary
-import SwitchComponent from "../../component/SwitchComponent/SwitchComponent"; // Import SwitchComponent
+import LeadCard from "../../component/LeadCard/LeadCard";
+import PiddingCard from "../../component/PiddingCard/PiddingCard";
+import SwitchComponent from "../../component/SwitchComponent/SwitchComponent";
+import FilterComponent from "../../component/FilterComponent/FilterComponent"; // Adjust the path if necessary
 
 // Sample leads data
 const leads = [
@@ -19,12 +20,29 @@ const leads = [
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState(0); // State to track which card to display
+  const [filteredLeads, setFilteredLeads] = useState(leads); // State for filtered leads
 
   return (
     <Layout>
       <Box sx={{ p: 3, backgroundColor: "#F1F1F1", marginTop: "65px" }}>
-        {/* SwitchComponent to toggle between LeadCard and PiddingCard */}
-        <SwitchComponent activeTab={activeTab} setActiveTab={setActiveTab} />
+        {/* Filter and Switch Components */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            mb: 2,
+            gap: 2,
+            flexWrap: "wrap",
+            "@media (max-width: 600px)": {
+              flexDirection: "column",
+              alignItems: "flex-start",
+            },
+          }}
+        >
+          <SwitchComponent activeTab={activeTab} setActiveTab={setActiveTab} />
+          <FilterComponent setFilteredLeads={setFilteredLeads} sx={{ ml: 1 }} /> {/* Add left margin if needed */}
+        </Box>
 
         <Box
           sx={{
@@ -33,7 +51,7 @@ const Dashboard = () => {
             justifyContent: "center",
           }}
         >
-          {leads.map((lead, index) => (
+          {filteredLeads.map((lead, index) => (
             <Box
               key={index}
               sx={{
