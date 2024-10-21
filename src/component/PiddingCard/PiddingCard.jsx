@@ -58,13 +58,13 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
           textAlign: { xs: "center", md: "left" },
         }}
       >
-        <CustomTypography className="address" variant="h6" component="div" sx={{ fontSize: { xs: '24px', md: '31px' } }}>
+        <CustomTypography className="address" variant="h6" component="div" sx={{ fontSize: { xs: '24px', sm: '26px', md: '28px', lg: '31px' } }}>
           {address}
         </CustomTypography>
-        <CustomTypography className="city" variant="body1" color="textSecondary" sx={{ fontSize: { xs: '18px', md: '21px' } }}>
+        <CustomTypography className="city" variant="body1" color="textSecondary" sx={{ fontSize: { xs: '18px', sm: '20px', md: '21px' } }}>
           {city}
         </CustomTypography>
-        <CustomTypography className="condition" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '14px', md: '16px' } }}>
+        <CustomTypography className="condition" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '14px', sm: '15px', md: '16px' } }}>
           Condition: {condition}
         </CustomTypography>
 
@@ -83,15 +83,15 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
             height: "35px",
           }}
         >
-          <CustomTypography className="status" variant="body2" sx={{ fontSize: { xs: '16px', md: '19px' } }}>
+          <CustomTypography className="status" variant="body2" sx={{ fontSize: { xs: '16px', sm: '17px', md: '19px' } }}>
             {status}
           </CustomTypography>
         </Box>
 
-        <CustomTypography className="Occupancy" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '16px', md: '18px' } }}>
+        <CustomTypography className="Occupancy" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '16px', sm: '17px', md: '18px' } }}>
           Occupancy: By Owner
         </CustomTypography>
-        <CustomTypography className="closing" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '16px', md: '18px' } }}>
+        <CustomTypography className="closing" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '16px', sm: '17px', md: '18px' } }}>
           Closing: 30-60 Days
         </CustomTypography>
       </Box>
@@ -107,10 +107,15 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
           textAlign: { xs: "center", md: "right" },
         }}
       >
-        <CustomTypography className="price-label" variant="body1" sx={{ fontSize: { xs: '16px', md: '18px' } }}>
+        <CustomTypography className="price-label" variant="body1" sx={{ fontSize: { xs: '16px', sm: '18px' } }}>
           Current Price
         </CustomTypography>
-        <CustomTypography className="current-price" variant="h5" color="primary" sx={{ fontWeight: "bold", fontSize: { xs: '40px', md: '60px' } }}>
+        <CustomTypography
+          className="current-price"
+          variant="h5"
+          color="primary"
+          sx={{ fontWeight: "bold", fontSize: { xs: '30px', sm: '40px', md: '50px' } }}
+        >
           {askingPrice}
         </CustomTypography>
 
@@ -141,7 +146,7 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
             height: "56px",
             borderRadius: "15px",
             marginTop: "16px",
-            fontSize: { xs: '16px', md: '20px' },
+            fontSize: { xs: '16px', sm: '18px', md: '20px' },
           }}
         >
           Add Bid
