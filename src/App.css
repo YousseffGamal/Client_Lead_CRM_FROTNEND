@@ -107,55 +107,57 @@ td{
     font-size: 28px !important;
     font-family: "LufgaLight" !important;
 }
-.address{
-    font-family: "LufgaRegular" !important;
+.address {
+    font-family: "LufgaRegular";
     color: #191919 !important;
-    font-size: 31px !important;
-
+    font-size: 31px; /* Base font size for larger screens */
 }
-.city{
-    font-family: "LufgaRegular" !important;
+
+.city {
+    font-family: "LufgaRegular";
     color: #0177FB !important;
-    font-size: 21px !important;
-    margin-top: 7px !important;
-
+    font-size: 21px; /* Base font size for larger screens */
+    margin-top: 7px;
 }
-.Condition{
-    font-family: "LufgaRegular" !important;
+
+.Condition {
+    font-family: "LufgaRegular";
     color: #191919 !important;
-    font-size: 16px !important;
-
+    font-size: 16px; /* Base font size for larger screens */
 }
 
-.status{
-    font-family: "LufgaMedium" !important;
-    font-size: 19px !important;
-
+.status {
+    font-family: "LufgaMedium";
+    font-size: 19px; /* Base font size for larger screens */
 }
-.Occupancy{
-    font-family: "LufgaRegular" !important;
+
+.Occupancy {
+    font-family: "LufgaRegular";
     color: #191919 !important;
-    font-size: 18px !important;
-    margin-top: 13px !important;
+    font-size: 18px; /* Base font size for larger screens */
+    margin-top: 13px;
 }
-.Closing{
-    font-family: "LufgaRegular" !important;
-    color: #191919 !important;
-    font-size: 18px !important;
-    margin-top: 13px !important; 
-}
-.LeadBtn{
-    font-family: "LufgaMedium" !important;
-    font-size: 20px !important;
-}
-.current-price{
-font-size: 60px !important;
-font-family: "LufgaRegular" !important;
-color: #191919 !important;
-text-align: right !important;
 
+.Closing {
+    font-family: "LufgaRegular";
+    color: #191919 !important;
+    font-size: 18px; /* Base font size for larger screens */
+    margin-top: 13px; 
 }
-.BID{
-    font-family: "LufgaMedium" !important;
-    font-size: 20px !important;
+
+.LeadBtn {
+    font-family: "LufgaMedium";
+    font-size: 20px; /* Base font size for larger screens */
+}
+
+.current-price {
+    font-size: 60px; /* Base font size for larger screens */
+    font-family: "LufgaRegular";
+    color: #191919 !important;
+    text-align: right;
+}
+
+.BID {
+    font-family: "LufgaMedium";
+    font-size: 20px; /* Base font size for larger screens */
 }

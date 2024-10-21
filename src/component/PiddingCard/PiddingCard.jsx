@@ -39,12 +39,12 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
         bgcolor: "#F9F9F9",
         borderRadius: "20px",
         display: "flex",
-        flexDirection: { xs: "column", md: "row" }, // Column on mobile, row on larger screens
+        flexDirection: { xs: "column", md: "row" },
         justifyContent: "space-between",
-        padding: { xs: "20px", sm: "30px", md: "42px" }, // Responsive padding
+        padding: { xs: "20px", sm: "30px", md: "42px" },
         boxShadow: 2,
         marginBottom: { xs: "16px", sm: "24px" },
-        flexWrap: "wrap", // Allow wrapping of child elements
+        flexWrap: "wrap",
       }}
     >
       {/* Left Part: Address, City, Condition, etc. */}
@@ -52,24 +52,19 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: { xs: "center", md: "space-between" }, // Center content vertically on mobile
-          alignItems: { xs: "center", md: "flex-start" }, // Center horizontally on mobile, left-align on larger screens
+          justifyContent: { xs: "center", md: "space-between" },
+          alignItems: { xs: "center", md: "flex-start" },
           width: { xs: "100%", md: "60%" },
-          textAlign: { xs: "center", md: "left" }, // Center text on mobile, left-align on larger screens
+          textAlign: { xs: "center", md: "left" },
         }}
       >
-        <CustomTypography className="address" variant="h6" component="div">
+        <CustomTypography className="address" variant="h6" component="div" sx={{ fontSize: { xs: '24px', md: '31px' } }}>
           {address}
         </CustomTypography>
-        <CustomTypography className="city" variant="body1" color="textSecondary">
+        <CustomTypography className="city" variant="body1" color="textSecondary" sx={{ fontSize: { xs: '18px', md: '21px' } }}>
           {city}
         </CustomTypography>
-        <CustomTypography
-          className="condition"
-          variant="body2"
-          color="textSecondary"
-          sx={{ marginTop: "8px" }}
-        >
+        <CustomTypography className="condition" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '14px', md: '16px' } }}>
           Condition: {condition}
         </CustomTypography>
 
@@ -88,25 +83,15 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
             height: "35px",
           }}
         >
-          <CustomTypography className="status" variant="body2">
+          <CustomTypography className="status" variant="body2" sx={{ fontSize: { xs: '16px', md: '19px' } }}>
             {status}
           </CustomTypography>
         </Box>
 
-        <CustomTypography
-          className="Occupancy"
-          variant="body2"
-          color="textSecondary"
-          sx={{ marginTop: "8px" }}
-        >
+        <CustomTypography className="Occupancy" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '16px', md: '18px' } }}>
           Occupancy: By Owner
         </CustomTypography>
-        <CustomTypography
-          className="closing"
-          variant="body2"
-          color="textSecondary"
-          sx={{ marginTop: "8px" }}
-        >
+        <CustomTypography className="closing" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '16px', md: '18px' } }}>
           Closing: 30-60 Days
         </CustomTypography>
       </Box>
@@ -117,20 +102,15 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: { xs: "center", md: "flex-end" }, // Center on mobile, right-align on larger screens
+          alignItems: { xs: "center", md: "flex-end" },
           width: { xs: "100%", md: "35%" },
-          textAlign: { xs: "center", md: "right" }, // Center text on mobile, right-align on larger screens
+          textAlign: { xs: "center", md: "right" },
         }}
       >
-        <CustomTypography className="price-label" variant="body1">
+        <CustomTypography className="price-label" variant="body1" sx={{ fontSize: { xs: '16px', md: '18px' } }}>
           Current Price
         </CustomTypography>
-        <CustomTypography
-          className="current-price"
-          variant="h5"
-          color="primary"
-          sx={{ fontWeight: "bold" }}
-        >
+        <CustomTypography className="current-price" variant="h5" color="primary" sx={{ fontWeight: "bold", fontSize: { xs: '40px', md: '60px' } }}>
           {askingPrice}
         </CustomTypography>
 
@@ -161,6 +141,7 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
             height: "56px",
             borderRadius: "15px",
             marginTop: "16px",
+            fontSize: { xs: '16px', md: '20px' },
           }}
         >
           Add Bid
