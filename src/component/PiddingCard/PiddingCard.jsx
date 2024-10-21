@@ -34,7 +34,7 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
   return (
     <Card
       sx={{
-        width: { xs: "100%", sm: "100%" },
+        width: "100%",
         height: "auto",
         bgcolor: "#F9F9F9",
         borderRadius: "20px",
@@ -44,6 +44,7 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
         padding: "42px",
         boxShadow: 2,
         marginBottom: { xs: "16px", sm: "24px" },
+        flexWrap: "wrap", // Allow wrapping of child elements
       }}
     >
       {/* Left Part: Address, City, Condition, etc. */}
@@ -139,7 +140,7 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
           variant="outlined"
           sx={{
             marginTop: "16px",
-            width: { xs: "100%", sm: "306px" },
+            width: { xs: "100%", sm: "100%" },
             borderRadius: "15px",
             border: "1px solid #0177FB",
             "& .MuiOutlinedInput-root": {
@@ -156,13 +157,13 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
           sx={{
             backgroundColor: "#0177FB",
             color: "#FFFFFF",
-            width: { xs: "100%", sm: "306px" },
+            width: { xs: "100%", sm: "100%" },
             height: "56px",
             borderRadius: "15px",
             marginTop: "16px",
           }}
         >
-       Add Bid
+          Add Bid
         </Button>
       </Box>
     </Card>
