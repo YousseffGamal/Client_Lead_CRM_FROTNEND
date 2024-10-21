@@ -41,7 +41,7 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
         display: "flex",
         flexDirection: { xs: "column", md: "row" }, // Column on mobile, row on larger screens
         justifyContent: "space-between",
-        padding: "42px",
+        padding: { xs: "20px", sm: "30px", md: "42px" }, // Responsive padding
         boxShadow: 2,
         marginBottom: { xs: "16px", sm: "24px" },
         flexWrap: "wrap", // Allow wrapping of child elements
