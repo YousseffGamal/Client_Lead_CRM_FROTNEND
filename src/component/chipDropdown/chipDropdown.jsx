@@ -6,7 +6,7 @@ const chipDropdown = ({ label, value, onChange, options, disabled }) => {
     <Autocomplete
       multiple
       options={options}
-      getOptionLabel={(option) => option.label}
+      getOptionLabel={(option) => option.label} // Correct property to display county name
       value={value.value}
       onChange={(event, newValue) => {
         onChange(newValue);
@@ -21,7 +21,11 @@ const chipDropdown = ({ label, value, onChange, options, disabled }) => {
       )}
       renderTags={(value, getTagProps) =>
         value.map((option, index) => (
-          <Chip key={index} label={option.label} {...getTagProps({ index })} />
+          <Chip
+            key={option.value} // Use unique value for key
+            label={option.label} // Display the county name
+            {...getTagProps({ index })}
+          />
         ))
       }
       disabled={disabled}
