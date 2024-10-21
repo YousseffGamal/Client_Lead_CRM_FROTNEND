@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, Typography, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  CircularProgress,
+  Autocomplete,
+  TextField,
+} from "@mui/material";
 import ChipDropdown from "../../component/chipDropdown/chipDropdown"; // Import your new ChipDropdown component
 import TextInput from "../../component/TextInput/TextInput"; // Import the TextInput component
 import SelectInput from "../../component/SelectInput/SelectInput"; // Import the SelectInput component
@@ -59,7 +66,7 @@ const SignUpPage = () => {
       LeadType: [],
       state: [], // Change to an array
       county: [], // Change to an array
-      occupancy: "", // Keep as string or change to array based on your needs
+      occupancy: [], // Keep as string or change to array based on your needs
       closingTime: "",
       askingPrice: "",
     },
@@ -94,12 +101,15 @@ const SignUpPage = () => {
   };
 
   const handleChipDropDownChange = (items, type) => {
-    const newValue = items.map((item) => item.value); // Get an array of selected values
+    // Get an array of selected values (just the values)
+    const newValue = items.map((item) => item.value);
+
+    // Update formData by replacing the specified preference with the new value array
     setFormData((prevData) => ({
       ...prevData,
       preferences: {
         ...prevData.preferences,
-        [type]: newValue, // Update the preference type with an array of values
+        [type]: newValue,
       },
     }));
   };
@@ -227,7 +237,7 @@ const SignUpPage = () => {
               label: item.label,
               value: item.value,
             }))}
-            value={formData.preferences.LeadType}
+            value={formData.preferences.LeadType || []}
             onChange={(newValue) =>
               handleChipDropDownChange(newValue, "LeadType")
             }
@@ -240,7 +250,7 @@ const SignUpPage = () => {
               label: state.name,
               value: state._id,
             }))}
-            value={formData.preferences.state} // Use an array for multiple selection
+            value={formData.preferences.state || []} // Use an array for multiple selection
             onChange={
               (newValue) => handleChipDropDownChange(newValue, "state") // Pass the new value
             }
@@ -253,24 +263,20 @@ const SignUpPage = () => {
               label: county.name,
               value: county._id,
             }))}
-            value={formData.preferences.county} // Use an array for multiple selection
+            value={formData.preferences.county || []} // Use an array for multiple selection
             onChange={
               (newValue) => handleChipDropDownChange(newValue, "county") // Pass the new value
             }
             label="County"
             placeholder="Select County"
+            // disabled={counties.length === 0}
           />
 
           <ChipDropdown
             options={occupancyOptions}
-            value={[formData.preferences.occupancy]} // Keep as is or change based on your needs
-            onChange={(newValue) =>
-              handleChange({
-                target: {
-                  name: "preferences.occupancy",
-                  value: newValue[0]?.value || "",
-                }, // Set value as string
-              })
+            value={formData.preferences.occupancy || []} // Keep as is or change based on your needs
+            onChange={
+              (newValue) => handleChipDropDownChange(newValue, "occupancy") // Pass the new value
             }
             label="Occupancy"
             placeholder="Select Occupancy"
@@ -299,6 +305,7 @@ const SignUpPage = () => {
                 marginTop: "20px",
                 backgroundColor: "#007bff",
                 "&:hover": { backgroundColor: "#0056b3" },
+                width: "100%",
               }}
             >
               {loading ? <CircularProgress size={24} /> : "Sign Up"}
