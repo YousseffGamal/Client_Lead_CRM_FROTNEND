@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import Layout from "../../component/Layout/Layout";
 import LeadCard from "../../component/LeadCard/LeadCard";
 import PiddingCard from "../../component/PiddingCard/PiddingCard";
 import SwitchComponent from "../../component/SwitchComponent/SwitchComponent";
 import FilterComponent from "../../component/FilterComponent/FilterComponent"; // Adjust the path if necessary
+import axios from "axios"; 
+import axiosInstance from "../../axios";
 
 // Sample leads data
 const leads = [
@@ -21,6 +23,25 @@ const leads = [
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState(0); // State to track which card to display
   const [filteredLeads, setFilteredLeads] = useState(leads); // State for filtered leads
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+
+ // Fetch leads from API
+ useEffect(() => {
+  const fetchLeads = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get("/getAllLeads"); 
+      setFilteredLeads(response.data.data); 
+      setLoading(false);
+    } catch (err) {
+      setError("Error fetching leads data");
+      setLoading(false);
+    }
+  };
+  fetchLeads(); 
+}, []);
+
 
   return (
     <Layout>
@@ -43,7 +64,7 @@ const Dashboard = () => {
           <SwitchComponent activeTab={activeTab} setActiveTab={setActiveTab} />
           <FilterComponent setFilteredLeads={setFilteredLeads} sx={{ ml: 1 }} /> {/* Add left margin if needed */}
         </Box>
-
+          
         <Box
           sx={{
             display: "flex",
