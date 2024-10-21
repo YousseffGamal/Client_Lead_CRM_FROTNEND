@@ -58,12 +58,12 @@ const FilterComponent = ({ setFilteredLeads }) => {
       sx={{
         display: "flex",
         gap: 1, // Reduced gap
-        flexWrap: "wrap",
+        flexWrap: { xs: "wrap", sm: "nowrap" }, // Stack on small screens
         marginBottom: 2,
       }}
     >
       {/* State Filter */}
-      <FormControl sx={{ minWidth: 185.79, borderRadius: "16.65px" }}>
+      <FormControl sx={{ flex: 1, minWidth: 185.79, borderRadius: "16.65px" }}>
         <InputLabel>State</InputLabel>
         <Select
           value={state}
@@ -83,7 +83,7 @@ const FilterComponent = ({ setFilteredLeads }) => {
       </FormControl>
 
       {/* Occupancy Filter */}
-      <FormControl sx={{ minWidth: 185.79, borderRadius: "16.65px" }}>
+      <FormControl sx={{ flex: 1, minWidth: 185.79, borderRadius: "16.65px" }}>
         <InputLabel>Occupancy</InputLabel>
         <Select
           value={occupancy}
@@ -109,6 +109,7 @@ const FilterComponent = ({ setFilteredLeads }) => {
         onChange={(event) => handleChange(event, setClosing)}
         type="number"
         sx={{
+          flex: 1,
           minWidth: 185.79,
           borderRadius: "16.65px",
         }}
@@ -121,13 +122,14 @@ const FilterComponent = ({ setFilteredLeads }) => {
         onChange={(event) => handleChange(event, setAskingPrice)}
         type="number"
         sx={{
+          flex: 1,
           minWidth: 185.79,
           borderRadius: "16.65px",
         }}
       />
 
       {/* Temperature Filter */}
-      <FormControl sx={{ minWidth: 185.79, borderRadius: "16.65px" }}>
+      <FormControl sx={{ flex: 1, minWidth: 185.79, borderRadius: "16.65px" }}>
         <InputLabel>Lead Type</InputLabel>
         <Select
           value={temperature}
