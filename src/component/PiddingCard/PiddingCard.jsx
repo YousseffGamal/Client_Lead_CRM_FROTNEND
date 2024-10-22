@@ -18,6 +18,8 @@ const PiddingCard = ({
   bidAmount,
   setbidAmount,
   value,
+  errorMessage,
+  onBidChange,
 }) => {
   // State for notification
   const [notificationOpen, setNotificationOpen] = useState(false);
@@ -198,8 +200,9 @@ const PiddingCard = ({
               },
             },
           }}
-          onChange={(e) => setbidAmount(e.target.value)}
+          onChange={(e) => onBidChange(leadId, e.target.value)}
         />
+        {errorMessage}
 
         <Button
           variant="contained"

@@ -17,6 +17,8 @@ const Dashboard = () => {
   const [biddingLeads, setbiddingLeads] = useState([]); // State for filtered leads
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("error");
+
   const { auth } = useAuth();
   const [bidAmount, setbidAmount] = useState("");
   let ws; // Declare the WebSocket instance
@@ -97,23 +99,42 @@ const Dashboard = () => {
     setActiveTab(event.target.checked ? 1 : 0);
   };
 
+  const handleBidChange = (leadId, value) => {
+    setbiddingLeads((prevItems) =>
+      prevItems.map((item) =>
+        item._id === leadId ? { ...item, bidAmount: value } : item
+      )
+    );
+    setbidAmount(value);
+  };
+
   const biddingAmount = (Lead) => {
+    const lead = biddingLeads.find((item) => item._id === Lead);
     axiosInstance
       .post("/bids", {
         bidderId: auth.user._id,
-        bidAmount,
+        bidAmount: lead.bidAmount,
         Lead,
       })
       .then((res) => {
-        const reSetBidAmount = biddingLeads.map((le) => {
-          return le._id === Lead ? { ...le, currentUserBids: "" } : le;
-        });
-        setbiddingLeads(reSetBidAmount);
+        setbiddingLeads((prevItems) =>
+          prevItems.map((item) =>
+            item._id === Lead ? { ...item, bidAmount: "", error: "" } : item
+          )
+        );
 
-        setbidAmount("");
+        // setbidAmount("");
       })
       .catch((err) => {
-        console.log(err);
+        setErrorMessage(err.response.data.message);
+        setbiddingLeads((prevItems) =>
+          prevItems.map((item) =>
+            item._id === Lead
+              ? { ...item, value: "", error: err.response.data.message }
+              : item
+          )
+        );
+        console.log(err.response.data.message);
       });
 
     console.log(auth.user._id);
@@ -202,6 +223,7 @@ const Dashboard = () => {
                 >
                   {
                     <PiddingCard
+                      lead={lead}
                       leadId={lead._id}
                       address={lead.addressLine}
                       city={lead.county.name}
@@ -214,7 +236,9 @@ const Dashboard = () => {
                       biddingAmount={biddingAmount}
                       setbidAmount={setbidAmount}
                       bidAmount={bidAmount}
-                      value={biddingLeads.currentUserBids}
+                      value={lead.bidAmount}
+                      errorMessage={lead.error}
+                      onBidChange={handleBidChange}
                     />
                   }
                 </Box>
