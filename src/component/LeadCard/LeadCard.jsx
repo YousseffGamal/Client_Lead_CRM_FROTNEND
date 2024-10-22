@@ -2,15 +2,23 @@ import React from "react";
 import { Card, CardContent, Button, Box } from "@mui/material";
 import CustomTypography from "../CustomTypography/CustomTypography"; // Import the shared component
 
-const LeadCard = ({ address, city, condition, askingPrice, status }) => {
+const LeadCard = ({
+  address,
+  city,
+  condition,
+  askingPrice,
+  leadType,
+  closingTime,
+  occupancy,
+}) => {
   const truncateText = (text, percentage) => {
     const truncatedLength = Math.ceil(text.length * percentage);
     return text.slice(0, truncatedLength) + "...";
   };
 
   // Define styles based on the lead's status
-  const getStatusStyles = (status) => {
-    switch (status) {
+  const getStatusStyles = (leadType) => {
+    switch (leadType) {
       case "Hot":
         return {
           backgroundColor: "#FFEBED",
@@ -34,7 +42,7 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
     }
   };
 
-  const statusStyles = getStatusStyles(status);
+  const statusStyles = getStatusStyles(leadType);
 
   return (
     <Card
@@ -67,7 +75,7 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
           sx={{
             fontFamily: "LufgaRegular",
             color: "#191919 !important",
-            fontSize: { xs: '15px', sm: '20px', md: '25px' }, // Responsive font size
+            fontSize: { xs: "15px", sm: "20px", md: "25px" }, // Responsive font size
           }}
         >
           {address}
@@ -79,7 +87,7 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
           sx={{
             fontFamily: "LufgaRegular",
             color: "#0177FB !important",
-            fontSize: { xs: '16px', sm: '18px', md: '21px' }, // Responsive font size
+            fontSize: { xs: "16px", sm: "18px", md: "21px" }, // Responsive font size
             marginTop: "7px",
           }}
         >
@@ -92,7 +100,7 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
           sx={{
             fontFamily: "LufgaRegular",
             color: "#191919 !important",
-            fontSize: { xs: '14px', sm: '16px', md: '16px' }, // Responsive font size
+            fontSize: { xs: "14px", sm: "16px", md: "16px" }, // Responsive font size
             marginTop: "8px",
           }}
         >
@@ -119,10 +127,10 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
             variant="body2"
             sx={{
               fontFamily: "LufgaMedium",
-              fontSize: { xs: '14px', sm: '16px', md: '19px' }, // Responsive font size
+              fontSize: { xs: "14px", sm: "16px", md: "19px" }, // Responsive font size
             }}
           >
-            {status}
+            {leadType}
           </CustomTypography>
         </Box>
 
@@ -132,12 +140,12 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
           sx={{
             fontFamily: "LufgaRegular",
             color: "#191919 !important",
-            fontSize: { xs: '14px', sm: '16px', md: '18px' }, // Responsive font size
+            fontSize: { xs: "14px", sm: "16px", md: "18px" }, // Responsive font size
             marginTop: "13px",
             textAlign: "center",
           }}
         >
-          Occupancy: By Owner
+          Occupancy: {occupancy}
         </CustomTypography>
         <CustomTypography
           className="Closing"
@@ -145,13 +153,13 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
           sx={{
             fontFamily: "LufgaRegular",
             color: "#191919 !important",
-            fontSize: { xs: '14px', sm: '16px', md: '18px' }, // Responsive font size
+            fontSize: { xs: "14px", sm: "16px", md: "18px" }, // Responsive font size
             marginTop: "13px",
             textAlign: "center",
             marginBottom: "16px",
           }}
         >
-          Closing: 30-60 Days
+          Closing Time: {closingTime} Days
         </CustomTypography>
         <Button
           variant="contained"
@@ -165,7 +173,7 @@ const LeadCard = ({ address, city, condition, askingPrice, status }) => {
             borderRadius: "15px", // Set border radius to 15px
             marginTop: "16px", // Add some space above the button
             fontFamily: "LufgaMedium",
-            fontSize: { xs: '12px', sm: '15px', md: '17px' }, // Responsive font size
+            fontSize: { xs: "12px", sm: "15px", md: "17px" }, // Responsive font size
             fontWeight: "bold", // Optional: make text bold
           }}
         >

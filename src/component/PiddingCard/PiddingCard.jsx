@@ -4,13 +4,25 @@ import { Card, Button, Box, TextField } from "@mui/material";
 import CustomTypography from "../CustomTypography/CustomTypography"; // Import the shared component
 import Notification from "../Notification/Notification"; // Import the Notification component
 
-const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
+const PiddingCard = ({
+  address,
+  city,
+  condition,
+  intialBiddingPrice,
+  leatType,
+  closingTime,
+  occupancy,
+  status,
+  biddingAmount,
+  leadId,
+}) => {
   // State for notification
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const [bidAmount, setbidAmount] = useState("");
 
   // Define styles based on the lead's status
-  const getStatusStyles = (status) => {
-    switch (status) {
+  const getStatusStyles = (leatType) => {
+    switch (leatType) {
       case "Hot":
         return { backgroundColor: "#FFEBED", color: "#CB0A1D" };
       case "Cold":
@@ -22,12 +34,13 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
     }
   };
 
-  const statusStyles = getStatusStyles(status);
+  const statusStyles = getStatusStyles(leatType);
 
   // Function to handle bid submission
   const handleBid = () => {
     // Here you would add the logic to submit the bid
     // After successfully adding the bid, show the notification
+    biddingAmount(bidAmount, leadId);
     setNotificationOpen(true);
   };
 
@@ -58,13 +71,31 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
           textAlign: { xs: "center", md: "left" },
         }}
       >
-        <CustomTypography className="address" variant="h6" component="div" sx={{ fontSize: { xs: '24px', sm: '26px', md: '28px', lg: '31px' } }}>
+        <CustomTypography
+          className="address"
+          variant="h6"
+          component="div"
+          sx={{ fontSize: { xs: "24px", sm: "26px", md: "28px", lg: "31px" } }}
+        >
           {address}
         </CustomTypography>
-        <CustomTypography className="city" variant="body1" color="textSecondary" sx={{ fontSize: { xs: '18px', sm: '20px', md: '21px' } }}>
+        <CustomTypography
+          className="city"
+          variant="body1"
+          color="textSecondary"
+          sx={{ fontSize: { xs: "18px", sm: "20px", md: "21px" } }}
+        >
           {city}
         </CustomTypography>
-        <CustomTypography className="condition" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '14px', sm: '15px', md: '16px' } }}>
+        <CustomTypography
+          className="condition"
+          variant="body2"
+          color="textSecondary"
+          sx={{
+            marginTop: "8px",
+            fontSize: { xs: "14px", sm: "15px", md: "16px" },
+          }}
+        >
           Condition: {condition}
         </CustomTypography>
 
@@ -83,16 +114,36 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
             height: "35px",
           }}
         >
-          <CustomTypography className="status" variant="body2" sx={{ fontSize: { xs: '16px', sm: '17px', md: '19px' } }}>
-            {status}
+          <CustomTypography
+            className="status"
+            variant="body2"
+            sx={{ fontSize: { xs: "16px", sm: "17px", md: "19px" } }}
+          >
+            {leatType}
           </CustomTypography>
         </Box>
 
-        <CustomTypography className="Occupancy" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '16px', sm: '17px', md: '18px' } }}>
-          Occupancy: By Owner
+        <CustomTypography
+          className="Occupancy"
+          variant="body2"
+          color="textSecondary"
+          sx={{
+            marginTop: "8px",
+            fontSize: { xs: "16px", sm: "17px", md: "18px" },
+          }}
+        >
+          Occupancy: {occupancy}
         </CustomTypography>
-        <CustomTypography className="closing" variant="body2" color="textSecondary" sx={{ marginTop: "8px", fontSize: { xs: '16px', sm: '17px', md: '18px' } }}>
-          Closing: 30-60 Days
+        <CustomTypography
+          className="closing"
+          variant="body2"
+          color="textSecondary"
+          sx={{
+            marginTop: "8px",
+            fontSize: { xs: "16px", sm: "17px", md: "18px" },
+          }}
+        >
+          Closing: {closingTime} Days
         </CustomTypography>
       </Box>
 
@@ -107,22 +158,32 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
           textAlign: { xs: "center", md: "right" },
         }}
       >
-        <CustomTypography className="price-label" variant="body1" sx={{ fontSize: { xs: '16px', sm: '18px' } }}>
+        <CustomTypography
+          className="price-label"
+          variant="body1"
+          sx={{ fontSize: { xs: "16px", sm: "18px" } }}
+        >
           Current Price
         </CustomTypography>
         <CustomTypography
           className="current-price"
           variant="h5"
           color="primary"
-          sx={{ fontWeight: "bold", fontSize: { xs: '30px', sm: '40px', md: '50px' } }}
+          sx={{
+            fontWeight: "bold",
+            fontSize: { xs: "30px", sm: "40px", md: "50px" },
+          }}
         >
-          {askingPrice}
+          {intialBiddingPrice}
         </CustomTypography>
 
         {/* Bidding Input Field */}
+        {status}
         <TextField
+          disabled={status == "Closed"}
           label="Enter Your Price"
           variant="outlined"
+          value={bidAmount}
           sx={{
             marginTop: "16px",
             width: { xs: "100%", sm: "100%" },
@@ -134,6 +195,7 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
               },
             },
           }}
+          onChange={(e) => setbidAmount(e.target.value)}
         />
 
         <Button
@@ -147,7 +209,7 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
             height: "56px",
             borderRadius: "15px",
             marginTop: "16px",
-            fontSize: { xs: '16px', sm: '18px', md: '20px' },
+            fontSize: { xs: "16px", sm: "18px", md: "20px" },
           }}
         >
           Add Bid
@@ -155,10 +217,10 @@ const PiddingCard = ({ address, city, condition, askingPrice, status }) => {
       </Box>
 
       {/* Notification Component */}
-      <Notification 
-        open={notificationOpen} 
-        message="Bid successfully added!" 
-        onClose={() => setNotificationOpen(false)} 
+      <Notification
+        open={notificationOpen}
+        message="Bid successfully added!"
+        onClose={() => setNotificationOpen(false)}
       />
     </Card>
   );

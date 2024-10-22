@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-const FilterComponent = ({ setFilteredLeads }) => {
+const FilterComponent = ({ setpricedLeads }) => {
   const [state, setState] = useState("");
   const [askingPrice, setAskingPrice] = useState("");
   const [occupancy, setOccupancy] = useState("");
@@ -50,7 +50,7 @@ const FilterComponent = ({ setFilteredLeads }) => {
         (temperature === "" || lead.status === temperature)
       );
     });
-    setFilteredLeads(filteredLeads);
+    setpricedLeads(filteredLeads);
   };
 
   return (
