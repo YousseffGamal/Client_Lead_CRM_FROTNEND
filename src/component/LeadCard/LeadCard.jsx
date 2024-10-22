@@ -55,17 +55,15 @@ const LeadCard = ({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        padding: "16px",
+        padding: "28px 34px", // Set padding for top-bottom 28px and left-right 34px
       }}
     >
       <CardContent
         sx={{
-          marginTop: "28px",
           textAlign: "center",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "0", // Adjusting padding to align items better
         }}
       >
         <CustomTypography
@@ -112,7 +110,6 @@ const LeadCard = ({
           sx={{
             backgroundColor: statusStyles.backgroundColor,
             color: statusStyles.color,
-            padding: "0", // Remove extra padding to fit the height
             borderRadius: "25.74px",
             marginTop: "13px",
             display: "flex",
