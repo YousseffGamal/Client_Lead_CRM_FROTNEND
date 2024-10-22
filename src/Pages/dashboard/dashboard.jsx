@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { auth } = useAuth();
+  const [bidAmount, setbidAmount] = useState("");
   let ws; // Declare the WebSocket instance
 
   useEffect(() => {
@@ -96,11 +97,28 @@ const Dashboard = () => {
     setActiveTab(event.target.checked ? 1 : 0);
   };
 
-  const biddingAmount = (i, leadId) => {
-    // axiosInstance.post("http://localhost:4000/bids", { bidderid, i, leadId });
+  const biddingAmount = (Lead) => {
+    axiosInstance
+      .post("/bids", {
+        bidderId: auth.user._id,
+        bidAmount,
+        Lead,
+      })
+      .then((res) => {
+        const reSetBidAmount = biddingLeads.map((le) => {
+          return le._id === Lead ? { ...le, currentUserBids: "" } : le;
+        });
+        setbiddingLeads(reSetBidAmount);
+
+        setbidAmount("");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     console.log(auth.user._id);
-    console.log(i);
+    console.log(Lead);
+    console.log(bidAmount);
   };
   // const resetBidAmount = () =>{
 
@@ -194,6 +212,9 @@ const Dashboard = () => {
                       occupancy={lead.occupancy}
                       status={lead.status}
                       biddingAmount={biddingAmount}
+                      setbidAmount={setbidAmount}
+                      bidAmount={bidAmount}
+                      value={biddingLeads.currentUserBids}
                     />
                   }
                 </Box>

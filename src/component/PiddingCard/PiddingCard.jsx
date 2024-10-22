@@ -15,10 +15,13 @@ const PiddingCard = ({
   status,
   biddingAmount,
   leadId,
+  bidAmount,
+  setbidAmount,
+  value,
 }) => {
   // State for notification
   const [notificationOpen, setNotificationOpen] = useState(false);
-  const [bidAmount, setbidAmount] = useState("");
+  // const [bidAmount, setbidAmount] = useState("");
 
   // Define styles based on the lead's status
   const getStatusStyles = (leatType) => {
@@ -40,7 +43,7 @@ const PiddingCard = ({
   const handleBid = () => {
     // Here you would add the logic to submit the bid
     // After successfully adding the bid, show the notification
-    biddingAmount(bidAmount, leadId);
+    biddingAmount(leadId);
     setNotificationOpen(true);
   };
 
@@ -183,7 +186,7 @@ const PiddingCard = ({
           disabled={status == "Closed"}
           label="Enter Your Price"
           variant="outlined"
-          value={bidAmount}
+          value={value}
           sx={{
             marginTop: "16px",
             width: { xs: "100%", sm: "100%" },
