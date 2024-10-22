@@ -44,6 +44,26 @@ const Dashboard = () => {
           setbiddingLeads((biddingLeads) => [...biddingLeads, data]);
         } else if (data.isBidding === false) {
           setpricedLeads((pricedLeads) => [...pricedLeads, data]);
+        } else if (data.bidderId) {
+          setBiddingLeads((prevItems) =>
+            prevItems.map((item) =>
+              item._id === data.Lead
+                ? { ...item, bids: [...item.bids, data] } // Ensure to spread the existing bids and append the new data
+                : item
+            )
+          );
+        } else if (data.name === "scheduleLeadPurchaseJob") {
+          setbiddingLeads((prevItems) =>
+            prevItems.map((item) =>
+              item._id === data.leadId ? { ...item, status: "Open" } : item
+            )
+          );
+        } else if (data.name === "closeLead") {
+          setbiddingLeads((prevItems) =>
+            prevItems.map((item) =>
+              item._id === data.leadId ? { ...item, status: "Closed" } : item
+            )
+          );
         }
       } catch (error) {
         console.error("Failed to parse JSON:", error);
@@ -102,7 +122,7 @@ const Dashboard = () => {
   const handleBidChange = (leadId, value) => {
     setbiddingLeads((prevItems) =>
       prevItems.map((item) =>
-        item._id === leadId ? { ...item, bidAmount: value } : item
+        item._id === leadId ? { ...item, value: value } : item
       )
     );
     setbidAmount(value);
@@ -113,13 +133,21 @@ const Dashboard = () => {
     axiosInstance
       .post("/bids", {
         bidderId: auth.user._id,
-        bidAmount: lead.bidAmount,
+        bidAmount: lead.value,
         Lead,
       })
       .then((res) => {
+        console.log(res.data.bid.bidAmount);
         setbiddingLeads((prevItems) =>
           prevItems.map((item) =>
-            item._id === Lead ? { ...item, bidAmount: "", error: "" } : item
+            item._id === Lead
+              ? {
+                  ...item,
+                  value: "",
+                  error: "",
+                  intialBiddingPrice: res.data.bid.bidAmount,
+                }
+              : item
           )
         );
 
@@ -181,30 +209,29 @@ const Dashboard = () => {
         >
           {activeTab === 0
             ? pricedLeads.map((lead, index) => (
-              <Box
-              key={index}
-              sx={{
-                width: {
-                  xs: "100%", // Full width on small screens like iPad
-                  sm: "100%", // Keep full width for small screens
-                  md: activeTab === 0 ? "33.33%" : "50%", // Adjust width for larger screens
-                  lg: activeTab === 0 ? "25%" : "50%", // Adjust for large screens
-                },
-                padding: 1,
-                boxSizing: "border-box",
-              }}
-            >
-              <LeadCard
-                address={lead.addressLine}
-                city={lead.county.name}
-                condition={lead.condition}
-                askingPrice={lead.askingPrice}
-                leadType={lead.leadType?.name}
-                closingTime={lead.closingTime}
-                occupancy={lead.occupancy}
-              />
-            </Box>
-            
+                <Box
+                  key={index}
+                  sx={{
+                    width: {
+                      xs: "100%", // Full width on small screens like iPad
+                      sm: "100%", // Keep full width for small screens
+                      md: activeTab === 0 ? "33.33%" : "50%", // Adjust width for larger screens
+                      lg: activeTab === 0 ? "25%" : "50%", // Adjust for large screens
+                    },
+                    padding: 1,
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <LeadCard
+                    address={lead.addressLine}
+                    city={lead.county.name}
+                    condition={lead.condition}
+                    askingPrice={lead.askingPrice}
+                    leadType={lead.leadType?.name}
+                    closingTime={lead.closingTime}
+                    occupancy={lead.occupancy}
+                  />
+                </Box>
               ))
             : biddingLeads.map((lead, index) => (
                 <Box
@@ -227,7 +254,11 @@ const Dashboard = () => {
                       address={lead.addressLine}
                       city={lead.county.name}
                       condition={lead.condition}
-                      intialBiddingPrice={lead.intialBiddingPrice}
+                      intialBiddingPrice={
+                        lead.bids.length != 0
+                          ? lead.bids[0].bidAmount
+                          : lead.intialBiddingPrice
+                      }
                       leadType={lead.leadType?.name}
                       closingTime={lead.closingTime}
                       occupancy={lead.occupancy}
@@ -235,7 +266,7 @@ const Dashboard = () => {
                       biddingAmount={biddingAmount}
                       setbidAmount={setbidAmount}
                       bidAmount={bidAmount}
-                      value={lead.bidAmount}
+                      value={lead.value}
                       errorMessage={lead.error}
                       onBidChange={handleBidChange}
                     />
