@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, Button, Box } from "@mui/material";
-import CustomTypography from "../CustomTypography/CustomTypography"; // Import the shared component
+import CustomTypography from "../CustomTypography/CustomTypography";
 
 const LeadCard = ({
   address,
@@ -16,7 +16,6 @@ const LeadCard = ({
     return text.slice(0, truncatedLength) + "...";
   };
 
-  // Define styles based on the lead's status
   const getStatusStyles = (leadType) => {
     switch (leadType) {
       case "Hot":
@@ -47,7 +46,8 @@ const LeadCard = ({
   return (
     <Card
       sx={{
-        width: "100%",
+        width: "100%", // Responsive width
+        maxWidth: { xs: "100%", sm: "450px", md: "100%" }, // Max width for small screens
         height: "auto",
         bgcolor: "#FFFFFF",
         borderRadius: "20px",
@@ -55,7 +55,8 @@ const LeadCard = ({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        padding: "28px 34px", // Set padding for top-bottom 28px and left-right 34px
+        padding: "28px 34px", // Maintain padding
+        boxSizing: "border-box", // Ensure padding affects the total size
       }}
     >
       <CardContent
@@ -73,7 +74,7 @@ const LeadCard = ({
           sx={{
             fontFamily: "LufgaRegular",
             color: "#191919 !important",
-            fontSize: { xs: "15px", sm: "20px", md: "25px" }, // Responsive font size
+            fontSize: { xs: "15px", sm: "20px", md: "25px" },
           }}
         >
           {address}
@@ -85,7 +86,7 @@ const LeadCard = ({
           sx={{
             fontFamily: "LufgaRegular",
             color: "#0177FB !important",
-            fontSize: { xs: "16px", sm: "18px", md: "21px" }, // Responsive font size
+            fontSize: { xs: "16px", sm: "18px", md: "21px" },
             marginTop: "7px",
           }}
         >
@@ -98,14 +99,13 @@ const LeadCard = ({
           sx={{
             fontFamily: "LufgaRegular",
             color: "#191919 !important",
-            fontSize: { xs: "14px", sm: "16px", md: "16px" }, // Responsive font size
+            fontSize: { xs: "14px", sm: "16px", md: "16px" },
             marginTop: "8px",
           }}
         >
           Condition: {truncateText(condition, 0.3)}
         </CustomTypography>
 
-        {/* Centered Status with dynamic background and text color */}
         <Box
           sx={{
             backgroundColor: statusStyles.backgroundColor,
@@ -113,10 +113,10 @@ const LeadCard = ({
             borderRadius: "25.74px",
             marginTop: "13px",
             display: "flex",
-            justifyContent: "center", // Center horizontally
-            alignItems: "center", // Center vertically
-            width: "79.04px", // Set the width to 79.04px
-            height: "35px", // Set the height to 35px
+            justifyContent: "center",
+            alignItems: "center",
+            width: "79.04px",
+            height: "35px",
           }}
         >
           <CustomTypography
@@ -124,7 +124,7 @@ const LeadCard = ({
             variant="body2"
             sx={{
               fontFamily: "LufgaMedium",
-              fontSize: { xs: "14px", sm: "16px", md: "19px" }, // Responsive font size
+              fontSize: { xs: "14px", sm: "16px", md: "19px" },
             }}
           >
             {leadType}
@@ -137,7 +137,7 @@ const LeadCard = ({
           sx={{
             fontFamily: "LufgaRegular",
             color: "#191919 !important",
-            fontSize: { xs: "14px", sm: "16px", md: "18px" }, // Responsive font size
+            fontSize: { xs: "14px", sm: "16px", md: "18px" },
             marginTop: "13px",
             textAlign: "center",
           }}
@@ -150,7 +150,7 @@ const LeadCard = ({
           sx={{
             fontFamily: "LufgaRegular",
             color: "#191919 !important",
-            fontSize: { xs: "14px", sm: "16px", md: "18px" }, // Responsive font size
+            fontSize: { xs: "14px", sm: "16px", md: "18px" },
             marginTop: "13px",
             textAlign: "center",
             marginBottom: "16px",
@@ -162,16 +162,16 @@ const LeadCard = ({
           variant="contained"
           className="LeadBtn"
           sx={{
-            backgroundColor: "#0177FB", // Change to #0177FB
-            color: "#FFFFFF", // Change text color to #FFFFFF
-            width: "100%", // Use full width
-            maxWidth: "265px", // Limit the max width
-            height: "56px", // Set height to 56px
-            borderRadius: "15px", // Set border radius to 15px
-            marginTop: "16px", // Add some space above the button
+            backgroundColor: "#0177FB",
+            color: "#FFFFFF",
+            width: "100%",
+            maxWidth: "265px",
+            height: "56px",
+            borderRadius: "15px",
+            marginTop: "16px",
             fontFamily: "LufgaMedium",
-            fontSize: { xs: "12px", sm: "15px", md: "17px" }, // Responsive font size
-            fontWeight: "bold", // Optional: make text bold
+            fontSize: { xs: "12px", sm: "15px", md: "17px" },
+            fontWeight: "bold",
           }}
         >
           Asking Price: {askingPrice}
