@@ -57,19 +57,20 @@ const FilterComponent = ({ setpricedLeads }) => {
     <Box
       sx={{
         display: "flex",
-        gap: 1, // Reduced gap
-        flexWrap: { xs: "wrap", sm: "nowrap" }, // Stack on small screens
+        flexWrap: "wrap", // Allow wrapping for all screen sizes
+        gap: 2, // Add consistent spacing between fields
+        alignItems: "center",
+        justifyContent: { xs: "center", sm: "flex-start" }, // Center on small screens, left-align on larger
         marginBottom: 2,
       }}
     >
       {/* State Filter */}
-      <FormControl sx={{ flex: 1, minWidth: 185.79, borderRadius: "16.65px" }}>
+      <FormControl sx={{ flex: 1, minWidth: 185.79 }}>
         <InputLabel>State</InputLabel>
         <Select
           value={state}
           label="State"
           onChange={(event) => handleChange(event, setState)}
-          sx={{ borderRadius: "16.65px" }}
         >
           <MenuItem value="">
             <em>None</em>
@@ -83,13 +84,12 @@ const FilterComponent = ({ setpricedLeads }) => {
       </FormControl>
 
       {/* Occupancy Filter */}
-      <FormControl sx={{ flex: 1, minWidth: 185.79, borderRadius: "16.65px" }}>
+      <FormControl sx={{ flex: 1, minWidth: 185.79 }}>
         <InputLabel>Occupancy</InputLabel>
         <Select
           value={occupancy}
           label="Occupancy"
           onChange={(event) => handleChange(event, setOccupancy)}
-          sx={{ borderRadius: "16.65px" }}
         >
           <MenuItem value="">
             <em>None</em>
@@ -108,11 +108,7 @@ const FilterComponent = ({ setpricedLeads }) => {
         label="Closing"
         onChange={(event) => handleChange(event, setClosing)}
         type="number"
-        sx={{
-          flex: 1,
-          minWidth: 185.79,
-          borderRadius: "16.65px",
-        }}
+        sx={{ flex: 1, minWidth: 185.79 }}
       />
 
       {/* Asking Price Filter */}
@@ -121,21 +117,16 @@ const FilterComponent = ({ setpricedLeads }) => {
         label="Asking Price"
         onChange={(event) => handleChange(event, setAskingPrice)}
         type="number"
-        sx={{
-          flex: 1,
-          minWidth: 185.79,
-          borderRadius: "16.65px",
-        }}
+        sx={{ flex: 1, minWidth: 185.79 }}
       />
 
       {/* Temperature Filter */}
-      <FormControl sx={{ flex: 1, minWidth: 185.79, borderRadius: "16.65px" }}>
+      <FormControl sx={{ flex: 1, minWidth: 185.79 }}>
         <InputLabel>Lead Type</InputLabel>
         <Select
           value={temperature}
           label="Temperature"
           onChange={(event) => handleChange(event, setTemperature)}
-          sx={{ borderRadius: "16.65px" }}
         >
           <MenuItem value="">
             <em>None</em>
@@ -152,10 +143,10 @@ const FilterComponent = ({ setpricedLeads }) => {
       <IconButton
         sx={{
           backgroundColor: "#000000",
-          borderRadius: "16.65px",
           color: "#FFFFFF",
-          height: "48.28px",
-          width: "48.28px",
+          height: "48px",
+          width: "48px",
+          borderRadius: "16px",
           "&:hover": {
             backgroundColor: "#333333",
           },

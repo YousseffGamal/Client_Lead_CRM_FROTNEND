@@ -181,31 +181,30 @@ const Dashboard = () => {
         >
           {activeTab === 0
             ? pricedLeads.map((lead, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: {
-                      xs: "100%", // Full width on small screens
-                      sm: "50%", // Two cards per row on small and up
-                      md: activeTab === 0 ? "33.33%" : "50%", // For LeadCard, three cards in medium screens, and two for PiddingCard
-                      lg: activeTab === 0 ? "25%" : "50%", // Four cards in large screens for LeadCard, two for PiddingCard
-                    },
-                    padding: 1,
-                    boxSizing: "border-box",
-                  }}
-                >
-                  {
-                    <LeadCard
-                      address={lead.addressLine}
-                      city={lead.county.name}
-                      condition={lead.condition}
-                      askingPrice={lead.askingPrice}
-                      leadType={lead.leadType?.name}
-                      closingTime={lead.closingTime}
-                      occupancy={lead.occupancy}
-                    />
-                  }
-                </Box>
+              <Box
+              key={index}
+              sx={{
+                width: {
+                  xs: "100%", // Full width on small screens like iPad
+                  sm: "100%", // Keep full width for small screens
+                  md: activeTab === 0 ? "33.33%" : "50%", // Adjust width for larger screens
+                  lg: activeTab === 0 ? "25%" : "50%", // Adjust for large screens
+                },
+                padding: 1,
+                boxSizing: "border-box",
+              }}
+            >
+              <LeadCard
+                address={lead.addressLine}
+                city={lead.county.name}
+                condition={lead.condition}
+                askingPrice={lead.askingPrice}
+                leadType={lead.leadType?.name}
+                closingTime={lead.closingTime}
+                occupancy={lead.occupancy}
+              />
+            </Box>
+            
               ))
             : biddingLeads.map((lead, index) => (
                 <Box
