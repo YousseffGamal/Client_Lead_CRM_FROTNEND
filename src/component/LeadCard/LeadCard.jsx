@@ -48,7 +48,7 @@ const LeadCard = ({
       sx={{
         width: "100%", // Responsive width
         maxWidth: { xs: "100%", sm: "450px", md: "100%" }, // Max width for small screens
-        height: "auto",
+        height: "400px", // Set a fixed height for the cards
         bgcolor: "#FFFFFF",
         borderRadius: "20px",
         display: "flex",
