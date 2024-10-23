@@ -5,7 +5,7 @@ import LoginPage from "./Pages/login/login";
 import SignUpPage from "./Pages/SignUp/SignUp";
 import ProtectedRoute from "./utiliteis/protectedRoute";
 import BlogsArticles from "./Pages/BlogsArticles/BlogsArticles";
-
+import LeadView from "./Pages/LeadView/LeadView ";
 import Profile from "./Pages/profile/profile";
 
 const ProjectRoutes = () => {
@@ -21,6 +21,8 @@ const ProjectRoutes = () => {
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/" element={<LoginPage />} />
+        <Route path="leadview" element={<LeadView />} />
+
         <Route path="/signuppage" element={<SignUpPage />} />
       </Routes>
     </Router>
