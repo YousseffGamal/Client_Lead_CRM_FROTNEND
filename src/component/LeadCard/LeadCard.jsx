@@ -1,8 +1,10 @@
 import React from "react";
 import { Card, CardContent, Button, Box } from "@mui/material";
 import CustomTypography from "../CustomTypography/CustomTypography";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const LeadCard = ({
+  leadId, // Include leadId in props
   address,
   city,
   condition,
@@ -11,6 +13,8 @@ const LeadCard = ({
   closingTime,
   occupancy,
 }) => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const truncateText = (text, percentage) => {
     const truncatedLength = Math.ceil(text.length * percentage);
     return text.slice(0, truncatedLength) + "...";
@@ -42,7 +46,10 @@ const LeadCard = ({
   };
 
   const statusStyles = getStatusStyles(leadType);
-
+  const handleCardClick = () => {
+    // Navigate to the LeadView page and pass the leadId
+    navigate(`/leadview/${leadId}`);
+  };
   return (
     <Card
       sx={{
@@ -59,6 +66,8 @@ const LeadCard = ({
         padding: "28px 34px", // Maintain padding
         boxSizing: "border-box", // Ensure padding affects the total size
       }}
+      onClick={handleCardClick} // Trigger navigation on card click
+
     >
       <CardContent
         sx={{

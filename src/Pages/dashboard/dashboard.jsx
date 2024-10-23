@@ -222,15 +222,16 @@ const Dashboard = () => {
                     boxSizing: "border-box",
                   }}
                 >
-                  <LeadCard
-                    address={lead.addressLine}
-                    city={lead.county.name}
-                    condition={lead.condition}
-                    askingPrice={lead.askingPrice}
-                    leadType={lead.leadType?.name}
-                    closingTime={lead.closingTime}
-                    occupancy={lead.occupancy}
-                  />
+              <LeadCard
+  leadId={lead._id} // Ensure this is passed
+  address={lead.addressLine}
+  city={lead.county.name}
+  condition={lead.condition}
+  askingPrice={lead.askingPrice}
+  leadType={lead.leadType?.name}
+  closingTime={lead.closingTime}
+  occupancy={lead.occupancy}
+/>
                 </Box>
               ))
             : biddingLeads.map((lead, index) => (

@@ -21,7 +21,7 @@ const ProjectRoutes = () => {
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/" element={<LoginPage />} />
-        <Route path="leadview" element={<LeadView />} />
+        <Route path="/leadview/:leadId" element={<LeadView />} /> {/* Dynamic route */}
 
         <Route path="/signuppage" element={<SignUpPage />} />
       </Routes>
