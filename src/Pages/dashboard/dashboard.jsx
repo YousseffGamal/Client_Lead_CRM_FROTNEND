@@ -45,10 +45,15 @@ const Dashboard = () => {
         } else if (data.isBidding === false) {
           setpricedLeads((pricedLeads) => [...pricedLeads, data]);
         } else if (data.bidderId) {
-          setBiddingLeads((prevItems) =>
+          setbiddingLeads((prevItems) =>
             prevItems.map((item) =>
               item._id === data.Lead
-                ? { ...item, bids: [...item.bids, data] } // Ensure to spread the existing bids and append the new data
+                ? {
+                    ...item,
+
+                    bids: [data, ...item.bids],
+                    // intialBiddingPrice: res.data.bid.bidAmount,
+                  }
                 : item
             )
           );
@@ -91,7 +96,7 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get("/UsergetAllLeads");
-      console.log(response);
+
       setpricedLeads(response.data.data);
       setLoading(false);
     } catch (err) {
@@ -137,7 +142,6 @@ const Dashboard = () => {
         Lead,
       })
       .then((res) => {
-        console.log(res.data.bid.bidAmount);
         setbiddingLeads((prevItems) =>
           prevItems.map((item) =>
             item._id === Lead
@@ -145,7 +149,8 @@ const Dashboard = () => {
                   ...item,
                   value: "",
                   error: "",
-                  intialBiddingPrice: res.data.bid.bidAmount,
+                  bids: [res.data.bid, ...item.bids],
+                  // intialBiddingPrice: res.data.bid.bidAmount,
                 }
               : item
           )
@@ -162,12 +167,7 @@ const Dashboard = () => {
               : item
           )
         );
-        console.log(err.response.data.message);
       });
-
-    console.log(auth.user._id);
-    console.log(Lead);
-    console.log(bidAmount);
   };
   // const resetBidAmount = () =>{
 

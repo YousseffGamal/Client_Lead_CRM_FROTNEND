@@ -185,7 +185,7 @@ const PiddingCard = ({
         {/* Bidding Input Field */}
         {status}
         <TextField
-          disabled={status == "Closed"}
+          disabled={status === "Closed" || status === "Relisted"}
           label="Enter Your Price"
           variant="outlined"
           value={value}
@@ -205,6 +205,7 @@ const PiddingCard = ({
         {errorMessage}
 
         <Button
+          disabled={status === "Closed" || status === "Relisted"}
           variant="contained"
           className="BID"
           onClick={handleBid} // Call handleBid when the button is clicked
