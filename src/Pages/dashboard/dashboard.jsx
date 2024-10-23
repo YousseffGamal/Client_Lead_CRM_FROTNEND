@@ -213,10 +213,10 @@ const Dashboard = () => {
                   key={index}
                   sx={{
                     width: {
-                      xs: "100%", // Full width on small screens like iPad
-                      sm: "100%", // Keep full width for small screens
-                      md: activeTab === 0 ? "33.33%" : "50%", // Adjust width for larger screens
-                      lg: activeTab === 0 ? "25%" : "50%", // Adjust for large screens
+                      xs: "100%", // Full width on small screens
+                      sm: "50%", // Two cards per row on small screens
+                      md: "33.33%", // Three cards per row on medium screens
+                      lg: "33.33%", // Three cards per row on large screens
                     },
                     padding: 1,
                     boxSizing: "border-box",
