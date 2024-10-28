@@ -8,7 +8,7 @@ const ProtectedRoute = ({ redirectTo, roles }) => {
 
   if (!auth.token) {
     // If not authenticated, redirect to the login page or specified route
-    logout();
+
     return <Navigate to={redirectTo} />;
   }
 

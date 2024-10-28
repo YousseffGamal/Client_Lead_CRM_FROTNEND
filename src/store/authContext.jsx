@@ -7,19 +7,27 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     token: localStorage.getItem("token") || "",
     user: JSON.parse(localStorage.getItem("user")) || null,
+    paymentMethodVerified:
+      localStorage.getItem("paymentMethodVerified") === "true",
   });
 
   const login = async (cred) => {
     try {
       const { data } = await axiosInstance.post("/signin", cred);
       console.log(data);
+
       setAuth({
         token: data.user.token,
         user: data.user.userExist,
+        paymentMethod: data.user.userExist.paymentMethod != null ? true : false,
       });
       localStorage.setItem("token", data.user.token);
+      localStorage.setItem(
+        "paymentMethodVerified",
+        data.user.userExist.paymentMethod != null ? "true" : "false"
+      );
       localStorage.setItem("user", JSON.stringify(data.user.userExist));
-
+      console.log("from auth", auth);
       return { success: true, data };
     } catch (error) {
       return {
@@ -62,7 +70,7 @@ export const AuthProvider = ({ children }) => {
   }, [logout]);
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ auth, login, logout, setAuth }}>
       {children}
     </AuthContext.Provider>
   );

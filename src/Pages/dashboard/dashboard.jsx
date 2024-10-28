@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import Layout from "../../component/Layout/Layout";
 import LeadCard from "../../component/LeadCard/LeadCard";
 import PiddingCard from "../../component/PiddingCard/PiddingCard";
@@ -8,9 +8,22 @@ import FilterComponent from "../../component/FilterComponent/FilterComponent"; /
 
 import { useAuth } from "../../store/authContext";
 import axiosInstance from "../../axios";
+import ChildModal from "../../component/childModal/ChildModal";
 
 // Sample leads data
-
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState(0); // State to track which card to display
   const [pricedLeads, setpricedLeads] = useState([]); // State for filtered leads
@@ -18,9 +31,42 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState("error");
+  const [clientSecret, setClientSecret] = useState("");
+  const [customerId, setCustomerId] = useState("");
 
   const { auth } = useAuth();
+  const [verified, setVerified] = useState(false);
+
+  useEffect(() => {
+    setVerified(auth.paymentMethodVerified);
+    setLoading(false);
+    console.log("Auth changed:", auth);
+  }, [auth]);
+
   const [bidAmount, setbidAmount] = useState("");
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    axiosInstance
+      .post("setupPaymentIntent", {
+        email: auth.user.email,
+        name: auth.user.firstName,
+      })
+      .then((res) => {
+        setClientSecret(res.data.clientSecret);
+        setCustomerId(res.data.customerId);
+        setOpen(true);
+      })
+      .catch((err) => {
+        console.log("Error fetching client secret:", err);
+        return;
+      });
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   let ws; // Declare the WebSocket instance
 
   useEffect(() => {
@@ -120,8 +166,12 @@ const Dashboard = () => {
       });
   };
   const switchView = (event) => {
-    getbiddingLeads();
-    setActiveTab(event.target.checked ? 1 : 0);
+    if (auth.paymentMethodVerified) {
+      getbiddingLeads();
+      setActiveTab(event.target.checked ? 1 : 0);
+    } else {
+      handleOpen();
+    }
   };
 
   const handleBidChange = (leadId, value) => {
@@ -169,115 +219,135 @@ const Dashboard = () => {
         );
       });
   };
-  // const resetBidAmount = () =>{
 
-  // }
-
-  return (
-    <Layout>
-      <Box sx={{ p: 3, backgroundColor: "#F1F1F1", marginTop: "65px" }}>
-        {/* Filter and Switch Components */}
-
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "start",
-            mb: 2,
-            gap: 2,
-            flexWrap: "wrap",
-            "@media (max-width: 600px)": {
-              flexDirection: "column",
-              alignItems: "flex-start",
-            },
-          }}
+  if (loading) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <Layout>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="parent-modal-title"
+          aria-describedby="parent-modal-description"
         >
-          <SwitchComponent activeTab={activeTab} switchView={switchView} />
-          <FilterComponent
-            setpricedLeads={setpricedLeads}
-            sx={{ ml: 1 }}
-          />{" "}
-          {/* Add left margin if needed */}
-        </Box>
+          <Box sx={{ ...style, width: 400 }}>
+            <h2 id="parent-modal-title">You need payment verification</h2>
+            <p id="parent-modal-description">
+              You need to verify your payment first to access bidding leads
+            </p>
+            <ChildModal
+              clientSecret={clientSecret}
+              customerId={customerId}
+              close={handleClose}
+            />
+          </Box>
+        </Modal>
+        <Box sx={{ p: 3, backgroundColor: "#F1F1F1", marginTop: "65px" }}>
+          {/* Filter and Switch Components */}
 
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-        >
-          {activeTab === 0
-            ? pricedLeads.map((lead, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: {
-                      xs: "100%", // Full width on small screens
-                      sm: "50%", // Two cards per row on small screens
-                      md: "33.33%", // Three cards per row on medium screens
-                      lg: "33.33%", // Three cards per row on large screens
-                    },
-                    padding: 1,
-                    boxSizing: "border-box",
-                  }}
-                >
-              <LeadCard
-  leadId={lead._id} // Ensure this is passed
-  address={lead.addressLine}
-  city={lead.county.name}
-  condition={lead.condition}
-  askingPrice={lead.askingPrice}
-  leadType={lead.leadType?.name}
-  closingTime={lead.closingTime}
-  occupancy={lead.occupancy}
-/>
-                </Box>
-              ))
-            : biddingLeads.map((lead, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: {
-                      xs: "100%", // Full width on small screens
-                      sm: "50%", // Two cards per row on small and up
-                      md: activeTab === 0 ? "33.33%" : "50%", // For LeadCard, three cards in medium screens, and two for PiddingCard
-                      lg: activeTab === 0 ? "25%" : "50%", // Four cards in large screens for LeadCard, two for PiddingCard
-                    },
-                    padding: 1,
-                    boxSizing: "border-box",
-                  }}
-                >
-                  {
-                    <PiddingCard
-                      lead={lead}
-                      leadId={lead._id}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "start",
+              mb: 2,
+              gap: 2,
+              flexWrap: "wrap",
+              "@media (max-width: 600px)": {
+                flexDirection: "column",
+                alignItems: "flex-start",
+              },
+            }}
+          >
+            <SwitchComponent activeTab={activeTab} switchView={switchView} />
+            <FilterComponent
+              setpricedLeads={setpricedLeads}
+              sx={{ ml: 1 }}
+            />{" "}
+            {/* Add left margin if needed */}
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            {activeTab === 0
+              ? pricedLeads.map((lead, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: {
+                        xs: "100%", // Full width on small screens
+                        sm: "50%", // Two cards per row on small screens
+                        md: "33.33%", // Three cards per row on medium screens
+                        lg: "33.33%", // Three cards per row on large screens
+                      },
+                      padding: 1,
+                      boxSizing: "border-box",
+                    }}
+                  >
+                    {verified}
+                    <LeadCard
+                      leadId={lead._id} // Ensure this is passed
                       address={lead.addressLine}
                       city={lead.county.name}
                       condition={lead.condition}
-                      intialBiddingPrice={
-                        lead.bids.length != 0
-                          ? lead.bids[0].bidAmount
-                          : lead.intialBiddingPrice
-                      }
+                      askingPrice={lead.askingPrice}
                       leadType={lead.leadType?.name}
                       closingTime={lead.closingTime}
                       occupancy={lead.occupancy}
-                      status={lead.status}
-                      biddingAmount={biddingAmount}
-                      setbidAmount={setbidAmount}
-                      bidAmount={bidAmount}
-                      value={lead.value}
-                      errorMessage={lead.error}
-                      onBidChange={handleBidChange}
                     />
-                  }
-                </Box>
-              ))}
+                  </Box>
+                ))
+              : biddingLeads.map((lead, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: {
+                        xs: "100%", // Full width on small screens
+                        sm: "50%", // Two cards per row on small and up
+                        md: activeTab === 0 ? "33.33%" : "50%", // For LeadCard, three cards in medium screens, and two for PiddingCard
+                        lg: activeTab === 0 ? "25%" : "50%", // Four cards in large screens for LeadCard, two for PiddingCard
+                      },
+                      padding: 1,
+                      boxSizing: "border-box",
+                    }}
+                  >
+                    {
+                      <PiddingCard
+                        lead={lead}
+                        leadId={lead._id}
+                        address={lead.addressLine}
+                        city={lead.county.name}
+                        condition={lead.condition}
+                        intialBiddingPrice={
+                          lead.bids.length != 0
+                            ? lead.bids[0].bidAmount
+                            : lead.intialBiddingPrice
+                        }
+                        leadType={lead.leadType?.name}
+                        closingTime={lead.closingTime}
+                        occupancy={lead.occupancy}
+                        status={lead.status}
+                        biddingAmount={biddingAmount}
+                        setbidAmount={setbidAmount}
+                        bidAmount={bidAmount}
+                        value={lead.value}
+                        errorMessage={lead.error}
+                        onBidChange={handleBidChange}
+                      />
+                    }
+                  </Box>
+                ))}
+          </Box>
         </Box>
-      </Box>
-    </Layout>
-  );
+      </Layout>
+    );
+  }
 };
 
 export default Dashboard;
