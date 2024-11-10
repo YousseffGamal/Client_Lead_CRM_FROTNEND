@@ -5,7 +5,6 @@ import LeadCard from "../../component/LeadCard/LeadCard";
 import PiddingCard from "../../component/PiddingCard/PiddingCard";
 import SwitchComponent from "../../component/SwitchComponent/SwitchComponent";
 import FilterComponent from "../../component/FilterComponent/FilterComponent"; // Adjust the path if necessary
-
 import { useAuth } from "../../store/authContext";
 import axiosInstance from "../../axios";
 import ChildModal from "../../component/childModal/ChildModal";
@@ -33,7 +32,6 @@ const Dashboard = () => {
   const [errorMessage, setErrorMessage] = useState("error");
   const [clientSecret, setClientSecret] = useState("");
   const [customerId, setCustomerId] = useState("");
-
   const { auth } = useAuth();
   const [verified, setVerified] = useState(false);
 
@@ -44,7 +42,6 @@ const Dashboard = () => {
   }, [auth]);
 
   const [bidAmount, setbidAmount] = useState("");
-
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {

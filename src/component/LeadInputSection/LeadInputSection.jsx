@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
+
 import { Box, TextField, Typography, Button, Modal } from "@mui/material";
 import ChildModal from "../childModal/ChildModal";
 const style = {
@@ -78,7 +80,7 @@ const LeadInputSection = () => {
           />
           <TextField
             fullWidth
-            label="Property Condition"
+            label="Condition"
             variant="outlined"
             margin="normal"
             multiline
@@ -159,7 +161,7 @@ const LeadInputSection = () => {
         <Box sx={{ flex: 1 }}>
           <TextField
             fullWidth
-            label="States"
+            label="State"
             variant="outlined"
             margin="normal"
             sx={{
@@ -200,7 +202,7 @@ const LeadInputSection = () => {
         <Box sx={{ flex: 1 }}>
           <TextField
             fullWidth
-            label="Seller Address:"
+            label="Address Line:"
             variant="outlined"
             margin="normal"
             sx={{
@@ -241,7 +243,7 @@ const LeadInputSection = () => {
         <Box sx={{ flex: 1, mr: 1 }}>
           <TextField
             fullWidth
-            label="Listing:"
+            label="Status:"
             variant="outlined"
             margin="normal"
             sx={{
@@ -435,7 +437,7 @@ const LeadInputSection = () => {
         <Box sx={{ flex: 1 }}>
           <TextField
             fullWidth
-            label="Reason for Selling:"
+            label="Motivation:"
             variant="outlined"
             margin="normal"
             sx={{
