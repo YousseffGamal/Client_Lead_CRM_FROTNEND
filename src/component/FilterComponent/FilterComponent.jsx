@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   FormControl,
@@ -9,68 +9,80 @@ import {
   IconButton,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import axiosInstance from "../../axios";
+import {
+  occupancyOptions,
+  leadTemperatureOptions,
+} from "../../component/constance/constance";
 
-const FilterComponent = ({ setpricedLeads }) => {
+const FilterComponent = ({ setPricedLeads }) => {
   const [state, setState] = useState("");
-  const [askingPrice, setAskingPrice] = useState("");
   const [occupancy, setOccupancy] = useState("");
-  const [closing, setClosing] = useState("");
   const [temperature, setTemperature] = useState("");
+  const [startClosing, setStartClosing] = useState("");
+  const [endClosing, setEndClosing] = useState("");
+  const [startAskingPrice, setStartAskingPrice] = useState("");
+  const [endAskingPrice, setEndAskingPrice] = useState("");
+  const [states, setStates] = useState([]);
 
-  const states = [
-    { id: "1", name: "Texas" },
-    { id: "2", name: "California" },
-    { id: "3", name: "New York" },
-    // Add more states as needed
-  ];
+  // Fetch states from the server
+  const getStates = async () => {
+    try {
+      const response = await axiosInstance.get("/getAllStates");
+      setStates(response.data.states);
+    } catch (error) {
+      console.error("Error fetching states:", error);
+    }
+  };
 
-  const occupancyOptions = [
-    { value: "occupied", label: "Occupied" },
-    { value: "vacant", label: "Vacant" },
-    // Add more occupancy options as needed
-  ];
-
-  const leadTemperatureOptions = [
-    { value: "hot", label: "Hot" },
-    { value: "warm", label: "Warm" },
-    { value: "cold", label: "Cold" },
-  ];
+  useEffect(() => {
+    getStates();
+  }, []);
 
   const handleChange = (event, setter) => {
     setter(event.target.value);
   };
 
-  const handleFilter = () => {
-    // Example filter logic (replace with your actual filtering logic)
-    const filteredLeads = leads.filter((lead) => {
-      return (
-        (state === "" || lead.state === state) &&
-        (occupancy === "" || lead.occupancy === occupancy) &&
-        (closing === "" || lead.closing <= closing) &&
-        (temperature === "" || lead.status === temperature)
+  // Handle filtering and setting data
+  const handleFilter = async () => {
+    try {
+      const queryParams = {
+        state,
+        occupancy,
+        leadType: temperature,
+        startAskingPrice,
+        endAskingPrice,
+        closing: `${startClosing}-${endClosing}`,
+      };
+
+      const response = await axiosInstance.get(
+        "/getLeadsFiltered",
+        { params: queryParams }
       );
-    });
-    setpricedLeads(filteredLeads);
+
+      setPricedLeads(response.data.data); // Make sure the state update function for leads is passed as a prop
+    } catch (error) {
+      console.error("Error fetching filtered leads:", error);
+    }
   };
 
   return (
     <Box
       sx={{
         display: "flex",
-        flexWrap: "wrap", // Allow wrapping for all screen sizes
-        gap: 2, // Add consistent spacing between fields
+        flexWrap: "wrap",
+        gap: 2,
         alignItems: "center",
-        justifyContent: { xs: "center", sm: "flex-start" }, // Center on small screens, left-align on larger
+        justifyContent: { xs: "center", sm: "flex-start" },
         marginBottom: 2,
       }}
     >
-      {/* State Filter */}
       <FormControl sx={{ flex: 1, minWidth: 185.79 }}>
         <InputLabel>State</InputLabel>
         <Select
           value={state}
           label="State"
-          onChange={(event) => handleChange(event, setState)}
+          onChange={(event) => handleChange(event, setState)} // Corrected here to setState
         >
           <MenuItem value="">
             <em>None</em>
@@ -83,7 +95,6 @@ const FilterComponent = ({ setpricedLeads }) => {
         </Select>
       </FormControl>
 
-      {/* Occupancy Filter */}
       <FormControl sx={{ flex: 1, minWidth: 185.79 }}>
         <InputLabel>Occupancy</InputLabel>
         <Select
@@ -102,25 +113,6 @@ const FilterComponent = ({ setpricedLeads }) => {
         </Select>
       </FormControl>
 
-      {/* Closing Filter */}
-      <TextField
-        value={closing}
-        label="Closing"
-        onChange={(event) => handleChange(event, setClosing)}
-        type="number"
-        sx={{ flex: 1, minWidth: 185.79 }}
-      />
-
-      {/* Asking Price Filter */}
-      <TextField
-        value={askingPrice}
-        label="Asking Price"
-        onChange={(event) => handleChange(event, setAskingPrice)}
-        type="number"
-        sx={{ flex: 1, minWidth: 185.79 }}
-      />
-
-      {/* Temperature Filter */}
       <FormControl sx={{ flex: 1, minWidth: 185.79 }}>
         <InputLabel>Lead Type</InputLabel>
         <Select
@@ -139,7 +131,38 @@ const FilterComponent = ({ setpricedLeads }) => {
         </Select>
       </FormControl>
 
-      {/* Icon Filter Button */}
+      {/* Closing Range Filters */}
+      <TextField
+        value={startClosing}
+        label="Start Closing (Days)"
+        onChange={(event) => handleChange(event, setStartClosing)}
+        type="number"
+        sx={{ flex: 1, minWidth: 185.79 }}
+      />
+      <TextField
+        value={endClosing}
+        label="End Closing (Days)"
+        onChange={(event) => handleChange(event, setEndClosing)}
+        type="number"
+        sx={{ flex: 1, minWidth: 185.79 }}
+      />
+
+      {/* Asking Price Range Filters */}
+      <TextField
+        value={startAskingPrice}
+        label="Start Asking Price ($)"
+        onChange={(event) => handleChange(event, setStartAskingPrice)}
+        type="number"
+        sx={{ flex: 1, minWidth: 185.79 }}
+      />
+      <TextField
+        value={endAskingPrice}
+        label="End Asking Price ($)"
+        onChange={(event) => handleChange(event, setEndAskingPrice)}
+        type="number"
+        sx={{ flex: 1, minWidth: 185.79 }}
+      />
+
       <IconButton
         sx={{
           backgroundColor: "#000000",

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Modal } from "@mui/material";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import Layout from "../../component/Layout/Layout";
 import LeadCard from "../../component/LeadCard/LeadCard";
 import PiddingCard from "../../component/PiddingCard/PiddingCard";
@@ -288,6 +289,7 @@ const Dashboard = () => {
                     }}
                   >
                     {verified}
+                    {/* <Link to={`/leads/${lead._id}`}> */}
                     <LeadCard
                       leadId={lead._id} // Ensure this is passed
                       address={lead.addressLine}
@@ -298,6 +300,7 @@ const Dashboard = () => {
                       closingTime={lead.closingTime}
                       occupancy={lead.occupancy}
                     />
+                    {/* </Link> */}
                   </Box>
                 ))
               : biddingLeads.map((lead, index) => (
@@ -314,6 +317,7 @@ const Dashboard = () => {
                       boxSizing: "border-box",
                     }}
                   >
+                   {/* <Link to={`/leads/${lead._id}`}> */}
                     {
                       <PiddingCard
                         lead={lead}
@@ -338,6 +342,7 @@ const Dashboard = () => {
                         onBidChange={handleBidChange}
                       />
                     }
+                    {/* </Link> */}
                   </Box>
                 ))}
           </Box>
