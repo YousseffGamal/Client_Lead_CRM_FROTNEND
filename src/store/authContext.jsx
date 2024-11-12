@@ -7,8 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     token: localStorage.getItem("token") || "",
     user: JSON.parse(localStorage.getItem("user")) || null,
-    paymentMethodVerified:
-      localStorage.getItem("paymentMethodVerified") === "true",
+    paymentMethod: localStorage.getItem("paymentMethod") || null,
   });
 
   const login = async (cred) => {
@@ -23,8 +22,8 @@ export const AuthProvider = ({ children }) => {
       });
       localStorage.setItem("token", data.user.token);
       localStorage.setItem(
-        "paymentMethodVerified",
-        data.user.userExist.paymentMethod != null ? "true" : "false"
+        "paymentMethod",
+        data.user.userExist.paymentMethod != null ? true : false
       );
       localStorage.setItem("user", JSON.stringify(data.user.userExist));
       console.log("from auth", auth);
@@ -41,14 +40,16 @@ export const AuthProvider = ({ children }) => {
     axiosInstance
       .post("logout")
       .then((res) => {
+        console.log("logout sucess");
         setAuth({ token: "", user: "" }); // Reset permissions state
         localStorage.removeItem("token");
         localStorage.removeItem("user");
       })
       .catch((err) => {
-        setAuth({ token: "", user: "" }); // Reset permissions state
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        // setAuth({ token: "", user: "" }); // Reset permissions state
+        // locallStoraStorage.removeItem("token");
+        // locage.removeItem("user");
+        console.log("logout failer");
       });
   };
 

@@ -53,8 +53,13 @@ function PaymentForm({ handleClose, clientSecret, customerId }) {
           const updatedAuth = {
             ...auth,
             paymentMethodVerified: true,
+            user: {
+              ...auth.user,
+              customerId,
+            },
           };
           setAuth(updatedAuth);
+          console.log("cameHerepaymentForm");
           localStorage.setItem("paymentMethodVerified", true);
           handleClose();
         } else {

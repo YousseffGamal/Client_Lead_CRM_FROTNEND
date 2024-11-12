@@ -1,0 +1,80 @@
+.payment-method-selector {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payment-method-selector h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .payment-methods-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .payment-method-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .payment-method-card.selected {
+    border-color: #4a90e2;
+  }
+  
+  .method-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .method-info .brand {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .method-info .last4 {
+    color: #999;
+  }
+  
+  .method-info .expiry {
+    font-size: 0.8rem;
+    color: #777;
+  }
+  
+  .pay-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pay-button:hover {
+    background-color: #357ab8;
+  }
+  
+  .pay-button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }

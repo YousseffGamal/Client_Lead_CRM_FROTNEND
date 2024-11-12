@@ -91,7 +91,7 @@ const Layout = ({ children, headerText, pageType }) => {
             padding: "8px 16px",
           }}
         >
-          Welcome <br /> Back, {auth.user.firstName}!
+          Welcome <br /> Back, {auth.user?.firstName}!
         </Typography>
         <Typography
           className="About"
@@ -337,7 +337,7 @@ const Layout = ({ children, headerText, pageType }) => {
                       fontSize: { xs: "0.875rem", sm: "1rem" },
                     }}
                   >
-                    {auth.user.firstName }
+                    {auth.user?.firstName}
                   </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
@@ -349,7 +349,7 @@ const Layout = ({ children, headerText, pageType }) => {
                       fontSize: { xs: "0.75rem", sm: "0.875rem" },
                     }}
                   >
-                    {auth.user.email}
+                    {auth.user?.email}
                   </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>

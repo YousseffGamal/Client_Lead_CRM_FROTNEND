@@ -8,7 +8,10 @@ const ChildModal = ({ clientSecret, customerId, close }) => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const closeAfterSuccess = () => {
     close();
+    setOpen(false);
   };
 
   const style = {
@@ -41,7 +44,7 @@ const ChildModal = ({ clientSecret, customerId, close }) => {
           </p>
           <Button onClick={handleClose}>Close Child Modal</Button> */}
           <PaymentIntentForm
-            handleClose={handleClose}
+            handleClose={closeAfterSuccess}
             clientSecret={clientSecret}
             customerId={customerId}
           />

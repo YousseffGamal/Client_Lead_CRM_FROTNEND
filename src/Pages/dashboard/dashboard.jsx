@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Box, Modal } from "@mui/material";
 import Layout from "../../component/Layout/Layout";
 import LeadCard from "../../component/LeadCard/LeadCard";
@@ -34,14 +34,14 @@ const Dashboard = () => {
   const [clientSecret, setClientSecret] = useState("");
   const [customerId, setCustomerId] = useState("");
 
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const [verified, setVerified] = useState(false);
-
+  const memoizedAuth = useMemo(() => auth, [auth]);
   useEffect(() => {
-    setVerified(auth.paymentMethodVerified);
+    setVerified(memoizedAuth.user.paymentMethod);
     setLoading(false);
-    console.log("Auth changed:", auth);
-  }, [auth]);
+    console.log("Auth changed:", memoizedAuth);
+  }, [memoizedAuth]);
 
   const [bidAmount, setbidAmount] = useState("");
 
@@ -64,6 +64,15 @@ const Dashboard = () => {
       });
   };
   const handleClose = () => {
+    setOpen(false);
+  };
+  const modalClose = () => {
+    getbiddingLeads();
+    setAuth({ ...auth, paymentMethod: true });
+    console.log("cameHereModalClose");
+    localStorage.setItem("paymentMethod", true);
+    setActiveTab(1);
+
     setOpen(false);
   };
 
@@ -166,10 +175,11 @@ const Dashboard = () => {
       });
   };
   const switchView = (event) => {
-    if (auth.paymentMethodVerified) {
+    if (auth.paymentMethod) {
       getbiddingLeads();
       setActiveTab(event.target.checked ? 1 : 0);
     } else {
+      console.log(auth);
       handleOpen();
     }
   };
@@ -239,7 +249,7 @@ const Dashboard = () => {
             <ChildModal
               clientSecret={clientSecret}
               customerId={customerId}
-              close={handleClose}
+              close={modalClose}
             />
           </Box>
         </Modal>
@@ -290,7 +300,6 @@ const Dashboard = () => {
                       boxSizing: "border-box",
                     }}
                   >
-                    {verified}
                     <LeadCard
                       leadId={lead._id} // Ensure this is passed
                       address={lead.addressLine}

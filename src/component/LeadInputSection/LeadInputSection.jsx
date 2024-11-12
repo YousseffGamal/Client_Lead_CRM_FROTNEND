@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Box, TextField, Typography, Button, Modal } from "@mui/material";
 import ChildModal from "../childModal/ChildModal";
+import PaymentMethodSelector from "../paymentMethods/PaymentMethods";
+import CheckOutForm from "../CheckOutForm/CheckOutForm";
+import { useAuth } from "../../store/authContext";
+import CheckOutComponent from "../CheckOutComponent/CheckOutComponent";
 const style = {
   position: "absolute",
   top: "50%",
@@ -13,13 +17,39 @@ const style = {
   pt: 2,
   px: 4,
   pb: 3,
+  maxHeight: "600px", // Set a max height for the box
+  overflowY: "auto",
 };
 const LeadInputSection = () => {
+  const { auth, setAuth } = useAuth();
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
+    setOpen(false);
+  };
+  const handlesuccessfulLogin = (CustomerId) => {
+    setAuth({
+      ...auth,
+      paymentMethod: true,
+      user: {
+        ...auth.user,
+        CustomerId,
+      },
+    });
+    // Retrieve the existing user object from localStorage
+    let user = JSON.parse(localStorage.getItem("user"));
+
+    // Update the CustomerId property
+    user = {
+      ...user,
+      CustomerId,
+    };
+
+    // Save the updated user object back to localStorage
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("paymentMethod", true);
     setOpen(false);
   };
   return (
@@ -474,12 +504,18 @@ const LeadInputSection = () => {
             aria-labelledby="parent-modal-title"
             aria-describedby="parent-modal-description"
           >
-            <Box sx={{ ...style, width: 400 }}>
-              <h2 id="parent-modal-title">Text in a modal</h2>
-              <p id="parent-modal-description">
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-              </p>
-              <ChildModal />
+            <Box sx={{ ...style, width: 600 }}>
+              {auth.paymentMethod ? (
+                <PaymentMethodSelector
+                  amount={300}
+                  handleClose={handlesuccessfulLogin}
+                />
+              ) : (
+                <CheckOutComponent
+                  amount={300}
+                  handleClose={handlesuccessfulLogin}
+                />
+              )}
             </Box>
           </Modal>
         </Box>
