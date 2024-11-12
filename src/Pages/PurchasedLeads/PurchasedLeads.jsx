@@ -14,7 +14,7 @@ const PurchasedLeads = () => {
     const fetchPurchasedLeads = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get("/user/getPurchasedLeads");
+        const response = await axiosInstance.get(`/getUserLeads/${id}`);
         setPurchasedLeads(response.data.data);
         setLoading(false);
       } catch (err) {
