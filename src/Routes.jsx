@@ -7,6 +7,7 @@ import ProtectedRoute from "./utiliteis/protectedRoute";
 import BlogsArticles from "./Pages/BlogsArticles/BlogsArticles";
 import LeadView from "./Pages/LeadView/LeadView ";
 import Profile from "./Pages/profile/profile";
+import PurchasedLeads from "./Pages/PurchasedLeads/PurchasedLeads";
 
 const ProjectRoutes = () => {
   return (
@@ -22,7 +23,7 @@ const ProjectRoutes = () => {
         </Route>
         <Route path="/" element={<LoginPage />} />
         <Route path="/leadview/:leadId" element={<LeadView />} /> {/* Dynamic route */}
-
+        <Route path="/purchased-leads" element={<PurchasedLeads />} />
         <Route path="/signuppage" element={<SignUpPage />} />
       </Routes>
     </Router>
