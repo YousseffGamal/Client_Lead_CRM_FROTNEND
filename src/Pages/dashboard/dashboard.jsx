@@ -66,27 +66,10 @@ const Dashboard = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const modalClose = (CustomerId) => {
+  const modalClose = () => {
     getbiddingLeads();
-    setAuth({
-      ...auth,
-      paymentMethod: true,
-      user: {
-        ...auth.user,
-        CustomerId,
-      },
-    });
-    // Retrieve the existing user object from localStorage
-    let user = JSON.parse(localStorage.getItem("user"));
-
-    // Update the CustomerId property
-    user = {
-      ...user,
-      CustomerId,
-    };
-
-    // Save the updated user object back to localStorage
-    localStorage.setItem("user", JSON.stringify(user));
+    setAuth({ ...auth, paymentMethod: true });
+    console.log("cameHereModalClose");
     localStorage.setItem("paymentMethod", true);
     setActiveTab(1);
 
