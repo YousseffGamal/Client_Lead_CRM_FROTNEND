@@ -31,7 +31,7 @@ const SwitchComponent = ({ activeTab, switchView }) => {
         variant="h6"
         sx={{ color: activeTab === 1 ? "#0177FB" : "#000", ml: 2 }}
       >
-        Pidding Leads
+        Bidding Leads
       </Typography>
     </Box>
   );

@@ -30,26 +30,30 @@ const LeadInputSection = () => {
     setOpen(false);
   };
   const handlesuccessfulLogin = (CustomerId) => {
-    setAuth({
-      ...auth,
-      paymentMethod: true,
-      user: {
-        ...auth.user,
+    console.log("CustomerId", CustomerId);
+    if (CustomerId) {
+      setAuth({
+        ...auth,
+        paymentMethod: true,
+        user: {
+          ...auth.user,
+          CustomerId,
+        },
+      });
+      // Retrieve the existing user object from localStorage
+      let user = JSON.parse(localStorage.getItem("user"));
+
+      // Update the CustomerId property
+      user = {
+        ...user,
         CustomerId,
-      },
-    });
-    // Retrieve the existing user object from localStorage
-    let user = JSON.parse(localStorage.getItem("user"));
+      };
 
-    // Update the CustomerId property
-    user = {
-      ...user,
-      CustomerId,
-    };
+      // Save the updated user object back to localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("paymentMethod", true);
+    }
 
-    // Save the updated user object back to localStorage
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("paymentMethod", true);
     setOpen(false);
   };
   return (

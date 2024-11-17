@@ -20,6 +20,8 @@ const PaymentMethodSelector = ({ amount, handleClose }) => {
           customerId: auth.user.CustomerId,
           amount,
           currency: "usd",
+          userID: auth.user._id,
+          leadId: "67190df38a219b0c77fa25ca",
         }
       );
       console.log(response);
@@ -37,6 +39,7 @@ const PaymentMethodSelector = ({ amount, handleClose }) => {
 
   useEffect(() => {
     const fetchPaymentMethods = async () => {
+      console.log("auth", auth.user.CustomerId);
       const response = await axiosInstance.get(
         `saved-payment-methods-for-user/${auth.user.CustomerId}`
       );

@@ -46,12 +46,13 @@ const CheckOutForm = ({ clientSecret, customerId, handleClose }) => {
         setSuccess("Payment successful!");
         alert("Payment successful!");
 
-        await axiosInstance.post("/savePaymentMethodAfterMakingAPayment", {
+        await axiosInstance.post("/handlesuccessLeadPurchase", {
           paymentMethodId: paymentIntent.payment_method,
           customerId,
           userID: auth.user._id,
           savePaymentInfo: saveInfo ? true : false,
-          LeadId: "67190df38a219b0c77fa25ca",
+          leadId: "67190df38a219b0c77fa25ca",
+          amount: 1000,
         });
 
         handleClose(customerId);

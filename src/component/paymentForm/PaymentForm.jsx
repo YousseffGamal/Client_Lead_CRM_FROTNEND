@@ -49,6 +49,7 @@ function PaymentForm({ handleClose, clientSecret, customerId }) {
         const { success } = response.data;
 
         if (success) {
+          console.log("customerId", customerId);
           alert("Card saved successfully!");
           const updatedAuth = {
             ...auth,
@@ -61,7 +62,7 @@ function PaymentForm({ handleClose, clientSecret, customerId }) {
           setAuth(updatedAuth);
           console.log("cameHerepaymentForm");
           localStorage.setItem("paymentMethodVerified", true);
-          handleClose();
+          handleClose(customerId);
         } else {
           alert("Failed to save card info!");
         }

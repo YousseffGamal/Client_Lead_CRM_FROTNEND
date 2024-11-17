@@ -9,8 +9,8 @@ const ChildModal = ({ clientSecret, customerId, close }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const closeAfterSuccess = () => {
-    close();
+  const closeAfterSuccess = (cxId) => {
+    close(cxId);
     setOpen(false);
   };
 
