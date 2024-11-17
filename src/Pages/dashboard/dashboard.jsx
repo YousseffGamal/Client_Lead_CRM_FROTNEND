@@ -28,7 +28,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState(0); // State to track which card to display
   const [pricedLeads, setpricedLeads] = useState([]); // State for filtered leads
   const [biddingLeads, setbiddingLeads] = useState([]); // State for filtered leads
-  const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState("error");
   const [clientSecret, setClientSecret] = useState("");
@@ -39,7 +39,7 @@ const Dashboard = () => {
   const memoizedAuth = useMemo(() => auth, [auth]);
   useEffect(() => {
     setVerified(memoizedAuth.user.paymentMethod);
-    setLoading(false);
+
     console.log("Auth changed:", memoizedAuth);
   }, [memoizedAuth]);
 
@@ -149,14 +149,11 @@ const Dashboard = () => {
   }, []);
   const fetchLeads = async () => {
     try {
-      setLoading(true);
       const response = await axiosInstance.get("/UsergetAllLeads");
 
       setpricedLeads(response.data.data);
-      setLoading(false);
     } catch (err) {
       setError("Error fetching leads data");
-      setLoading(false);
     }
   };
 
@@ -230,133 +227,129 @@ const Dashboard = () => {
       });
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <Layout>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="parent-modal-title"
-          aria-describedby="parent-modal-description"
+  return (
+    <Layout>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={{ ...style, width: 400 }}>
+          <h2 id="parent-modal-title">You need payment verification</h2>
+          <p id="parent-modal-description">
+            You need to verify your payment first to access bidding leads
+          </p>
+          <ChildModal
+            clientSecret={clientSecret}
+            customerId={customerId}
+            close={modalClose}
+          />
+        </Box>
+      </Modal>
+      <Box sx={{ p: 3, backgroundColor: "#F1F1F1", marginTop: "65px" }}>
+        {/* Filter and Switch Components */}
+
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            mb: 2,
+            gap: 2,
+            flexWrap: "wrap",
+            "@media (max-width: 600px)": {
+              flexDirection: "column",
+              alignItems: "flex-start",
+            },
+          }}
         >
-          <Box sx={{ ...style, width: 400 }}>
-            <h2 id="parent-modal-title">You need payment verification</h2>
-            <p id="parent-modal-description">
-              You need to verify your payment first to access bidding leads
-            </p>
-            <ChildModal
-              clientSecret={clientSecret}
-              customerId={customerId}
-              close={modalClose}
-            />
-          </Box>
-        </Modal>
-        <Box sx={{ p: 3, backgroundColor: "#F1F1F1", marginTop: "65px" }}>
-          {/* Filter and Switch Components */}
+          <SwitchComponent activeTab={activeTab} switchView={switchView} />
+          <FilterComponent
+            setpricedLeads={setpricedLeads}
+            sx={{ ml: 1 }}
+          />{" "}
+          {/* Add left margin if needed */}
+        </Box>
 
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "start",
-              mb: 2,
-              gap: 2,
-              flexWrap: "wrap",
-              "@media (max-width: 600px)": {
-                flexDirection: "column",
-                alignItems: "flex-start",
-              },
-            }}
-          >
-            <SwitchComponent activeTab={activeTab} switchView={switchView} />
-            <FilterComponent
-              setpricedLeads={setpricedLeads}
-              sx={{ ml: 1 }}
-            />{" "}
-            {/* Add left margin if needed */}
-          </Box>
-
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            {activeTab === 0
-              ? pricedLeads.map((lead, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      width: {
-                        xs: "100%", // Full width on small screens
-                        sm: "50%", // Two cards per row on small screens
-                        md: "33.33%", // Three cards per row on medium screens
-                        lg: "33.33%", // Three cards per row on large screens
-                      },
-                      padding: 1,
-                      boxSizing: "border-box",
-                    }}
-                  >
-                    <LeadCard
-                      leadId={lead._id} // Ensure this is passed
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
+          {activeTab === 0
+            ? pricedLeads.map((lead, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    width: {
+                      xs: "100%", // Full width on small screens
+                      sm: "50%", // Two cards per row on small screens
+                      md: "33.33%", // Three cards per row on medium screens
+                      lg: "33.33%", // Three cards per row on large screens
+                    },
+                    padding: 1,
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <LeadCard
+                    leadId={lead._id} // Ensure this is passed
+                    address={lead.addressLine}
+                    city={lead.county.name}
+                    condition={lead.condition}
+                    askingPrice={lead.askingPrice}
+                    leadType={lead.leadType?.name}
+                    closingTime={lead.closingTime}
+                    occupancy={lead.occupancy}
+                  />
+                </Box>
+              ))
+            : biddingLeads.map((lead, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    width: {
+                      xs: "100%", // Full width on small screens
+                      sm: "50%", // Two cards per row on small and up
+                      md: activeTab === 0 ? "33.33%" : "50%", // For LeadCard, three cards in medium screens, and two for PiddingCard
+                      lg: activeTab === 0 ? "25%" : "50%", // Four cards in large screens for LeadCard, two for PiddingCard
+                    },
+                    padding: 1,
+                    boxSizing: "border-box",
+                  }}
+                >
+                  {
+                    <PiddingCard
+                      lead={lead}
+                      leadId={lead._id}
                       address={lead.addressLine}
                       city={lead.county.name}
                       condition={lead.condition}
-                      askingPrice={lead.askingPrice}
+                      intialBiddingPrice={
+                        lead.bids.length != 0
+                          ? lead.bids[0].bidAmount
+                          : lead.intialBiddingPrice
+                      }
                       leadType={lead.leadType?.name}
                       closingTime={lead.closingTime}
                       occupancy={lead.occupancy}
+                      status={lead.status}
+                      biddingAmount={biddingAmount}
+                      setbidAmount={setbidAmount}
+                      bidAmount={bidAmount}
+                      value={lead.value}
+                      errorMessage={lead.error}
+                      onBidChange={handleBidChange}
                     />
-                  </Box>
-                ))
-              : biddingLeads.map((lead, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      width: {
-                        xs: "100%", // Full width on small screens
-                        sm: "50%", // Two cards per row on small and up
-                        md: activeTab === 0 ? "33.33%" : "50%", // For LeadCard, three cards in medium screens, and two for PiddingCard
-                        lg: activeTab === 0 ? "25%" : "50%", // Four cards in large screens for LeadCard, two for PiddingCard
-                      },
-                      padding: 1,
-                      boxSizing: "border-box",
-                    }}
-                  >
-                    {
-                      <PiddingCard
-                        lead={lead}
-                        leadId={lead._id}
-                        address={lead.addressLine}
-                        city={lead.county.name}
-                        condition={lead.condition}
-                        intialBiddingPrice={
-                          lead.bids.length != 0
-                            ? lead.bids[0].bidAmount
-                            : lead.intialBiddingPrice
-                        }
-                        leadType={lead.leadType?.name}
-                        closingTime={lead.closingTime}
-                        occupancy={lead.occupancy}
-                        status={lead.status}
-                        biddingAmount={biddingAmount}
-                        setbidAmount={setbidAmount}
-                        bidAmount={bidAmount}
-                        value={lead.value}
-                        errorMessage={lead.error}
-                        onBidChange={handleBidChange}
-                      />
-                    }
-                  </Box>
-                ))}
-          </Box>
+                  }
+                </Box>
+              ))}
         </Box>
-      </Layout>
-    );
-  }
+      </Box>
+    </Layout>
+  );
 };
 
 export default Dashboard;

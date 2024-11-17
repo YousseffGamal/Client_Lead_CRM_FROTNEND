@@ -154,22 +154,23 @@ const Layout = ({ children, headerText, pageType }) => {
             />
           </ListItem>
         </Link>
-
-        <Link to="/blogsarticles" style={{ textDecoration: "none" }}>
+        {/* purchasedLeads */}
+        <Link to="/purchasedLeads" style={{ textDecoration: "none" }}>
           <ListItem
             button
-            onClick={() => handleLinkClick("/blogsarticles")}
+            onClick={() => handleLinkClick("/purchasedLeads")}
             sx={{
               width: "90%",
+              marginBottom: "23px",
               backgroundColor:
-                activeLink === "/blogsarticles" ? "#000000" : "transparent",
-              color: activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
+                activeLink === "/purchasedLeads" ? "#000000" : "transparent",
+              color: activeLink === "/purchasedLeads" ? "#F1F1F1" : "#656565",
               height: "77px",
               borderRadius: "30px",
               "&:hover": {
                 backgroundColor:
-                  activeLink === "/blogsarticles" ? "#000000" : "transparent", // Neutralize hover effect
-                color: activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
+                  activeLink === "/purchasedLeads" ? "#000000" : "transparent", // Neutralize hover effect
+                color: activeLink === "/purchasedLeads" ? "#F1F1F1" : "#656565",
               },
             }}
           >
@@ -177,15 +178,15 @@ const Layout = ({ children, headerText, pageType }) => {
               <People
                 style={{
                   color:
-                    activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
+                    activeLink === "/purchasedLeads" ? "#F1F1F1" : "#656565",
                 }}
               />
             </ListItemIcon>
             <ListItemText
               className="NavText"
-              primary="Blogs & Articles"
+              primary="Purchased Leads"
               sx={{
-                color: activeLink === "/blogsarticles" ? "#F1F1F1" : "#656565",
+                color: activeLink === "/purchasedLeads" ? "#F1F1F1" : "#656565",
               }}
             />
           </ListItem>

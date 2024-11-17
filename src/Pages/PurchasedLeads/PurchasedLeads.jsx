@@ -1,46 +1,56 @@
-// PurchasedLeads.js
-import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
-import axiosInstance from "../../axios";
-import LeadCard from "../../component/LeadCard/LeadCard"; // Adjust the path if necessary
+import React, { useState, useEffect, useMemo } from "react";
+import { Box, Modal } from "@mui/material";
 import Layout from "../../component/Layout/Layout";
+import LeadCard from "../../component/LeadCard/LeadCard";
+import FilterComponent from "../../component/FilterComponent/FilterComponent"; // Adjust the path if necessary
+import axiosInstance from "../../axios";
+import { useAuth } from "../../store/authContext";
 
-const PurchasedLeads = () => {
-  const [purchasedLeads, setPurchasedLeads] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const Dashboard = () => {
+  const [pricedLeads, setpricedLeads] = useState([]); // State for filtered leads
 
+  const { auth } = useAuth();
+  const fetchLeads = async () => {
+    try {
+      console.log("auth", auth.user._id);
+      const response = await axiosInstance.get(
+        `/userPurchasedLeads/${auth.user._id}`
+      );
+      console.log(response);
+      setpricedLeads(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Fetch leads from API
   useEffect(() => {
-    const fetchPurchasedLeads = async () => {
-      try {
-        setLoading(true);
-        const response = await axiosInstance.get(`/getUserLeads/${leadId}`);
-        // setPurchasedLeads(response.data.data);
-        return response.data.data;
-        setLoading(false);
-      } catch (err) {
-        setError("Error fetching purchased leads data");
-        setLoading(false);
-      }
-    };
-
-    fetchPurchasedLeads();
+    fetchLeads();
   }, []);
 
-  if (loading) {
-    return <div>Loading purchased leads...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
-    <Layout>
+    <Layout headerText="Purchased Leads" pageType="purchasedLeads">
       <Box sx={{ p: 3, backgroundColor: "#F1F1F1", marginTop: "65px" }}>
-        <Typography variant="h4" gutterBottom>
-          Purchased Leads 
-        </Typography>
+        {/* Filter and Switch Components */}
+
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            mb: 2,
+            gap: 2,
+            flexWrap: "wrap",
+            "@media (max-width: 600px)": {
+              flexDirection: "column",
+              alignItems: "flex-start",
+            },
+          }}
+        >
+          <FilterComponent setpricedLeads={setpricedLeads} sx={{ ml: 1 }} />{" "}
+          {/* Add left margin if needed */}
+        </Box>
+
         <Box
           sx={{
             display: "flex",
@@ -48,40 +58,36 @@ const PurchasedLeads = () => {
             justifyContent: "center",
           }}
         >
-          {purchasedLeads.length > 0 ? (
-            purchasedLeads.map((lead) => (
-              <Box
-                key={lead._id}
-                sx={{
-                  width: {
-                    xs: "100%",
-                    sm: "50%",
-                    md: "33.33%",
-                    lg: "25%",
-                  },
-                  padding: 1,
-                  boxSizing: "border-box",
-                }}
-              >
-                <LeadCard
-                  leadId={lead._id}
-                  address={lead.addressLine}
-                  city={lead.county.name}
-                  condition={lead.condition}
-                  askingPrice={lead.askingPrice}
-                  leadType={lead.leadType?.name}
-                  closingTime={lead.closingTime}
-                  occupancy={lead.occupancy}
-                />
-              </Box>
-            ))
-          ) : (
-            <Typography variant="body1">No purchased leads found.</Typography>
-          )}
+          {pricedLeads.map((lead, index) => (
+            <Box
+              key={index}
+              sx={{
+                width: {
+                  xs: "100%", // Full width on small screens
+                  sm: "50%", // Two cards per row on small screens
+                  md: "33.33%", // Three cards per row on medium screens
+                  lg: "33.33%", // Three cards per row on large screens
+                },
+                padding: 1,
+                boxSizing: "border-box",
+              }}
+            >
+              <LeadCard
+                leadId={lead._id} // Ensure this is passed
+                address={lead.addressLine}
+                city={lead.county.name}
+                condition={lead.condition}
+                askingPrice={lead.askingPrice}
+                leadType={lead.leadType?.name}
+                closingTime={lead.closingTime}
+                occupancy={lead.occupancy}
+              />
+            </Box>
+          ))}
         </Box>
       </Box>
     </Layout>
   );
 };
 
-export default PurchasedLeads;
+export default Dashboard;

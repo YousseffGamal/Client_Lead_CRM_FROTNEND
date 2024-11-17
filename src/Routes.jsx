@@ -4,10 +4,9 @@ import Dashboard from "./Pages/dashboard/dashboard";
 import LoginPage from "./Pages/login/login";
 import SignUpPage from "./Pages/SignUp/SignUp";
 import ProtectedRoute from "./utiliteis/protectedRoute";
-import BlogsArticles from "./Pages/BlogsArticles/BlogsArticles";
+import PurchasedLeads from "./Pages/PurchasedLeads/PurchasedLeads";
 import LeadView from "./Pages/LeadView/LeadView ";
 import Profile from "./Pages/profile/profile";
-import PurchasedLeads from "./Pages/PurchasedLeads/PurchasedLeads";
 
 const ProjectRoutes = () => {
   return (
@@ -16,13 +15,13 @@ const ProjectRoutes = () => {
       <Routes>
         <Route element={<ProtectedRoute redirectTo="/" />}>
           <Route path="/dashboard" element={<Dashboard />} />
-
-          <Route path="/blogsarticles" element={<BlogsArticles />} />
+          <Route path="/purchasedLeads" element={<PurchasedLeads />} />
 
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/leadview/:leadId" element={<LeadView />} /> {/* Dynamic route */}
+        <Route path="/leadview/:leadId" element={<LeadView />} />{" "}
+        {/* Dynamic route */}
         <Route path="/purchased-leads" element={<PurchasedLeads />} />
         <Route path="/signuppage" element={<SignUpPage />} />
       </Routes>
