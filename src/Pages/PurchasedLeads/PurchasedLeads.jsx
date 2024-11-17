@@ -14,8 +14,9 @@ const PurchasedLeads = () => {
     const fetchPurchasedLeads = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get(`/getUserLeads/${id}`);
-        setPurchasedLeads(response.data.data);
+        const response = await axiosInstance.get(`/getUserLeads/${leadId}`);
+        // setPurchasedLeads(response.data.data);
+        return response.data.data;
         setLoading(false);
       } catch (err) {
         setError("Error fetching purchased leads data");
