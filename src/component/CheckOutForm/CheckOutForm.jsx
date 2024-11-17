@@ -45,13 +45,15 @@ const CheckOutForm = ({ clientSecret, customerId, handleClose }) => {
       } else {
         setSuccess("Payment successful!");
         alert("Payment successful!");
-        if (saveInfo) {
-          await axiosInstance.post("/savePaymentMethodAfterMakingAPayment", {
-            paymentMethodId: paymentIntent.payment_method,
-            customerId,
-            userID: auth.user._id,
-          });
-        }
+
+        await axiosInstance.post("/savePaymentMethodAfterMakingAPayment", {
+          paymentMethodId: paymentIntent.payment_method,
+          customerId,
+          userID: auth.user._id,
+          savePaymentInfo: saveInfo ? true : false,
+          LeadId: "67190df38a219b0c77fa25ca",
+        });
+
         handleClose(customerId);
       }
     } catch (error) {
