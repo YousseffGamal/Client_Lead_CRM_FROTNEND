@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Box, Modal } from "@mui/material";
+import { Box, Modal, Typography, Switch  } from "@mui/material";
 import Layout from "../../component/Layout/Layout";
 import LeadCard from "../../component/LeadCard/LeadCard";
 import FilterComponent from "../../component/FilterComponent/FilterComponent"; // Adjust the path if necessary
@@ -8,29 +8,52 @@ import { useAuth } from "../../store/authContext";
 
 const Dashboard = () => {
   const [pricedLeads, setpricedLeads] = useState([]); // State for filtered leads
+  const [isBidding, setIsBidding] = useState(false); // Toggle state
 
   const { auth } = useAuth();
+
   const fetchLeads = async () => {
     try {
       console.log("auth", auth.user._id);
-      const response = await axiosInstance.get(
-        `/userPurchasedLeads/${auth.user._id}`
-      );
-      console.log(response);
+      const endpoint = isBidding
+        ? `/userBiddingLeads/${auth.user._id}` // API for bidding leads
+        : `/userPurchasedLeads/${auth.user._id}`; // API for normal purchased leads
+      const response = await axiosInstance.get(endpoint);
       setpricedLeads(response.data.data);
-    } catch (err) {
+    } catch (err) { 
       console.log(err);
     }
   };
 
-  // Fetch leads from API
+  // Fetch leads when component mounts or toggle state changes
   useEffect(() => {
     fetchLeads();
-  }, []);
+  }, [isBidding]);
 
   return (
     <Layout headerText="Purchased Leads" pageType="purchasedLeads">
       <Box sx={{ p: 3, backgroundColor: "#F1F1F1", marginTop: "65px" }}>
+        
+         {/* Toggle Switch */}
+         <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            mb: 2,
+            gap: 2,
+          }}
+        >
+          <Typography variant="h6">
+            {isBidding ? "Bidding Leads" : "Normal Leads"}
+          </Typography>
+          <Switch
+            checked={isBidding}
+            onChange={() => setIsBidding((prev) => !prev)}
+            color="primary"
+          />
+        </Box>
+
         {/* Filter and Switch Components */}
 
         <Box
