@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import { useParams } from 'react-router-dom';
 
 import { Box, TextField, Typography, Button, Modal } from "@mui/material";
@@ -78,40 +78,41 @@ const LeadInputSection = () => {
             Lead Information
           </Typography>
           <TextField
-            fullWidth
-            label="Asking Price"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "97px", // Set height for the input
-              backgroundColor: "#0177FB", // Background color for Asking Price
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "#FFFFFF", // Input text color for Asking Price
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#FFFFFF", // Label color for Asking Price
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value="100000" // Example value
-            InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium" }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
+  fullWidth
+  label="Asking Price"
+  variant="outlined"
+  margin="normal"
+  sx={{
+    height: "97px", // Set height for the input
+    backgroundColor: "#0177FB", // Background color for Asking Price
+    borderRadius: "20px",
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "none", // Remove the border
+      },
+      "&.Mui-focused fieldset": {
+        border: "none", // Remove the border when focused
+      },
+    },
+    "& input": {
+      textAlign: "center", // Center the text value
+      color: "#FFFFFF", // Input text color for Asking Price
+      fontFamily: "LufgaRegular", // Set your desired font family here
+    },
+    "& label": {
+      color: "#000000", // Change label color to black
+      fontFamily: "LufgaMedium", // Set your desired font family here
+    },
+  }}
+  value="100000" // Example value
+  InputLabelProps={{
+    sx: { color: "#000000", fontFamily: "LufgaMedium", fontSize: "25px" }, // Label color and font family
+  }}
+  InputProps={{
+    readOnly: true, // Disable input
+  }}
+/>
+
           <TextField
             fullWidth
             label="Condition"
@@ -144,7 +145,7 @@ const LeadInputSection = () => {
             }}
             value="Good" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -185,7 +186,7 @@ const LeadInputSection = () => {
             }}
             value="(***) *** **33" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -222,7 +223,7 @@ const LeadInputSection = () => {
             }}
             value="Alabama" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -259,11 +260,11 @@ const LeadInputSection = () => {
               "& label": {
                 color: "#191919", // Label color
                 fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
+                },
+              }}
             value="123 m st" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -304,7 +305,7 @@ const LeadInputSection = () => {
             }}
             value="For Sale" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -341,7 +342,7 @@ const LeadInputSection = () => {
             }}
             value="Vacant" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -382,7 +383,7 @@ const LeadInputSection = () => {
             }}
             value="Hot" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -419,7 +420,7 @@ const LeadInputSection = () => {
             }}
             value="Pending" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -459,7 +460,7 @@ const LeadInputSection = () => {
             }}
             value="2:00 PM" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -498,7 +499,7 @@ const LeadInputSection = () => {
             }}
             value="Need more space" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
