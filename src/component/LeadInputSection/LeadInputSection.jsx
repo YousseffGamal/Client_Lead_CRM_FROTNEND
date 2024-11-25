@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 
-import { Box, TextField, Typography, Button, Modal } from "@mui/material";
+import { Box, TextField, Typography, Button, Modal, CircularProgress } from "@mui/material";
 import ChildModal from "../childModal/ChildModal";
 import PaymentMethodSelector from "../paymentMethods/PaymentMethods";
 import CheckOutForm from "../CheckOutForm/CheckOutForm";
 import { useAuth } from "../../store/authContext";
 import CheckOutComponent from "../CheckOutComponent/CheckOutComponent";
+import axiosInstance from "../../axios";
 const style = {
   position: "absolute",
   top: "50%",
@@ -23,8 +24,57 @@ const style = {
   overflowY: "auto",
 };
 const LeadInputSection = () => {
+  const { leadId } = useParams(); // Extract leadId from the URL
+  const [leadData, setLeadData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { auth, setAuth } = useAuth();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchLeadData = async () => {
+      try {
+        setLoading(true)
+        const response = await axiosInstance.get(`/getLeadById/${leadId}`);
+        setLeadData(response.data.data);
+        console.log(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching lead data:", err);
+        setError("Failed to fetch lead data. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    if (leadId) {
+      fetchLeadData();
+    }
+  }, [leadId]);
+
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <Typography color="error">{error}</Typography>
+      </Box>
+    );
+  }
+
+  if (!leadData) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <Typography>No lead data found for this ID.</Typography>
+      </Box>
+    );
+  }
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -104,7 +154,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="100000" // Example value
+             value={leadData.LeadPrice || ""}
             InputLabelProps={{
               sx: { color: "#FFFFFF", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -142,7 +192,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="Good" // Example value
+            value={leadData.condition || ""}
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -183,7 +233,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="(***) *** **33" // Example value
+            value={leadData.phone || ""}
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -220,7 +270,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="Alabama" // Example value
+            value={leadData.state || ""}
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -261,7 +311,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="123 m st" // Example value
+            value={leadData.addressLine || ""}
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -302,7 +352,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="For Sale" // Example value
+            value={leadData.status || ""}
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -339,7 +389,8 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="Vacant" // Example value
+            value={leadData.occupancy || ""}
+
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -380,7 +431,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="Hot" // Example value
+            value={leadData.leadType || ""}
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -417,7 +468,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="Pending" // Example value
+            value={leadData.closingTime || ""}
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -457,7 +508,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="2:00 PM" // Example value
+            value={leadData.bestTimeForCallback || ""}
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -496,7 +547,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="Need more space" // Example value
+            value={leadData.motivation || ""}
             InputLabelProps={{
               sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -543,6 +594,7 @@ const LeadInputSection = () => {
       >
         Buy
       </Button>
+
     </>
   );
 };
