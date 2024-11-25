@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 
 import { Box, TextField, Typography, Button, Modal, CircularProgress } from "@mui/material";
@@ -154,7 +154,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-             value={leadData.LeadPrice || ""}
+            value="100000" // Example value
             InputLabelProps={{
               sx: { color: "#FFFFFF", fontFamily: "LufgaMedium" }, // Label color and font family
             }}
@@ -194,7 +194,7 @@ const LeadInputSection = () => {
             }}
             value={leadData.condition || ""}
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -235,7 +235,7 @@ const LeadInputSection = () => {
             }}
             value={leadData.phone || ""}
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -272,7 +272,7 @@ const LeadInputSection = () => {
             }}
             value={leadData.state || ""}
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -311,9 +311,9 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value={leadData.addressLine || ""}
+            value="123 m st" // Example value
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -354,7 +354,7 @@ const LeadInputSection = () => {
             }}
             value={leadData.status || ""}
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -392,7 +392,7 @@ const LeadInputSection = () => {
             value={leadData.occupancy || ""}
 
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -433,7 +433,7 @@ const LeadInputSection = () => {
             }}
             value={leadData.leadType || ""}
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -470,7 +470,7 @@ const LeadInputSection = () => {
             }}
             value={leadData.closingTime || ""}
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -510,7 +510,7 @@ const LeadInputSection = () => {
             }}
             value={leadData.bestTimeForCallback || ""}
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -549,7 +549,7 @@ const LeadInputSection = () => {
             }}
             value={leadData.motivation || ""}
             InputLabelProps={{
-              sx: { color: "#191919", fontFamily: "LufgaMedium" }, // Label color and font family
+              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
