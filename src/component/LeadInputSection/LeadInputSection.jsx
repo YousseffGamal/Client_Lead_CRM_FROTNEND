@@ -128,40 +128,41 @@ const LeadInputSection = () => {
             Lead Information
           </Typography>
           <TextField
-            fullWidth
-            label="Asking Price"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "97px", // Set height for the input
-              backgroundColor: "#0177FB", // Background color for Asking Price
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "#FFFFFF", // Input text color for Asking Price
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#FFFFFF", // Label color for Asking Price
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value="100000" // Example value
-            InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium" }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
+  fullWidth
+  label="Asking Price"
+  variant="outlined"
+  margin="normal"
+  sx={{
+    height: "97px", // Set height for the input
+    backgroundColor: "#0177FB", // Background color for Asking Price
+    borderRadius: "20px",
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "none", // Remove the border
+      },
+      "&.Mui-focused fieldset": {
+        border: "none", // Remove the border when focused
+      },
+    },
+    "& input": {
+      textAlign: "center", // Center the text value
+      color: "#FFFFFF", // Input text color for Asking Price
+      fontFamily: "LufgaRegular", // Set your desired font family here
+    },
+    "& label": {
+      color: "#000", // Label color updated to #000
+      fontFamily: "LufgaMedium", // Set your desired font family here
+    },
+  }}
+  value="100000" // Example value
+  InputLabelProps={{
+    sx: { color: "#000", fontFamily: "LufgaMedium", fontSize: "25px" }, // Label color updated to #000
+  }}
+  InputProps={{
+    readOnly: true, // Disable input
+  }}
+/>
+
           <TextField
             fullWidth
             label="Condition"
