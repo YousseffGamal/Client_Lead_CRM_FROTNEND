@@ -30,6 +30,7 @@ const LeadInputSection = () => {
   const [error, setError] = useState(null);
   const { auth, setAuth } = useAuth();
   const [open, setOpen] = useState(false);
+  const [stateName, setStateName] = useState(""); // State for storing the fetched state name
 
   useEffect(() => {
     const fetchLeadData = async () => {
@@ -50,6 +51,25 @@ const LeadInputSection = () => {
       fetchLeadData();
     }
   }, [leadId]);
+
+    // Fetch state name once leadData is available
+    useEffect(() => {
+      const fetchStateName = async () => {
+        if (leadData?.state) {
+          try {
+            const response = await axiosInstance.get(`/getStateBy/${leadData.state}`);
+            setStateName(response.data.stateName || "Unknown State");
+          } catch (error) {
+            console.error("Error fetching state name:", error);
+            setStateName("Unknown State");
+          }
+        }
+      };
+  
+      fetchStateName();
+    }, [leadData]);
+
+    
 
   if (loading) {
     return (
@@ -203,7 +223,7 @@ const LeadInputSection = () => {
           />
         </Box>
       </Box>
-
+         
       {/* Second Row: Two Inputs Beside Each Other */}
       <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1, mr: 1 }}>
@@ -271,7 +291,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value={leadData.state || ""}
+            value={leadData.stateName?.name}
             InputLabelProps={{
               sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
@@ -312,7 +332,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value="123 m st" // Example value
+            value={leadData.addressLine || ""}
             InputLabelProps={{
               sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
@@ -432,7 +452,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaMedium", // Set your desired font family here
               },
             }}
-            value={leadData.leadType || ""}
+            value={leadData.leadType?.name || ""}
             InputLabelProps={{
               sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
             }}
