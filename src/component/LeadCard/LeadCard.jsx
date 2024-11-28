@@ -66,7 +66,6 @@ const LeadCard = ({
         padding: "28px 34px", // Maintain padding
         boxSizing: "border-box", // Ensure padding affects the total size
       }}
-      onClick={handleCardClick} // Trigger navigation on card click
 
     >
       <CardContent
@@ -183,8 +182,10 @@ const LeadCard = ({
             fontSize: { xs: "12px", sm: "15px", md: "17px" },
             fontWeight: "bold",
           }}
+          onClick={handleCardClick} // Trigger navigation on card click
+
         >
-          Asking Price: {askingPrice}
+          View More
         </Button>
       </CardContent>
     </Card>

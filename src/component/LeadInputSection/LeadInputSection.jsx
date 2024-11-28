@@ -158,7 +158,7 @@ const LeadInputSection = () => {
           {/* Placeholder for the map component */}
           <div
             style={{
-              height: "400px",
+              height: "460px",
               backgroundColor: "#e0e0e0",
               border: "2px solid #456EFE",
               borderRadius: "20px",
@@ -169,478 +169,497 @@ const LeadInputSection = () => {
           <Typography variant="h6" gutterBottom>
             Lead Information
           </Typography>
-          <TextField
-            fullWidth
-            label="Asking Price"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "97px", // Set height for the input
-              backgroundColor: "#0177FB", // Background color for Asking Price
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "#FFFFFF", // Input text color for Asking Price
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#000", // Label color updated to #000
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value="100000" // Example value
-            InputLabelProps={{
-              sx: {
-                color: "#000",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color updated to #000
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
+          <Box sx={{ flex: 1, mr: 1, mb: 2 }}>
+  {/* Label for Asking Price */}
+  <Box
+    sx={{
+      display: "block",
+      color: "#000", // Label color
+      fontFamily: "LufgaMedium",
+      fontSize: "15px", 
+    }}
+  >
+    Asking Price
+  </Box>
 
-          <TextField
-            fullWidth
-            label="Condition"
-            variant="outlined"
-            margin="normal"
-            multiline
-            rows={3}
-            sx={{
-              height: "230px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& textarea": {
-                // Targeting the textarea for multiline input
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Textarea text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.condition || ""}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
+  {/* Input for Asking Price */}
+  <TextField
+    fullWidth
+    variant="outlined"
+    margin="normal"
+    sx={{
+      height: "97px", // Set height for the input
+      backgroundColor: "#0177FB", // Background color for Asking Price
+      borderRadius: "20px",
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          border: "none", // Remove the border
+        },
+        "&.Mui-focused fieldset": {
+          border: "none", // Remove the border when focused
+        },
+      },
+      "& input": {
+        textAlign: "center", // Center the text value
+        color: "#FFFFFF", // Input text color for Asking Price
+        fontFamily: "LufgaRegular", // Set your desired font family here
+      },
+    }}
+    value="100000" // Example value
+    InputProps={{
+      readOnly: true, // Disable input
+    }}
+  />
+</Box>
+
+<Box sx={{ flex: 1, mr: 1, mb: 2 }}>
+  {/* Label for Condition */}
+  <Box
+    sx={{
+      display: "block",
+      color: "#191919", // Label color
+      fontFamily: "LufgaMedium",
+      fontSize: "15px",
+    }}
+  >
+    Condition
+  </Box>
+
+  {/* Input for Condition */}
+  <TextField
+    fullWidth
+    variant="outlined"
+    margin="normal"
+    multiline
+    rows={3}
+    sx={{
+      height: "230px", // Set height for the input
+      backgroundColor: "#FFFFFF",
+      borderRadius: "20px",
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          border: "none", // Remove the border
+        },
+        "&.Mui-focused fieldset": {
+          border: "none", // Remove the border when focused
+        },
+      },
+      "& textarea": {
+        textAlign: "center", // Center the text value
+        color: "rgba(25, 25, 25, 0.7)", // Textarea text color with opacity
+        fontFamily: "LufgaRegular", // Set your desired font family here
+      },
+    }}
+    value={leadData.condition || ""}
+    InputProps={{
+      readOnly: true, // Disable input
+    }}
+  />
+</Box>
+
         </Box>
       </Box>
 
       {/* Second Row: Two Inputs Beside Each Other */}
       <Box sx={{ display: "flex", mb: 3 }}>
-        <Box sx={{ flex: 1, mr: 1 }}>
-          <TextField
-            fullWidth
-            label="Phone Number: "
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "63px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.phone || ""}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
-        </Box>
+      <Box sx={{ flex: 1, mr: 1 }}>
+  {/* Label Component */}
+  <Box
+    sx={{
+      display: "block",
+      color: "#191919", // Label color
+      fontFamily: "LufgaMedium",
+      fontSize: "15px",
+    }}
+  >
+    Phone Number:
+  </Box>
+
+  {/* Input Component */}
+  <TextField
+    fullWidth
+    variant="outlined"
+    margin="normal"
+    sx={{
+      height: "63px", // Set height for the input
+      backgroundColor: "#FFFFFF",
+      borderRadius: "20px",
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          border: "none", // Remove the border
+        },
+        "&.Mui-focused fieldset": {
+          border: "none", // Remove the border when focused
+        },
+      },
+      "& input": {
+        textAlign: "center", // Center the text value
+        color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
+        fontFamily: "LufgaRegular", // Set your desired font family here
+      },
+    }}
+    value={leadData.phone || ""}
+    InputProps={{
+      readOnly: true, // Disable input
+    }}
+  />
+</Box>
+
         <Box sx={{ flex: 1 }}>
-          <TextField
-            fullWidth
-            label="State"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "63px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.stateName?.name}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
+        <Box sx={{ flex: 1, mr: 1, mb: 2 }}>
+  {/* Label for State */}
+  <Box
+    sx={{
+      display: "block",
+      color: "#191919", // Label color
+      fontFamily: "LufgaMedium",
+      fontSize: "15px",
+    }}
+  >
+    State
+  </Box>
+
+  {/* Input for State */}
+  <TextField
+    fullWidth
+    variant="outlined"
+    margin="normal"
+    sx={{
+      height: "63px", // Set height for the input
+      backgroundColor: "#FFFFFF",
+      borderRadius: "20px",
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          border: "none", // Remove the border
+        },
+        "&.Mui-focused fieldset": {
+          border: "none", // Remove the border when focused
+        },
+      },
+      "& input": {
+        textAlign: "center", // Center the text value
+        color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
+        fontFamily: "LufgaRegular", // Set your desired font family here
+      },
+    }}
+    value={leadData.stateName?.name}
+    InputProps={{
+      readOnly: true, // Disable input
+    }}
+  />
+</Box>
+
         </Box>
       </Box>
 
-      {/* Third Row: Seller Address Input */}
-      <Box sx={{ display: "flex", mb: 3 }}>
-        <Box sx={{ flex: 1 }}>
-          <TextField
-            fullWidth
-            label="Address Line:"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "63px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.addressLine || ""}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
-        </Box>
-      </Box>
+    {/* Third Row: Seller Address Input */}
+<Box sx={{ display: "flex", mb: 3 }}>
+  <Box sx={{ flex: 1 }}>
+    {/* Label for Address Line */}
+    <Box
+      sx={{
+        display: "block",
+        color: "#191919", // Label color
+        fontFamily: "LufgaMedium",
+        fontSize: "15px", // Updated font size
+      }}
+    >
+      Address Line:
+    </Box>
 
-      {/* Fourth Row: Listing and Occupancy Inputs */}
-      <Box sx={{ display: "flex", mb: 3 }}>
-        <Box sx={{ flex: 1, mr: 1 }}>
-          <TextField
-            fullWidth
-            label="Status:"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "63px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.status || ""}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
-        </Box>
-        <Box sx={{ flex: 1 }}>
-          <TextField
-            fullWidth
-            label="Occupancy:"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "63px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.occupancy || ""}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
-        </Box>
-      </Box>
+    {/* Input for Address Line */}
+    <TextField
+      fullWidth
+      variant="outlined"
+      margin="normal"
+      sx={{
+        height: "63px",
+        backgroundColor: "#FFFFFF",
+        borderRadius: "20px",
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            border: "none",
+          },
+          "&.Mui-focused fieldset": {
+            border: "none",
+          },
+        },
+        "& input": {
+          textAlign: "center",
+          color: "rgba(25, 25, 25, 0.7)",
+          fontFamily: "LufgaRegular",
+        },
+      }}
+      value={leadData.addressLine || ""}
+      InputProps={{
+        readOnly: true,
+      }}
+    />
+  </Box>
+</Box>
 
-      {/* Fifth Row: Lead Temperature and Closing Inputs */}
+{/* Fourth Row: Listing and Occupancy Inputs */}
+<Box sx={{ display: "flex", mb: 3 }}>
+  {/* Status Input */}
+  <Box sx={{ flex: 1, mr: 1 }}>
+    {/* Label for Status */}
+    <Box
+      sx={{
+        display: "block",
+        color: "#191919",
+        fontFamily: "LufgaMedium",
+        fontSize: "15px", // Updated font size
+      }}
+    >
+      Status:
+    </Box>
+
+    {/* Input for Status */}
+    <TextField
+      fullWidth
+      variant="outlined"
+      margin="normal"
+      sx={{
+        height: "63px",
+        backgroundColor: "#FFFFFF",
+        borderRadius: "20px",
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            border: "none",
+          },
+          "&.Mui-focused fieldset": {
+            border: "none",
+          },
+        },
+        "& input": {
+          textAlign: "center",
+          color: "rgba(25, 25, 25, 0.7)",
+          fontFamily: "LufgaRegular",
+        },
+      }}
+      value={leadData.status || ""}
+      InputProps={{
+        readOnly: true,
+      }}
+    />
+  </Box>
+
+  {/* Occupancy Input */}
+  <Box sx={{ flex: 1 }}>
+    {/* Label for Occupancy */}
+    <Box
+      sx={{
+        display: "block",
+        color: "#191919",
+        fontFamily: "LufgaMedium",
+        fontSize: "15px", // Updated font size
+      }}
+    >
+      Occupancy:
+    </Box>
+
+    {/* Input for Occupancy */}
+    <TextField
+      fullWidth
+      variant="outlined"
+      margin="normal"
+      sx={{
+        height: "63px",
+        backgroundColor: "#FFFFFF",
+        borderRadius: "20px",
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            border: "none",
+          },
+          "&.Mui-focused fieldset": {
+            border: "none",
+          },
+        },
+        "& input": {
+          textAlign: "center",
+          color: "rgba(25, 25, 25, 0.7)",
+          fontFamily: "LufgaRegular",
+        },
+      }}
+      value={leadData.occupancy || ""}
+      InputProps={{
+        readOnly: true,
+      }}
+    />
+  </Box>
+</Box>
+
+{/* Fifth Row: Lead Temperature and Closing Inputs */}
+<Box sx={{ display: "flex", mb: 3 }}>
+  <Box sx={{ flex: 1, mr: 1, mb: 2 }}>
+    {/* Label for Lead Temperature */}
+    <Box
+      sx={{
+        display: "block",
+        color: "#191919", // Label color
+        fontFamily: "LufgaMedium",
+        fontSize: "15px",
+      }}
+    >
+      Lead Temperature
+    </Box>
+    <TextField
+      fullWidth
+      variant="outlined"
+      margin="normal"
+      sx={{
+        height: "63px", // Set height for the input
+        backgroundColor: "#FFFFFF",
+        borderRadius: "20px",
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            border: "none", // Remove the border
+          },
+          "&.Mui-focused fieldset": {
+            border: "none", // Remove the border when focused
+          },
+        },
+        "& input": {
+          textAlign: "center", // Center the text value
+          color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
+          fontFamily: "LufgaRegular", // Set your desired font family here
+        },
+      }}
+      value={leadData.leadType?.name || ""}
+      InputProps={{
+        readOnly: true, // Disable input
+      }}
+    />
+  </Box>
+  <Box sx={{ flex: 1, mb: 2 }}>
+    {/* Label for Closing */}
+    <Box
+      sx={{
+        display: "block",
+        color: "#191919", // Label color
+        fontFamily: "LufgaMedium",
+        fontSize: "15px",
+      }}
+    >
+      Closing
+    </Box>
+    <TextField
+      fullWidth
+      variant="outlined"
+      margin="normal"
+      sx={{
+        height: "63px", // Set height for the input
+        backgroundColor: "#FFFFFF",
+        borderRadius: "20px",
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            border: "none", // Remove the border
+          },
+          "&.Mui-focused fieldset": {
+            border: "none", // Remove the border when focused
+          },
+        },
+        "& input": {
+          textAlign: "center", // Center the text value
+          color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
+          fontFamily: "LufgaRegular", // Set your desired font family here
+        },
+      }}
+      value={leadData.closingTime || ""}
+      InputProps={{
+        readOnly: true, // Disable input
+      }}
+    />
+  </Box>
+</Box>
+
+{/* Fifth Row: Best Callback Time */}
+<Box sx={{ flex: 1, mr: 1, mb: 2 }}>
+  {/* Label for Best Callback Time */}
+  <Box
+    sx={{
+      display: "block",
+      color: "#191919", // Label color
+      fontFamily: "LufgaMedium",
+      fontSize: "15px",
+    }}
+  >
+    Best Callback Time
+  </Box>
+  <TextField
+    fullWidth
+    variant="outlined"
+    margin="normal"
+    sx={{
+      height: "63px", // Set height for the input
+      backgroundColor: "#FFFFFF",
+      borderRadius: "20px",
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          border: "none", // Remove the border
+        },
+        "&.Mui-focused fieldset": {
+          border: "none", // Remove the border when focused
+        },
+      },
+      "& input": {
+        textAlign: "center", // Center the text value
+        color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
+        fontFamily: "LufgaRegular", // Set your desired font family here
+      },
+    }}
+    value={leadData.bestTimeForCallback || ""}
+    InputProps={{
+      readOnly: true, // Disable input
+    }}
+  />
+</Box>
+
       <Box sx={{ display: "flex", mb: 3 }}>
-        <Box sx={{ flex: 1, mr: 1 }}>
-          <TextField
-            fullWidth
-            label="Lead Temperature:"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "63px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.leadType?.name || ""}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
-        </Box>
         <Box sx={{ flex: 1 }}>
-          <TextField
-            fullWidth
-            label="Closing:"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "63px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.closingTime || ""}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
-        </Box>
-      </Box>
-      {/* Fifth Row: Best Callback Time and Reason for Selling */}
-      <Box sx={{ display: "flex", mb: 3 }}>
-        <Box sx={{ flex: 1, mr: 1 }}>
-          <TextField
-            fullWidth
-            label="Best Callback Time:"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "63px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.bestTimeForCallback || ""}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
-        </Box>
-      </Box>
-      <Box sx={{ display: "flex", mb: 3 }}>
-        <Box sx={{ flex: 1 }}>
-          <TextField
-            fullWidth
-            label="Motivation:"
-            variant="outlined"
-            margin="normal"
-            sx={{
-              height: "63px", // Set height for the input
-              backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none", // Remove the border
-                },
-                "&.Mui-focused fieldset": {
-                  border: "none", // Remove the border when focused
-                },
-              },
-              "& input": {
-                textAlign: "center", // Center the text value
-                color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
-                fontFamily: "LufgaRegular", // Set your desired font family here
-              },
-              "& label": {
-                color: "#191919", // Label color
-                fontFamily: "LufgaMedium", // Set your desired font family here
-              },
-            }}
-            value={leadData.motivation || ""}
-            InputLabelProps={{
-              sx: {
-                color: "#FFFFFF",
-                fontFamily: "LufgaMedium",
-                fontSize: "25px",
-              }, // Label color and font family
-            }}
-            InputProps={{
-              readOnly: true, // Disable input
-            }}
-          />
+        <Box sx={{ flex: 1, mb: 2 }}>
+  {/* Label for Motivation */}
+  <Box
+    sx={{
+      display: "block",
+      color: "#191919", // Label color
+      fontFamily: "LufgaMedium",
+      fontSize: "15px",
+    }}
+  >
+    Motivation
+  </Box>
+
+  {/* Input for Motivation */}
+  <TextField
+    fullWidth
+    variant="outlined"
+    margin="normal"
+    sx={{
+      height: "63px", // Set height for the input
+      backgroundColor: "#FFFFFF",
+      borderRadius: "20px",
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          border: "none", // Remove the border
+        },
+        "&.Mui-focused fieldset": {
+          border: "none", // Remove the border when focused
+        },
+      },
+      "& input": {
+        textAlign: "center", // Center the text value
+        color: "rgba(25, 25, 25, 0.7)", // Input text color with opacity
+        fontFamily: "LufgaRegular", // Set your desired font family here
+      },
+    }}
+    value={leadData.motivation || ""}
+    InputProps={{
+      readOnly: true, // Disable input
+    }}
+  />
+</Box>
+
           <Modal
             open={open}
             onClose={handleClose}
