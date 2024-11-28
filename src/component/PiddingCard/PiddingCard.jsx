@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Card, Button, Box, TextField } from "@mui/material";
 import CustomTypography from "../CustomTypography/CustomTypography"; // Import the shared component
 import Notification from "../Notification/Notification"; // Import the Notification component
+import CountdownTimer from "../CountdownTimer/CountDownTimer";
 
 const PiddingCard = ({
   address,
@@ -20,6 +21,7 @@ const PiddingCard = ({
   value,
   errorMessage,
   onBidChange,
+  BidDurationDelay,
 }) => {
   // State for notification
   const [notificationOpen, setNotificationOpen] = useState(false);
@@ -103,7 +105,8 @@ const PiddingCard = ({
         >
           Condition: {condition}
         </CustomTypography>
-
+        {BidDurationDelay}
+        <CountdownTimer duration={BidDurationDelay} />
         {/* Centered Status with dynamic background and text color */}
         <Box
           sx={{

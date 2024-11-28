@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-import { Box, TextField, Typography, Button, Modal, CircularProgress } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Typography,
+  Button,
+  Modal,
+  CircularProgress,
+} from "@mui/material";
 import ChildModal from "../childModal/ChildModal";
 import PaymentMethodSelector from "../paymentMethods/PaymentMethods";
 import CheckOutForm from "../CheckOutForm/CheckOutForm";
@@ -35,7 +42,7 @@ const LeadInputSection = () => {
   useEffect(() => {
     const fetchLeadData = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const response = await axiosInstance.get(`/getLeadById/${leadId}`);
         setLeadData(response.data.data);
         console.log(response.data);
@@ -52,28 +59,33 @@ const LeadInputSection = () => {
     }
   }, [leadId]);
 
-    // Fetch state name once leadData is available
-    useEffect(() => {
-      const fetchStateName = async () => {
-        if (leadData?.state) {
-          try {
-            const response = await axiosInstance.get(`/getStateBy/${leadData.state}`);
-            setStateName(response.data.stateName || "Unknown State");
-          } catch (error) {
-            console.error("Error fetching state name:", error);
-            setStateName("Unknown State");
-          }
+  // Fetch state name once leadData is available
+  useEffect(() => {
+    const fetchStateName = async () => {
+      if (leadData?.state) {
+        try {
+          const response = await axiosInstance.get(
+            `/getStateBy/${leadData.state}`
+          );
+          setStateName(response.data.stateName || "Unknown State");
+        } catch (error) {
+          console.error("Error fetching state name:", error);
+          setStateName("Unknown State");
         }
-      };
-  
-      fetchStateName();
-    }, [leadData]);
+      }
+    };
 
-    
+    fetchStateName();
+  }, [leadData]);
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -81,7 +93,12 @@ const LeadInputSection = () => {
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
         <Typography color="error">{error}</Typography>
       </Box>
     );
@@ -89,7 +106,12 @@ const LeadInputSection = () => {
 
   if (!leadData) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
         <Typography>No lead data found for this ID.</Typography>
       </Box>
     );
@@ -148,40 +170,44 @@ const LeadInputSection = () => {
             Lead Information
           </Typography>
           <TextField
-  fullWidth
-  label="Asking Price"
-  variant="outlined"
-  margin="normal"
-  sx={{
-    height: "97px", // Set height for the input
-    backgroundColor: "#0177FB", // Background color for Asking Price
-    borderRadius: "20px",
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        border: "none", // Remove the border
-      },
-      "&.Mui-focused fieldset": {
-        border: "none", // Remove the border when focused
-      },
-    },
-    "& input": {
-      textAlign: "center", // Center the text value
-      color: "#FFFFFF", // Input text color for Asking Price
-      fontFamily: "LufgaRegular", // Set your desired font family here
-    },
-    "& label": {
-      color: "#000", // Label color updated to #000
-      fontFamily: "LufgaMedium", // Set your desired font family here
-    },
-  }}
-  value="100000" // Example value
-  InputLabelProps={{
-    sx: { color: "#000", fontFamily: "LufgaMedium", fontSize: "25px" }, // Label color updated to #000
-  }}
-  InputProps={{
-    readOnly: true, // Disable input
-  }}
-/>
+            fullWidth
+            label="Asking Price"
+            variant="outlined"
+            margin="normal"
+            sx={{
+              height: "97px", // Set height for the input
+              backgroundColor: "#0177FB", // Background color for Asking Price
+              borderRadius: "20px",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "none", // Remove the border
+                },
+                "&.Mui-focused fieldset": {
+                  border: "none", // Remove the border when focused
+                },
+              },
+              "& input": {
+                textAlign: "center", // Center the text value
+                color: "#FFFFFF", // Input text color for Asking Price
+                fontFamily: "LufgaRegular", // Set your desired font family here
+              },
+              "& label": {
+                color: "#000", // Label color updated to #000
+                fontFamily: "LufgaMedium", // Set your desired font family here
+              },
+            }}
+            value="100000" // Example value
+            InputLabelProps={{
+              sx: {
+                color: "#000",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color updated to #000
+            }}
+            InputProps={{
+              readOnly: true, // Disable input
+            }}
+          />
 
           <TextField
             fullWidth
@@ -215,7 +241,11 @@ const LeadInputSection = () => {
             }}
             value={leadData.condition || ""}
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -223,7 +253,7 @@ const LeadInputSection = () => {
           />
         </Box>
       </Box>
-         
+
       {/* Second Row: Two Inputs Beside Each Other */}
       <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1, mr: 1 }}>
@@ -256,7 +286,11 @@ const LeadInputSection = () => {
             }}
             value={leadData.phone || ""}
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -293,7 +327,11 @@ const LeadInputSection = () => {
             }}
             value={leadData.stateName?.name}
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -334,7 +372,11 @@ const LeadInputSection = () => {
             }}
             value={leadData.addressLine || ""}
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -375,7 +417,11 @@ const LeadInputSection = () => {
             }}
             value={leadData.status || ""}
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -411,9 +457,12 @@ const LeadInputSection = () => {
               },
             }}
             value={leadData.occupancy || ""}
-
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -454,7 +503,11 @@ const LeadInputSection = () => {
             }}
             value={leadData.leadType?.name || ""}
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -491,7 +544,11 @@ const LeadInputSection = () => {
             }}
             value={leadData.closingTime || ""}
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -531,7 +588,11 @@ const LeadInputSection = () => {
             }}
             value={leadData.bestTimeForCallback || ""}
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -570,7 +631,11 @@ const LeadInputSection = () => {
             }}
             value={leadData.motivation || ""}
             InputLabelProps={{
-              sx: { color: "#FFFFFF", fontFamily: "LufgaMedium",fontSize:"25px" }, // Label color and font family
+              sx: {
+                color: "#FFFFFF",
+                fontFamily: "LufgaMedium",
+                fontSize: "25px",
+              }, // Label color and font family
             }}
             InputProps={{
               readOnly: true, // Disable input
@@ -615,7 +680,6 @@ const LeadInputSection = () => {
       >
         Buy
       </Button>
-
     </>
   );
 };

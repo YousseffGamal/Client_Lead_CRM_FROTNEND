@@ -44,6 +44,7 @@ const Dashboard = () => {
   }, [memoizedAuth]);
 
   const [bidAmount, setbidAmount] = useState("");
+  const [bidDuration, setBidDuration] = useState(0);
 
   const [open, setOpen] = useState(false);
 
@@ -99,18 +100,25 @@ const Dashboard = () => {
           setbiddingLeads((biddingLeads) => [...biddingLeads, data]);
         } else if (data.isBidding === false) {
           setpricedLeads((pricedLeads) => [...pricedLeads, data]);
-        } else if (data.bidderId) {
+        } else if (data.savedBid) {
+          setBidDuration(data.duration);
           setbiddingLeads((prevItems) =>
-            prevItems.map((item) =>
-              item._id === data.Lead
-                ? {
-                    ...item,
+            prevItems.map((item) => {
+              if (item._id === data.savedBid.Lead) {
+                const updatedBid = {
+                  ...data.savedBid,
+                  BidDurationDelay: data.duration, // Example: Adding a new property
+                };
 
-                    bids: [data, ...item.bids],
-                    // intialBiddingPrice: res.data.bid.bidAmount,
-                  }
-                : item
-            )
+                return {
+                  ...item,
+                  bids: [updatedBid, ...item.bids],
+                  BidDurationDelay: data.duration,
+                  // initialBiddingPrice: res.data.bid.bidAmount,
+                };
+              }
+              return item;
+            })
           );
         } else if (data.name === "scheduleLeadPurchaseJob") {
           setbiddingLeads((prevItems) =>
@@ -332,6 +340,7 @@ const Dashboard = () => {
                           ? lead.bids[0].bidAmount
                           : lead.intialBiddingPrice
                       }
+                      BidDurationDelay={lead.BidDurationDelay}
                       leadType={lead.leadType?.name}
                       closingTime={lead.closingTime}
                       occupancy={lead.occupancy}

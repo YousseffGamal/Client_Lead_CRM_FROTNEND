@@ -45,7 +45,7 @@ const CheckOutForm = ({ clientSecret, customerId, handleClose }) => {
       } else {
         setSuccess("Payment successful!");
         alert("Payment successful!");
-
+        console.log(paymentIntent.payment_method);
         await axiosInstance.post("/handlesuccessLeadPurchase", {
           paymentMethodId: paymentIntent.payment_method,
           customerId,
