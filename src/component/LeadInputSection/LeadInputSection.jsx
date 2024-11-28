@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css"; // Import Leaflet CSS
 import {
   Box,
   TextField,
@@ -154,17 +155,30 @@ const LeadInputSection = () => {
     <>
       {/* First Row: Map and Inputs */}
       <Box sx={{ display: "flex", mb: 3 }}>
-        <Box sx={{ flex: 1, mr: 2 }}>
-          {/* Placeholder for the map component */}
-          <div
-            style={{
-              height: "460px",
-              backgroundColor: "#e0e0e0",
-              border: "2px solid #456EFE",
-              borderRadius: "20px",
-            }}
-          ></div>
-        </Box>
+      <Box sx={{ flex: 1, mr: 2 }}>
+  <MapContainer
+    center={[51.505, -0.09]} // Set default coordinates (latitude, longitude)
+    zoom={13} // Set zoom level
+    style={{
+      height: "460px",
+      borderRadius: "20px",
+      border: "2px solid #456EFE",
+    }}
+  >
+    {/* Add a TileLayer to display the map */}
+    <TileLayer
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    />
+
+    {/* Add a Marker */}
+    <Marker position={[51.505, -0.09]}>
+      <Popup>
+        A sample marker. <br /> Easily customizable.
+      </Popup>
+    </Marker>
+  </MapContainer>
+</Box>
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6" gutterBottom>
             Lead Information
