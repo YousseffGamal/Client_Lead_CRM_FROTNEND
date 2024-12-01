@@ -105,7 +105,7 @@ const PiddingCard = ({
         >
           Condition: {condition}
         </CustomTypography>
-        {BidDurationDelay}
+
         <CountdownTimer duration={BidDurationDelay} />
         {/* Centered Status with dynamic background and text color */}
         <Box
