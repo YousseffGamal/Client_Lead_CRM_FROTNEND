@@ -5,6 +5,8 @@ import LeadCard from "../../component/LeadCard/LeadCard";
 import PiddingCard from "../../component/PiddingCard/PiddingCard";
 import SwitchComponent from "../../component/SwitchComponent/SwitchComponent";
 import FilterComponent from "../../component/FilterComponent/FilterComponent"; // Adjust the path if necessary
+import TimeDateModal from "../../component/scheduleCommentEmail/scheduleCommentEmail";
+import { Button } from "@mui/material";
 
 import { useAuth } from "../../store/authContext";
 import axiosInstance from "../../axios";
@@ -29,6 +31,7 @@ const PurchasedLeads = () => {
   const [pricedLeads, setpricedLeads] = useState([]); // State for filtered leads
   const [biddingLeads, setbiddingLeads] = useState([]); // State for filtered leads
   const [isBidding, setIsBidding] = useState(false); // Toggle state
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState("error");
@@ -241,7 +244,12 @@ const PurchasedLeads = () => {
         );
       });
   };
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
+  const handleSubmit = (formData) => {
+    console.log("Form Data Submitted:", formData);
+  };
   return (
     <Layout>
       <Modal
@@ -264,7 +272,14 @@ const PurchasedLeads = () => {
       </Modal>
       <Box sx={{ p: 3, backgroundColor: "#F1F1F1", marginTop: "65px" }}>
         {/* Filter and Switch Components */}
-
+        {/* <Button variant="contained" color="primary" onClick={handleOpenModal}>
+        schedule  Email
+      </Button>
+      <TimeDateModal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleSubmit}
+      /> */}
         <Box
           sx={{
             display: "flex",
