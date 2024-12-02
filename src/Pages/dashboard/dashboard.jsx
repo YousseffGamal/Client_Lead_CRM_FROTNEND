@@ -87,10 +87,12 @@ const Dashboard = () => {
     ws.onopen = () => {
       console.log("Connected to WebSocket");
       // Send an initial message, if needed
+      ws.send("Hello Server!");
     };
 
     // Event listener for incoming messages
     ws.onmessage = async (event) => {
+      console.log("Message from server:", event.data);
       // Handle the case where the event data is already JSON
       try {
         const data = JSON.parse(event.data);
@@ -99,17 +101,29 @@ const Dashboard = () => {
         } else if (data.isBidding === false) {
           setpricedLeads((pricedLeads) => [...pricedLeads, data]);
         } else if (data.savedBid) {
+          // setbiddingLeads((prevItems) =>
+          //   prevItems.map((item) => {
+          //     if (item._id === data.savedBid.Lead) {
+          //       const updatedBid = {
+          //         ...data.savedBid,
+          //         BidDurationDelay: data.duration, // Adding or updating the duration
+          //       };
+          //       return {
+          //         ...item,
+          //         bids: [updatedBid, ...item.bids],
+          //         BidDurationDelay: data.duration, // Update BidDurationDelay with the new duration
+          //       };
+          //     }
+          //     return item;
+          //   })
+          // );
           setbiddingLeads((prevItems) =>
             prevItems.map((item) => {
               if (item._id === data.savedBid.Lead) {
-                const updatedBid = {
-                  ...data.savedBid,
-                  BidDurationDelay: data.duration,
-                };
                 return {
                   ...item,
-                  bids: [updatedBid, ...item.bids],
                   BidDurationDelay: data.duration,
+                  resetFlag: !item.resetFlag,
                 };
               }
               return item;
@@ -129,7 +143,7 @@ const Dashboard = () => {
           );
         }
       } catch (error) {
-        //
+        console.error("Failed to parse JSON:", error);
       }
     };
     //yzhr mn 8ir arkam
@@ -137,12 +151,12 @@ const Dashboard = () => {
     //payment
     // Event listener for errors
     ws.onerror = (error) => {
-      //
+      console.error("WebSocket Error:", error);
     };
 
     // Event listener for when the connection is closed
     ws.onclose = () => {
-      //
+      console.log("WebSocket connection closed");
     };
 
     // Clean up the WebSocket connection when the component unmounts
@@ -335,6 +349,7 @@ const Dashboard = () => {
                           ? lead.bids[0].bidAmount
                           : lead.intialBiddingPrice
                       }
+                      key={lead.BidDurationDelay}
                       BidDurationDelay={lead.BidDurationDelay}
                       leadType={lead.leadType?.name}
                       closingTime={lead.closingTime}

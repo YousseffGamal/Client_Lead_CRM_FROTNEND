@@ -22,9 +22,11 @@ const PiddingCard = ({
   errorMessage,
   onBidChange,
   BidDurationDelay,
+  lead,
 }) => {
   // State for notification
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const { resetFlag } = lead;
   // const [bidAmount, setbidAmount] = useState("");
 
   // Define styles based on the lead's status
@@ -105,8 +107,8 @@ const PiddingCard = ({
         >
           Condition: {condition}
         </CustomTypography>
-
-        <CountdownTimer duration={BidDurationDelay} />
+        {resetFlag}
+        <CountdownTimer key={resetFlag} duration={BidDurationDelay} />
         {/* Centered Status with dynamic background and text color */}
         <Box
           sx={{

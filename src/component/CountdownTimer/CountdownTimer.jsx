@@ -6,6 +6,7 @@ const CountdownTimer = ({ duration }) => {
   // Update `timeLeft` whenever `duration` changes
   useEffect(() => {
     setTimeLeft(duration);
+    console.log("Duration updated:", duration);
   }, [duration]);
 
   useEffect(() => {
