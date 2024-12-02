@@ -154,6 +154,19 @@ const LeadCard = ({
           Occupancy: {occupancy}
         </CustomTypography>
         <CustomTypography
+          className="Occupancy"
+          variant="body2"
+          sx={{
+            fontFamily: "LufgaRegular",
+            color: "#191919 !important",
+            fontSize: { xs: "14px", sm: "16px", md: "18px" },
+            marginTop: "13px",
+            textAlign: "center",
+          }}
+        >
+          Asking Price: {askingPrice}
+        </CustomTypography>
+        <CustomTypography
           className="Closing"
           variant="body2"
           sx={{

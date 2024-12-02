@@ -105,6 +105,8 @@ const PurchasedLeads = () => {
                     address={lead.addressLine}
                     city={lead.county.name}
                     condition={lead.condition}
+                                        status={lead.status}
+
                     askingPrice={lead.askingPrice}
                     leadType={lead.leadType?.name}
                     closingTime={lead.closingTime}
@@ -126,7 +128,22 @@ const PurchasedLeads = () => {
                     boxSizing: "border-box",
                   }}
                 >
-                  <PiddingCard
+                  <LeadCard
+                  
+               lead={lead}
+               leadId={lead._id}
+               address={lead.addressLine}
+               city={lead.county.name}
+               condition={lead.condition}
+               askingPrice={lead.askingPrice}
+               BidDurationDelay={lead.BidDurationDelay}
+               leadType={lead.leadType?.name}
+               closingTime={lead.closingTime}
+               occupancy={lead.occupancy}
+               status={lead.status}
+
+                  />
+                  {/* <PiddingCard
                     lead={lead}
                     leadId={lead._id}
                     address={lead.addressLine}
@@ -142,7 +159,7 @@ const PurchasedLeads = () => {
                     closingTime={lead.closingTime}
                     occupancy={lead.occupancy}
                     status={lead.status}
-                  />
+                  /> */}
                 </Box>
               ))}
         </Box>
