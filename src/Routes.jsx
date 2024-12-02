@@ -7,7 +7,7 @@ import ProtectedRoute from "./utiliteis/protectedRoute";
 import PurchasedLeads from "./Pages/PurchasedLeads/PurchasedLeads";
 import LeadView from "./Pages/LeadView/LeadView ";
 import Profile from "./Pages/profile/profile";
-
+import PurchasedLeadView from "./Pages/purchasedLeadView/purchasedLeadView"
 const ProjectRoutes = () => {
   return (
     // <React.Suspense fallback={<>Loading...</>}>
@@ -21,6 +21,8 @@ const ProjectRoutes = () => {
         </Route>
         <Route path="/" element={<LoginPage />} />
         <Route path="/leadview/:leadId" element={<LeadView />} />{" "}
+        <Route path="/purchasedleadview/:leadId" element={<PurchasedLeadView />} />{" "}
+
         {/* Dynamic route */}
         <Route path="/purchased-leads" element={<PurchasedLeads />} />
         <Route path="/signuppage" element={<SignUpPage />} />

@@ -11,6 +11,8 @@ const LeadCard = ({
   askingPrice,
   leadType,
   closingTime,
+  viewPath, // Add viewPath prop
+
   occupancy,
 }) => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -46,9 +48,10 @@ const LeadCard = ({
   };
 
   const statusStyles = getStatusStyles(leadType);
+ 
   const handleCardClick = () => {
-    // Navigate to the LeadView page and pass the leadId
-    navigate(`/leadview/${leadId}`);
+    // Navigate to the dynamic path
+    navigate(`${viewPath}/${leadId}`);
   };
   return (
     <Card

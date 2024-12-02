@@ -111,6 +111,8 @@ const PurchasedLeads = () => {
                     leadType={lead.leadType?.name}
                     closingTime={lead.closingTime}
                     occupancy={lead.occupancy}
+                    viewPath="/purchasedleadview" // Specify the path
+
                   />
                 </Box>
               ))
@@ -141,6 +143,8 @@ const PurchasedLeads = () => {
                closingTime={lead.closingTime}
                occupancy={lead.occupancy}
                status={lead.status}
+               viewPath="/purchasedleadview" // Specify the path
+
 
                   />
                   {/* <PiddingCard
