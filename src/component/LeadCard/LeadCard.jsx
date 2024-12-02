@@ -11,6 +11,8 @@ const LeadCard = ({
   askingPrice,
   leadType,
   closingTime,
+  viewPath, // Add viewPath prop
+
   occupancy,
 }) => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -46,9 +48,10 @@ const LeadCard = ({
   };
 
   const statusStyles = getStatusStyles(leadType);
+ 
   const handleCardClick = () => {
-    // Navigate to the LeadView page and pass the leadId
-    navigate(`/leadview/${leadId}`);
+    // Navigate to the dynamic path
+    navigate(`${viewPath}/${leadId}`);
   };
   return (
     <Card
@@ -152,6 +155,19 @@ const LeadCard = ({
           }}
         >
           Occupancy: {occupancy}
+        </CustomTypography>
+        <CustomTypography
+          className="Occupancy"
+          variant="body2"
+          sx={{
+            fontFamily: "LufgaRegular",
+            color: "#191919 !important",
+            fontSize: { xs: "14px", sm: "16px", md: "18px" },
+            marginTop: "13px",
+            textAlign: "center",
+          }}
+        >
+          Asking Price: {askingPrice}
         </CustomTypography>
         <CustomTypography
           className="Closing"

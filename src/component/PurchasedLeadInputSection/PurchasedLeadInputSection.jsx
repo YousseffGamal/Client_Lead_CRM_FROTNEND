@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css"; // Import Leaflet CSS
@@ -16,6 +16,8 @@ import CheckOutForm from "../CheckOutForm/CheckOutForm";
 import { useAuth } from "../../store/authContext";
 import CheckOutComponent from "../CheckOutComponent/CheckOutComponent";
 import axiosInstance from "../../axios";
+import TimeDateModal from "../scheduleCommentEmail/scheduleCommentEmail"
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -39,10 +41,8 @@ const LeadInputSection = () => {
   const { auth, setAuth } = useAuth();
   const [open, setOpen] = useState(false);
   const [stateName, setStateName] = useState(""); // State for storing the fetched state name
-  const [blurClass, setBlurClass] = useState("");
-  useEffect(() => {
-    setBlurClass("blur-effect"); // Add a class dynamically
-  }, []);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     const fetchLeadData = async () => {
       try {
@@ -154,23 +154,27 @@ const LeadInputSection = () => {
 
     setOpen(false);
   };
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  const handleSubmit = (formData) => {
+    console.log("Form Data Submitted:", formData);
+  };
 
   return (
     <>
       {/* First Row: Map and Inputs */}
       <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1, mr: 2 }}>
-        <div className={blurClass}>
-
-        <MapContainer
-      center={[51.505, -0.09]} // Default coordinates (latitude, longitude)
-      zoom={13} // Zoom level
-      style={{
-        height: "460px",
-        borderRadius: "20px",
-        border: "2px solid #456EFE",
-      }}
-    >
+          <MapContainer
+            center={[51.505, -0.09]} // Set default coordinates (latitude, longitude)
+            zoom={13} // Set zoom level
+            style={{
+              height: "460px",
+              borderRadius: "20px",
+              border: "2px solid #456EFE",
+            }}
+          >
             {/* Add a TileLayer to display the map */}
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -184,8 +188,6 @@ const LeadInputSection = () => {
               </Popup>
             </Marker>
           </MapContainer>
-          </div>
-
         </Box>
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6" gutterBottom>
@@ -249,7 +251,6 @@ const LeadInputSection = () => {
 
             {/* Input for Condition */}
             <TextField
-            className={blurClass}
               fullWidth
               variant="outlined"
               margin="normal"
@@ -259,6 +260,7 @@ const LeadInputSection = () => {
                 height: "230px", // Set height for the input
                 backgroundColor: "#FFFFFF",
                 borderRadius: "20px",
+                filter: "blur(5px)",
                 WebkitTextSecurity: "disc", // WebKit-specific
                 textSecurity: "disc", // Standard property
                 "& .MuiOutlinedInput-root": {
@@ -391,20 +393,16 @@ const LeadInputSection = () => {
 
           {/* Input Component */}
           <TextField
-                      className={blurClass}
-
             fullWidth
             variant="outlined"
             margin="normal"
             sx={{
-
               height: "63px", // Set height for the input
               backgroundColor: "#FFFFFF",
               borderRadius: "20px",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   border: "none", // Remove the border
-                  
                 },
                 "&.Mui-focused fieldset": {
                   border: "none", // Remove the border when focused
@@ -666,12 +664,9 @@ const LeadInputSection = () => {
 
           {/* Input Component */}
           <TextField
-                      className={blurClass}
-
             fullWidth
             variant="outlined"
             margin="normal"
-            
             sx={{
               height: "63px", // Set height for the input
               backgroundColor: "#FFFFFF",
@@ -713,8 +708,6 @@ const LeadInputSection = () => {
 
             {/* Input for State */}
             <TextField
-                        className={blurClass}
-
               fullWidth
               variant="outlined"
               margin="normal"
@@ -797,7 +790,6 @@ const LeadInputSection = () => {
           {/* Label for Address Line */}
           <Box
             sx={{
-              
               display: "block",
               color: "#191919", // Label color
               fontFamily: "LufgaMedium",
@@ -809,8 +801,6 @@ const LeadInputSection = () => {
 
           {/* Input for Address Line */}
           <TextField
-                      className={blurClass}
-
             fullWidth
             variant="outlined"
             margin="normal"
@@ -1129,7 +1119,7 @@ const LeadInputSection = () => {
       <Button
         variant="contained"
         className="BID"
-        onClick={handleOpen}
+        onClick={handleOpenModal}
         sx={{
           backgroundColor: "#0177FB",
           color: "#FFFFFF",
@@ -1140,8 +1130,13 @@ const LeadInputSection = () => {
           fontSize: { xs: "16px", sm: "18px", md: "20px" },
         }}
       >
-        Buy
+        Schedule Email
       </Button>
+      <TimeDateModal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleSubmit}
+      />
     </>
   );
 };

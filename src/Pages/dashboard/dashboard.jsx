@@ -315,11 +315,12 @@ const Dashboard = () => {
                     leadId={lead._id} // Ensure this is passed
                     address={lead.addressLine}
                     city={lead.county.name}
-                    condition={lead.condition}
-                    askingPrice={lead.askingPrice}
+                    condition={lead.condition}    
                     leadType={lead.leadType?.name}
                     closingTime={lead.closingTime}
                     occupancy={lead.occupancy}
+                    viewPath="/leadview" // Specify the path
+
                   />
                 </Box>
               ))
@@ -361,6 +362,8 @@ const Dashboard = () => {
                       value={lead.value}
                       errorMessage={lead.error}
                       onBidChange={handleBidChange}
+                      viewPath="/leadview" // Specify the path
+
                     />
                   }
                 </Box>

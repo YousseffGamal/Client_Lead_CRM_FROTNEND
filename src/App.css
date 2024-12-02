@@ -161,3 +161,7 @@ td{
     font-family: "LufgaMedium";
     font-size: 20px; /* Base font size for larger screens */
 }
+.blur-effect {
+    filter: blur(5px);
+  }
+  
