@@ -4,16 +4,143 @@ import Layout from "../../component/Layout/Layout";
 import LeadCard from "../../component/LeadCard/LeadCard";
 import PiddingCard from "../../component/PiddingCard/PiddingCard";
 import SwitchComponent from "../../component/SwitchComponent/SwitchComponent";
-import FilterComponent from "../../component/FilterComponent/FilterComponent";
+import FilterComponent from "../../component/FilterComponent/FilterComponent"; // Adjust the path if necessary
 
 import { useAuth } from "../../store/authContext";
 import axiosInstance from "../../axios";
 
 const PurchasedLeads = () => {
-  const [activeTab, setActiveTab] = useState(0); 
-  const [pricedLeads, setPricedLeads] = useState([]); 
-  const [biddingLeads, setBiddingLeads] = useState([]); 
-  const { auth } = useAuth(); 
+  const [activeTab, setActiveTab] = useState(0); // State to track which card to display
+  const [pricedLeads, setpricedLeads] = useState([]); // State for filtered leads
+  const [biddingLeads, setbiddingLeads] = useState([]); // State for filtered leads
+  const [isBidding, setIsBidding] = useState(false); // Toggle state
+
+  const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("error");
+  const [clientSecret, setClientSecret] = useState("");
+  const [customerId, setCustomerId] = useState("");
+
+  const { auth, setAuth } = useAuth();
+  const [verified, setVerified] = useState(false);
+  const memoizedAuth = useMemo(() => auth, [auth]);
+  useEffect(() => {
+    setVerified(memoizedAuth.user.paymentMethod);
+
+    console.log("Auth changed:", memoizedAuth);
+  }, [memoizedAuth]);
+
+  const [bidAmount, setbidAmount] = useState("");
+  const [bidDuration, setBidDuration] = useState(0);
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    axiosInstance
+      .post("setupPaymentIntent", {
+        email: auth.user.email,
+        name: auth.user.firstName,
+      })
+      .then((res) => {
+        setClientSecret(res.data.clientSecret);
+        setCustomerId(res.data.customerId);
+        setOpen(true);
+      })
+      .catch((err) => {
+        console.log("Error fetching client secret:", err);
+        return;
+      });
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const modalClose = () => {
+    getbiddingLeads();
+    setAuth({ ...auth, paymentMethod: true });
+    console.log("cameHereModalClose");
+    localStorage.setItem("paymentMethod", true);
+    setActiveTab(1);
+
+    setOpen(false);
+  };
+
+  let ws; // Declare the WebSocket instance
+
+  useEffect(() => {
+    // Initialize the WebSocket connection
+    ws = new WebSocket("http://localhost:8080");
+
+    // Event listener for when the connection is open
+    ws.onopen = () => {
+      console.log("Connected to WebSocket");
+      // Send an initial message, if needed
+      ws.send("Hello Server!");
+    };
+
+    // Event listener for incoming messages
+    ws.onmessage = async (event) => {
+      console.log("Message from server:", event.data);
+      // Handle the case where the event data is already JSON
+      try {
+        const data = JSON.parse(event.data);
+        if (data.isBidding === true) {
+          setbiddingLeads((biddingLeads) => [...biddingLeads, data]);
+        } else if (data.isBidding === false) {
+          setpricedLeads((pricedLeads) => [...pricedLeads, data]);
+        } else if (data.savedBid) {
+          setBidDuration(data.duration);
+          setbiddingLeads((prevItems) =>
+            prevItems.map((item) => {
+              if (item._id === data.savedBid.Lead) {
+                const updatedBid = {
+                  ...data.savedBid,
+                  BidDurationDelay: data.duration, // Example: Adding a new property
+                };
+
+                return {
+                  ...item,
+                  bids: [updatedBid, ...item.bids],
+                  BidDurationDelay: data.duration,
+                  // initialBiddingPrice: res.data.bid.bidAmount,
+                };
+              }
+              return item;
+            })
+          );
+        } else if (data.name === "scheduleLeadPurchaseJob") {
+          setbiddingLeads((prevItems) =>
+            prevItems.map((item) =>
+              item._id === data.leadId ? { ...item, status: "Open" } : item
+            )
+          );
+        } else if (data.name === "closeLead") {
+          setbiddingLeads((prevItems) =>
+            prevItems.map((item) =>
+              item._id === data.leadId ? { ...item, status: "Closed" } : item
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Failed to parse JSON:", error);
+      }
+    };
+    //yzhr mn 8ir arkam
+    //aftergetting the lead - comment & schedule mail message (task)
+    //payment
+    // Event listener for errors
+    ws.onerror = (error) => {
+      console.error("WebSocket Error:", error);
+    };
+
+    // Event listener for when the connection is closed
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    // Clean up the WebSocket connection when the component unmounts
+    return () => {
+      ws.close();
+    };
+  }, []);
 
   
   const fetchLeads = async () => {
@@ -48,11 +175,17 @@ const PurchasedLeads = () => {
   const switchView = (event) => {
     setActiveTab(event.target.checked ? 1 : 0);
   };
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
+  const handleSubmit = (formData) => {
+    console.log("Form Data Submitted:", formData);
+  };
   return (
     <Layout>
       <Box sx={{ p: 3, backgroundColor: "#F1F1F1", marginTop: "65px" }}>
         {/* Filter and Switch Components */}
+
         <Box
           sx={{
             display: "flex",
