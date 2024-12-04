@@ -40,6 +40,7 @@ const LeadInputSection = () => {
   const [error, setError] = useState(null);
   const { auth, setAuth } = useAuth();
   const [open, setOpen] = useState(false);
+  const [leadAmount, setLeadAmount] = useState("");
   const [stateName, setStateName] = useState(""); // State for storing the fetched state name
   const [blurClass, setBlurClass] = useState("");
   useEffect(() => {
@@ -51,6 +52,7 @@ const LeadInputSection = () => {
         setLoading(true);
         const response = await axiosInstance.get(`/getLeadById/${leadId}`);
         setLeadData(response.data.data);
+        setLeadAmount(response.data.data.LeadPrice);
         console.log(response.data);
         setLoading(false);
       } catch (err) {
@@ -1102,13 +1104,13 @@ const LeadInputSection = () => {
               {auth.paymentMethod ? (
                 <PaymentMethodSelector
                   leadId={leadId}
-                  amount={300}
+                  amount={leadAmount}
                   handleClose={handlesuccessfulLogin}
                 />
               ) : (
                 <CheckOutComponent
                   leadId={leadId}
-                  amount={300}
+                  amount={leadAmount}
                   handleClose={handlesuccessfulLogin}
                 />
               )}

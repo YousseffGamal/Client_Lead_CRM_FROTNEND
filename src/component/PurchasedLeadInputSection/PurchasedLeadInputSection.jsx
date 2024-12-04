@@ -66,10 +66,10 @@ const LeadInputSection = () => {
   // Fetch state name once leadData is available
   useEffect(() => {
     const fetchStateName = async () => {
-      if (leadData?.state._id) {
+      if (leadData?.state) {
         try {
           const response = await axiosInstance.get(
-            `/getStateBy/${leadData.state}`
+            `/getStateBy/${leadData.state._id}`
           );
           setStateName(response.data.stateName || "Unknown State");
         } catch (error) {
