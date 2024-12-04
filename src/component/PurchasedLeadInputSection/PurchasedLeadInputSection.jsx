@@ -16,7 +16,7 @@ import CheckOutForm from "../CheckOutForm/CheckOutForm";
 import { useAuth } from "../../store/authContext";
 import CheckOutComponent from "../CheckOutComponent/CheckOutComponent";
 import axiosInstance from "../../axios";
-import TimeDateModal from "../scheduleCommentEmail/scheduleCommentEmail"
+import TimeDateModal from "../scheduleCommentEmail/scheduleCommentEmail";
 
 const style = {
   position: "absolute",
@@ -464,10 +464,9 @@ const LeadInputSection = () => {
             />
           </Box>
         </Box>
-
       </Box>
       {/* Second Row: Two Inputs Beside Each Other */}
-  
+
       {/* Second Row: Two Inputs Beside Each Other */}
       <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1, mr: 1 }}>
@@ -613,7 +612,7 @@ const LeadInputSection = () => {
               fontSize: "15px",
             }}
           >
-           Bath Count:
+            Bath Count:
           </Box>
 
           {/* Input Component */}
@@ -783,7 +782,6 @@ const LeadInputSection = () => {
       </Box>
 
       {/* Third Row: Seller Address Input */}
-     
 
       {/* Third Row: Seller Address Input */}
       <Box sx={{ display: "flex", mb: 3 }}>
@@ -830,7 +828,6 @@ const LeadInputSection = () => {
           />
         </Box>
       </Box>
-
 
       {/* Fourth Row: Listing and Occupancy Inputs */}
       <Box sx={{ display: "flex", mb: 3 }}>
