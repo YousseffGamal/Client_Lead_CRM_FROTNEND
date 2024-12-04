@@ -602,6 +602,7 @@ const LeadInputSection = () => {
           />
         </Box>
       </Box>
+      
       <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1, mr: 1 }}>
           {/* Label Component */}
