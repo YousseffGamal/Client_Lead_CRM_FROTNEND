@@ -101,22 +101,6 @@ const Dashboard = () => {
         } else if (data.isBidding === false) {
           setpricedLeads((pricedLeads) => [...pricedLeads, data]);
         } else if (data.savedBid) {
-          // setbiddingLeads((prevItems) =>
-          //   prevItems.map((item) => {
-          //     if (item._id === data.savedBid.Lead) {
-          //       const updatedBid = {
-          //         ...data.savedBid,
-          //         BidDurationDelay: data.duration, // Adding or updating the duration
-          //       };
-          //       return {
-          //         ...item,
-          //         bids: [updatedBid, ...item.bids],
-          //         BidDurationDelay: data.duration, // Update BidDurationDelay with the new duration
-          //       };
-          //     }
-          //     return item;
-          //   })
-          // );
           setbiddingLeads((prevItems) =>
             prevItems.map((item) => {
               if (item._id === data.savedBid.Lead) {
@@ -182,6 +166,7 @@ const Dashboard = () => {
     axiosInstance
       .get("biddingLeads")
       .then((res) => {
+        console.log("bidding leads", res.data.data);
         setbiddingLeads(res.data.data);
       })
       .catch((err) => {
@@ -315,12 +300,11 @@ const Dashboard = () => {
                     leadId={lead._id} // Ensure this is passed
                     address={lead.addressLine}
                     city={lead.county.name}
-                    condition={lead.condition}    
+                    condition={lead.condition}
                     leadType={lead.leadType?.name}
                     closingTime={lead.closingTime}
                     occupancy={lead.occupancy}
                     viewPath="/leadview" // Specify the path
-
                   />
                 </Box>
               ))
@@ -363,7 +347,6 @@ const Dashboard = () => {
                       errorMessage={lead.error}
                       onBidChange={handleBidChange}
                       viewPath="/leadview" // Specify the path
-
                     />
                   }
                 </Box>

@@ -160,32 +160,30 @@ const LeadInputSection = () => {
       {/* First Row: Map and Inputs */}
       <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1, mr: 2 }}>
-        <div className={blurClass}>
+          <div className={blurClass}>
+            <MapContainer
+              center={[51.505, -0.09]} // Default coordinates (latitude, longitude)
+              zoom={13} // Zoom level
+              style={{
+                height: "460px",
+                borderRadius: "20px",
+                border: "2px solid #456EFE",
+              }}
+            >
+              {/* Add a TileLayer to display the map */}
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              />
 
-        <MapContainer
-      center={[51.505, -0.09]} // Default coordinates (latitude, longitude)
-      zoom={13} // Zoom level
-      style={{
-        height: "460px",
-        borderRadius: "20px",
-        border: "2px solid #456EFE",
-      }}
-    >
-            {/* Add a TileLayer to display the map */}
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            />
-
-            {/* Add a Marker */}
-            <Marker position={[51.505, -0.09]}>
-              <Popup>
-                A sample marker. <br /> Easily customizable.
-              </Popup>
-            </Marker>
-          </MapContainer>
+              {/* Add a Marker */}
+              <Marker position={[51.505, -0.09]}>
+                <Popup>
+                  A sample marker. <br /> Easily customizable.
+                </Popup>
+              </Marker>
+            </MapContainer>
           </div>
-
         </Box>
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6" gutterBottom>
@@ -249,7 +247,7 @@ const LeadInputSection = () => {
 
             {/* Input for Condition */}
             <TextField
-            className={blurClass}
+              className={blurClass}
               fullWidth
               variant="outlined"
               margin="normal"
@@ -391,20 +389,17 @@ const LeadInputSection = () => {
 
           {/* Input Component */}
           <TextField
-                      className={blurClass}
-
+            className={blurClass}
             fullWidth
             variant="outlined"
             margin="normal"
             sx={{
-
               height: "63px", // Set height for the input
               backgroundColor: "#FFFFFF",
               borderRadius: "20px",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   border: "none", // Remove the border
-                  
                 },
                 "&.Mui-focused fieldset": {
                   border: "none", // Remove the border when focused
@@ -467,7 +462,6 @@ const LeadInputSection = () => {
             />
           </Box>
         </Box>
-
       </Box>
       {/* Second Row: Two Inputs Beside Each Other */}
       <Box sx={{ display: "flex", mb: 3 }}>
@@ -481,7 +475,7 @@ const LeadInputSection = () => {
               fontSize: "15px",
             }}
           >
-           Bath Count:
+            Bath Count:
           </Box>
 
           {/* Input Component */}
@@ -666,12 +660,10 @@ const LeadInputSection = () => {
 
           {/* Input Component */}
           <TextField
-                      className={blurClass}
-
+            className={blurClass}
             fullWidth
             variant="outlined"
             margin="normal"
-            
             sx={{
               height: "63px", // Set height for the input
               backgroundColor: "#FFFFFF",
@@ -713,8 +705,7 @@ const LeadInputSection = () => {
 
             {/* Input for State */}
             <TextField
-                        className={blurClass}
-
+              className={blurClass}
               fullWidth
               variant="outlined"
               margin="normal"
@@ -797,7 +788,6 @@ const LeadInputSection = () => {
           {/* Label for Address Line */}
           <Box
             sx={{
-              
               display: "block",
               color: "#191919", // Label color
               fontFamily: "LufgaMedium",
@@ -809,8 +799,7 @@ const LeadInputSection = () => {
 
           {/* Input for Address Line */}
           <TextField
-                      className={blurClass}
-
+            className={blurClass}
             fullWidth
             variant="outlined"
             margin="normal"
@@ -839,7 +828,6 @@ const LeadInputSection = () => {
           />
         </Box>
       </Box>
-
 
       {/* Fourth Row: Listing and Occupancy Inputs */}
       <Box sx={{ display: "flex", mb: 3 }}>
@@ -1112,11 +1100,13 @@ const LeadInputSection = () => {
             <Box sx={{ ...style, width: 600 }}>
               {auth.paymentMethod ? (
                 <PaymentMethodSelector
+                  leadId={leadId}
                   amount={300}
                   handleClose={handlesuccessfulLogin}
                 />
               ) : (
                 <CheckOutComponent
+                  leadId={leadId}
                   amount={300}
                   handleClose={handlesuccessfulLogin}
                 />

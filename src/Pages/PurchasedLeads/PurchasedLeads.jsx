@@ -105,14 +105,12 @@ const PurchasedLeads = () => {
                     address={lead.addressLine}
                     city={lead.county.name}
                     condition={lead.condition}
-                                        status={lead.status}
-
+                    status={lead.status}
                     askingPrice={lead.askingPrice}
                     leadType={lead.leadType?.name}
                     closingTime={lead.closingTime}
                     occupancy={lead.occupancy}
                     viewPath="/purchasedleadview" // Specify the path
-
                   />
                 </Box>
               ))
@@ -131,21 +129,20 @@ const PurchasedLeads = () => {
                   }}
                 >
                   <LeadCard
-                  
-               lead={lead}
-               leadId={lead._id}
-               address={lead.addressLine}
-               city={lead.county.name}
-               condition={lead.condition}
-               askingPrice={lead.askingPrice}
-               BidDurationDelay={lead.BidDurationDelay}
-               leadType={lead.leadType?.name}
-               closingTime={lead.closingTime}
-               occupancy={lead.occupancy}
-               status={lead.status}
-               viewPath="/purchasedleadview" // Specify the path
-
-
+                    lead={lead}
+                    leadId={lead._id}
+                    address={lead.addressLine}
+                    city={lead.county.name}
+                    condition={lead.condition}
+                    askingPrice={lead.askingPrice}
+                    BidDurationDelay={lead.BidDurationDelay}
+                    leadType={lead.leadType?.name}
+                    closingTime={lead.closingTime}
+                    occupancy={lead.occupancy}
+                    status={lead.status}
+                    viewPath={
+                      activeTab === 0 ? "/purchasedleadview" : "/leadview"
+                    } // Specify the path purchasedleadview
                   />
                   {/* <PiddingCard
                     lead={lead}

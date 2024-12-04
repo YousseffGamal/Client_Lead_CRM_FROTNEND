@@ -3,7 +3,7 @@ import axiosInstance from "../../axios";
 import { useAuth } from "../../store/authContext";
 import "./PaymentMethod.css"; // Assuming you have a CSS file for styles
 
-const PaymentMethodSelector = ({ amount, handleClose }) => {
+const PaymentMethodSelector = ({ amount, handleClose, leadId }) => {
   const { auth } = useAuth();
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [selectedMethodId, setSelectedMethodId] = useState(null);
@@ -21,7 +21,7 @@ const PaymentMethodSelector = ({ amount, handleClose }) => {
           amount,
           currency: "usd",
           userID: auth.user._id,
-          leadId: "67190df38a219b0c77fa25ca",
+          leadId: leadId,
         }
       );
       console.log(response);

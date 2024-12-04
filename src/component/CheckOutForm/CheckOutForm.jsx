@@ -8,7 +8,7 @@ import axiosInstance from "../../axios";
 import { useAuth } from "../../store/authContext";
 import "./CheckOutForm.css"; // Add a separate CSS file or CSS module
 
-const CheckOutForm = ({ clientSecret, customerId, handleClose }) => {
+const CheckOutForm = ({ clientSecret, customerId, handleClose, leadId }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -51,7 +51,7 @@ const CheckOutForm = ({ clientSecret, customerId, handleClose }) => {
           customerId,
           userID: auth.user._id,
           savePaymentInfo: saveInfo ? true : false,
-          leadId: "67190df38a219b0c77fa25ca",
+          leadId: leadId,
           amount: 1000,
         });
 
