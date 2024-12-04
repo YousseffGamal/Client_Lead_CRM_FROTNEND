@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Modal,
-  TextField,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Box, Modal, TextField, Typography, Button } from "@mui/material";
+import { useAuth } from "../../store/authContext";
 
 const TimeDateModal = ({ open, onClose, onSubmit }) => {
+  const { auth } = useAuth();
   const [formData, setFormData] = useState({
-    datetime: "",
-    notes: "",
+    emailScheduledDate: "",
+    comment: "",
+    userId: auth.user._id,
   });
 
   const handleChange = (e) => {
@@ -45,8 +42,8 @@ const TimeDateModal = ({ open, onClose, onSubmit }) => {
         <TextField
           label="Select Date and Time"
           type="datetime-local"
-          name="datetime"
-          value={formData.datetime}
+          name="emailScheduledDate"
+          value={formData.emailScheduledDate}
           onChange={handleChange}
           fullWidth
           sx={{ mb: 2 }}
@@ -54,8 +51,8 @@ const TimeDateModal = ({ open, onClose, onSubmit }) => {
         />
         <TextField
           label="Notes"
-          name="notes"
-          value={formData.notes}
+          name="comment"
+          value={formData.comment}
           onChange={handleChange}
           multiline
           rows={4}

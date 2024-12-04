@@ -55,7 +55,7 @@ const CheckOutForm = ({ clientSecret, customerId, handleClose, leadId }) => {
           amount: 1000,
         });
 
-        handleClose(customerId);
+        handleClose(saveInfo ? customerId : "");
       }
     } catch (error) {
       setError(error.message);

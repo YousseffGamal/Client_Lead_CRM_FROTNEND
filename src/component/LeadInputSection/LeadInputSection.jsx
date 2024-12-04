@@ -10,6 +10,7 @@ import {
   Modal,
   CircularProgress,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import ChildModal from "../childModal/ChildModal";
 import PaymentMethodSelector from "../paymentMethods/PaymentMethods";
 import CheckOutForm from "../CheckOutForm/CheckOutForm";
@@ -32,6 +33,7 @@ const style = {
   overflowY: "auto",
 };
 const LeadInputSection = () => {
+  const navigate = useNavigate();
   const { leadId } = useParams(); // Extract leadId from the URL
   const [leadData, setLeadData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -69,7 +71,7 @@ const LeadInputSection = () => {
       if (leadData?.state) {
         try {
           const response = await axiosInstance.get(
-            `/getStateBy/${leadData.state}`
+            `/getStateBy/${leadData.state._id}`
           );
           setStateName(response.data.stateName || "Unknown State");
         } catch (error) {
@@ -153,6 +155,7 @@ const LeadInputSection = () => {
     }
 
     setOpen(false);
+    navigate("/purchasedLeads");
   };
 
   return (
@@ -225,7 +228,7 @@ const LeadInputSection = () => {
                   fontFamily: "LufgaRegular", // Set your desired font family here
                 },
               }}
-              value="100000" // Example value
+              value={leadData.askingPrice || "No Asking Price"} // Example value
               InputProps={{
                 readOnly: true, // Disable input
               }}
@@ -247,7 +250,6 @@ const LeadInputSection = () => {
 
             {/* Input for Condition */}
             <TextField
-              className={blurClass}
               fullWidth
               variant="outlined"
               margin="normal"
@@ -257,8 +259,7 @@ const LeadInputSection = () => {
                 height: "230px", // Set height for the input
                 backgroundColor: "#FFFFFF",
                 borderRadius: "20px",
-                WebkitTextSecurity: "disc", // WebKit-specific
-                textSecurity: "disc", // Standard property
+
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     border: "none", // Remove the border
@@ -463,8 +464,8 @@ const LeadInputSection = () => {
           </Box>
         </Box>
       </Box>
-            {/* Second Row: Two Inputs Beside Each Other */}
-            <Box sx={{ display: "flex", mb: 3 }}>
+      {/* Second Row: Two Inputs Beside Each Other */}
+      <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1, mr: 1 }}>
           {/* Label Component */}
           <Box
@@ -553,8 +554,8 @@ const LeadInputSection = () => {
           </Box>
         </Box>
       </Box>
-          {/* Third Row: Seller Address Input */}
-          <Box sx={{ display: "flex", mb: 3 }}>
+      {/* Third Row: Seller Address Input */}
+      <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1 }}>
           {/* Label for Address Line */}
           <Box
@@ -781,8 +782,6 @@ const LeadInputSection = () => {
           </Box>
         </Box>
       </Box>
-
-  
 
       {/* Third Row: Seller Address Input */}
       <Box sx={{ display: "flex", mb: 3 }}>

@@ -66,7 +66,7 @@ const LeadInputSection = () => {
   // Fetch state name once leadData is available
   useEffect(() => {
     const fetchStateName = async () => {
-      if (leadData?.state) {
+      if (leadData?.state._id) {
         try {
           const response = await axiosInstance.get(
             `/getStateBy/${leadData.state}`
@@ -159,6 +159,7 @@ const LeadInputSection = () => {
 
   const handleSubmit = (formData) => {
     console.log("Form Data Submitted:", formData);
+    axiosInstance.post("sendEmail", formData).then((res) => console.log(res));
   };
 
   return (
@@ -229,7 +230,7 @@ const LeadInputSection = () => {
                   fontFamily: "LufgaRegular", // Set your desired font family here
                 },
               }}
-              value="100000" // Example value
+              value={leadData.askingPrice || "No Asking Price"} // Example value
               InputProps={{
                 readOnly: true, // Disable input
               }}
@@ -260,8 +261,6 @@ const LeadInputSection = () => {
                 height: "230px", // Set height for the input
                 backgroundColor: "#FFFFFF",
                 borderRadius: "20px",
-                WebkitTextSecurity: "disc", // WebKit-specific
-                textSecurity: "disc", // Standard property
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     border: "none", // Remove the border
@@ -601,7 +600,7 @@ const LeadInputSection = () => {
           />
         </Box>
       </Box>
-      
+
       <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1, mr: 1 }}>
           {/* Label Component */}
