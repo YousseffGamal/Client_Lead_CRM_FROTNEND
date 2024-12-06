@@ -46,9 +46,9 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("user");
       })
       .catch((err) => {
-        // setAuth({ token: "", user: "" }); // Reset permissions state
-        // locallStoraStorage.removeItem("token");
-        // locage.removeItem("user");
+        setAuth({ token: "", user: "" }); // Reset permissions state
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         console.log("logout failer");
       });
   };
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
     const interceptor = axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {
-        if (error.response && error.response.status === 401) {
+        if (error.response && error.response.status == 401) {
           // Token expired or unauthorized
 
           logout(); // Logout the user and redirect to login page

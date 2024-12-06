@@ -268,8 +268,9 @@ const Dashboard = () => {
         >
           <SwitchComponent activeTab={activeTab} switchView={switchView} />
           <FilterComponent
-            setpricedLeads={setpricedLeads}
+            setpricedLeads={activeTab == 0 ? setpricedLeads : setbiddingLeads}
             sx={{ ml: 1 }}
+            activeTab={activeTab}
           />{" "}
           {/* Add left margin if needed */}
         </Box>

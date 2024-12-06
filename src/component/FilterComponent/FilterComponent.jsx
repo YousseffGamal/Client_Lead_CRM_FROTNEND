@@ -15,7 +15,7 @@ import {
   leadTemperatureOptions,
 } from "../../component/constance/constance";
 
-const FilterComponent = ({ setPricedLeads }) => {
+const FilterComponent = ({ setpricedLeads, activeTab }) => {
   const [state, setState] = useState("");
   const [occupancy, setOccupancy] = useState("");
   const [temperature, setTemperature] = useState("");
@@ -29,6 +29,7 @@ const FilterComponent = ({ setPricedLeads }) => {
   const getStates = async () => {
     try {
       const response = await axiosInstance.get("/getAllStates");
+      console.log("states", response.data.states);
       setStates(response.data.states);
     } catch (error) {
       console.error("Error fetching states:", error);
@@ -56,11 +57,13 @@ const FilterComponent = ({ setPricedLeads }) => {
       };
 
       const response = await axiosInstance.get(
-        "/getLeadsFiltered",
-        { params: queryParams }
+        activeTab == 0 ? "/UsergetAllLeads" : "/biddingLeads",
+        {
+          params: queryParams,
+        }
       );
-
-      setPricedLeads(response.data.data); // Make sure the state update function for leads is passed as a prop
+      console.log("filtered leads", response.data.data);
+      setpricedLeads(response.data.data); // Make sure the state update function for leads is passed as a prop
     } catch (error) {
       console.error("Error fetching filtered leads:", error);
     }
@@ -88,7 +91,7 @@ const FilterComponent = ({ setPricedLeads }) => {
             <em>None</em>
           </MenuItem>
           {states.map((element) => (
-            <MenuItem key={element.id} value={element.id}>
+            <MenuItem key={element._id} value={element._id}>
               {element.name}
             </MenuItem>
           ))}
