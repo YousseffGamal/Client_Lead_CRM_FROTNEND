@@ -287,6 +287,8 @@ const SignUpPage = () => {
             name="preferences.closingTime"
             value={formData.preferences.closingTime}
             onChange={handleChange}
+            type="number"
+
           />
 
           <TextInput
@@ -294,6 +296,8 @@ const SignUpPage = () => {
             name="preferences.askingPrice"
             value={formData.preferences.askingPrice}
             onChange={handleChange}
+            type="number"
+
           />
 
           <Box textAlign="center">

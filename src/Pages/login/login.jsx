@@ -5,6 +5,8 @@ import Ellipse from "../../assets/images/Ellipse 1.png";
 import TopLeftImage from "../../assets/images/tapIcon.png"; // Import the top-left image
 import { useAuth } from "../../store/authContext";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -133,7 +135,9 @@ const LoginPage = () => {
               variant="body2"
               sx={{ color: "#000000", cursor: "pointer" }}
             >
-              Forget Password?
+             <Link to="/signuppage" style={{ textDecoration: "none", color: "#000000" }}>
+    Sign Up
+  </Link>
             </Typography>
           </Box>
 
