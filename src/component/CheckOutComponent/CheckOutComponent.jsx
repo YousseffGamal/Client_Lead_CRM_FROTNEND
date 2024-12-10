@@ -40,6 +40,7 @@ const CheckOutComponent = ({ amount, handleClose, leadId }) => {
         clientSecret={clientSecret}
         customerId={customerId}
         handleClose={handleClose}
+        amount={amount}
       />
     </Elements>
   );

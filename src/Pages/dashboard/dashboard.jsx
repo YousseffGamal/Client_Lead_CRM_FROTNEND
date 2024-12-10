@@ -67,14 +67,37 @@ const Dashboard = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const modalClose = () => {
-    getbiddingLeads();
-    setAuth({ ...auth, paymentMethod: true });
-    console.log("cameHereModalClose");
-    localStorage.setItem("paymentMethod", true);
-    setActiveTab(1);
+  const modalClose = (cxId) => {
+    if (cxId) {
+      console.log("sucess cx id", cxId);
+      getbiddingLeads();
+      setAuth({
+        ...auth,
+        paymentMethod: true,
+        user: {
+          ...auth.user,
+          CustomerId: cxId,
+        },
+      });
+      // Retrieve the existing user object from localStorage
+      let user = JSON.parse(localStorage.getItem("user"));
 
-    setOpen(false);
+      // Update the CustomerId property
+      user = {
+        ...user,
+        CustomerId: cxId,
+      };
+
+      // Save the updated user object back to localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("paymentMethod", true);
+
+      setActiveTab(1);
+
+      setOpen(false);
+    } else {
+      setOpen(false);
+    }
   };
 
   let ws; // Declare the WebSocket instance

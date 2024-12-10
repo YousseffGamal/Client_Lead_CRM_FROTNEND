@@ -295,6 +295,50 @@ const LeadInputSection = () => {
               fontSize: "15px", // Updated font size
             }}
           >
+            House Number
+          </Box>
+
+          {/* Input for Address Line */}
+          <TextField
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            sx={{
+              height: "63px",
+              backgroundColor: "#FFFFFF",
+              borderRadius: "20px",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "none",
+                },
+                "&.Mui-focused fieldset": {
+                  border: "none",
+                },
+              },
+              "& input": {
+                textAlign: "center",
+                color: "rgba(25, 25, 25, 0.7)",
+                fontFamily: "LufgaRegular",
+              },
+            }}
+            value={leadData.houseNumber || ""}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </Box>
+      </Box>
+      <Box sx={{ display: "flex", mb: 3 }}>
+        <Box sx={{ flex: 1 }}>
+          {/* Label for Address Line */}
+          <Box
+            sx={{
+              display: "block",
+              color: "#191919", // Label color
+              fontFamily: "LufgaMedium",
+              fontSize: "15px", // Updated font size
+            }}
+          >
             Address Line:
           </Box>
 
@@ -328,10 +372,9 @@ const LeadInputSection = () => {
           />
         </Box>
       </Box>
-       {/* Second Row: Two Inputs Beside Each Other */}
-       <Box sx={{ display: "flex", mb: 3 }}>
-        
-       <Box sx={{ flex: 1, mr: 1 }}>
+      {/* Second Row: Two Inputs Beside Each Other */}
+      <Box sx={{ display: "flex", mb: 3 }}>
+        <Box sx={{ flex: 1, mr: 1 }}>
           {/* Label Component */}
           <Box
             sx={{
@@ -419,8 +462,6 @@ const LeadInputSection = () => {
         </Box>
       </Box>
       <Box sx={{ display: "flex", mb: 3 }}>
-     
-
         <Box sx={{ flex: 1 }}>
           <Box sx={{ flex: 1, mr: 1, mb: 2 }}>
             {/* Label for State */}
@@ -689,9 +730,6 @@ const LeadInputSection = () => {
       </Box>
       {/* Second Row: Two Inputs Beside Each Other */}
 
-    
-      
-
       <Box sx={{ display: "flex", mb: 3 }}>
         <Box sx={{ flex: 1, mr: 1 }}>
           {/* Label Component */}
@@ -825,8 +863,6 @@ const LeadInputSection = () => {
             }}
           />
         </Box>
-
-      
       </Box>
 
       {/* Third Row: Seller Address Input */}
@@ -970,7 +1006,6 @@ const LeadInputSection = () => {
 
       {/* Fifth Row: Lead Temperature and Closing Inputs */}
       <Box sx={{ display: "flex", mb: 3 }}>
-     
         <Box sx={{ flex: 1, mb: 2 }}>
           {/* Label for Closing */}
           <Box

@@ -297,12 +297,56 @@ const LeadInputSection = () => {
               fontSize: "15px", // Updated font size
             }}
           >
+            House Number
+          </Box>
+
+          {/* Input for Address Line */}
+          <TextField
+            fullWidth
+            className={blurClass}
+            variant="outlined"
+            margin="normal"
+            sx={{
+              height: "63px",
+              backgroundColor: "#FFFFFF",
+              borderRadius: "20px",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "none",
+                },
+                "&.Mui-focused fieldset": {
+                  border: "none",
+                },
+              },
+              "& input": {
+                textAlign: "center",
+                color: "rgba(25, 25, 25, 0.7)",
+                fontFamily: "LufgaRegular",
+              },
+            }}
+            value={"Dumb Number"}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </Box>
+      </Box>
+      <Box sx={{ display: "flex", mb: 3 }}>
+        <Box sx={{ flex: 1 }}>
+          {/* Label for Address Line */}
+          <Box
+            sx={{
+              display: "block",
+              color: "#191919", // Label color
+              fontFamily: "LufgaMedium",
+              fontSize: "15px", // Updated font size
+            }}
+          >
             Address Line:
           </Box>
 
           {/* Input for Address Line */}
           <TextField
-            className={blurClass}
             fullWidth
             variant="outlined"
             margin="normal"
@@ -437,6 +481,7 @@ const LeadInputSection = () => {
 
             {/* Input for State */}
             <TextField
+              className={blurClass}
               fullWidth
               variant="outlined"
               margin="normal"
@@ -458,7 +503,7 @@ const LeadInputSection = () => {
                   fontFamily: "LufgaRegular", // Set your desired font family here
                 },
               }}
-              value={leadData.zip}
+              value={"dumb zip code "}
               InputProps={{
                 readOnly: true, // Disable input
               }}
@@ -614,6 +659,7 @@ const LeadInputSection = () => {
 
           {/* Input Component */}
           <TextField
+            className={blurClass}
             fullWidth
             variant="outlined"
             margin="normal"
@@ -635,7 +681,7 @@ const LeadInputSection = () => {
                 fontFamily: "LufgaRegular", // Set your desired font family here
               },
             }}
-            value={leadData.phone || ""}
+            value={"dump phone number"}
             InputProps={{
               readOnly: true, // Disable input
             }}
