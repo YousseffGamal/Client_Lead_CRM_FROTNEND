@@ -124,6 +124,7 @@ const Dashboard = () => {
         } else if (data.isBidding === false) {
           setpricedLeads((pricedLeads) => [...pricedLeads, data]);
         } else if (data.savedBid) {
+          console.log("savedBid", data.savedBid);
           setbiddingLeads((prevItems) =>
             prevItems.map((item) => {
               if (item._id === data.savedBid.Lead) {
@@ -131,6 +132,7 @@ const Dashboard = () => {
                   ...item,
                   BidDurationDelay: data.duration,
                   resetFlag: !item.resetFlag,
+                  bids: [...item.bids, data.savedBid],
                 };
               }
               return item;
